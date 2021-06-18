@@ -10,7 +10,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 public class RegisterActivity extends AppCompatActivity {
-
+/* Trang Đăng kí
+* Một số hàm chính:
+* Kiểm tra và lưu dữ liệu user vào database --> CreateNewAccount()
+* Chuyển sang trang Profile (SetupActivity) --> SendUserToSetupActivity()
+*
+* */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +53,5 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void SendUserToMainActivity(){
-        //chuyển sang trang chủ
-    }
 
 }

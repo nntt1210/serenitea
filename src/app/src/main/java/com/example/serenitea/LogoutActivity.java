@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class LogoutActivity extends AppCompatActivity {
+//màn hình chính khi chưa login
 
     private Button btnLogin, btnSignup;
     @Override

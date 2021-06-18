@@ -10,6 +10,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 public class LoginActivity extends AppCompatActivity {
+//màn hình login
+/* Một số hàm chính:
+- check user có login thành công --> AllowingUserToLogin()
+- chuyển sang giao diện chính (EmotionActivity) --> SendUserToEmotionActivity()
+- chuyển sang trang ResetPasswordActivity --> SendUserToResetPasswordActivity()
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     private void AllowingUserToLogin(){
         //nếu Login thành công -> gọi SendUserToMainActivity()
     }
-    private void SendUserToRegisterActivity(){
-        //chuyển sang trang Đăng kí
-    }
 
-    private void SendUserToMainActivity(){
+    private void SendUserToEmotionActivity(){
         //chuyển sang trang chủ
     }
 
