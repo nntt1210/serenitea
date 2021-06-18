@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "523903788506",
+    "firebase_url": "https://serenitea-a7be8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "serenitea-a7be8",
+    "storage_bucket": "serenitea-a7be8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523903788506:android:971e4b4d3eebbb9b1a4ce3",
+        "android_client_info": {
+          "package_name": "com.example.serenitea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523903788506-eau08f846hkkadqdnt8n1lcql2bfqh4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN3MAK6Q7JIh9nl92Ign-xi3lkhseQOI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523903788506-eau08f846hkkadqdnt8n1lcql2bfqh4i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
