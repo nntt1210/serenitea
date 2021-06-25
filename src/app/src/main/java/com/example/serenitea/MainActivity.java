@@ -2,6 +2,7 @@ package com.example.serenitea;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -23,15 +24,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //nếu user==null-->gọi SendUserToLoginActivity()
-
+        SendUserToLogoutActivity();
     }
 
     private void UserMenuSelector (MenuItem item){
         //chuyển hướng trang khi chọn trên menu (vd: Đăng kí, đăng nhập, profile...)
     }
 
-    private void SendUserToLoginActivity (){
-        //chuyển sang trang Login
+    private void SendUserToLogoutActivity (){
+        //chuyển sang trang Logout (trang ban đầu khi vô app)
+        Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
+        logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(logoutIntent);
+        finish();
     }
 
 }
