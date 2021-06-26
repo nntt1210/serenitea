@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         //get input field
         Username = (EditText) findViewById(R.id.login_username);
         Password = (EditText) findViewById(R.id.login_password);
+        LoginButton = (Button) findViewById(R.id.btn_login);
         loadingBar = new ProgressDialog(this);
 
         //event click LoginButton
