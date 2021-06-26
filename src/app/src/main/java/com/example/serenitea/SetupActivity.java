@@ -19,6 +19,11 @@ public class SetupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setup);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void SaveAccountInformation(){
         //lưu thông tin user vào database
     }
