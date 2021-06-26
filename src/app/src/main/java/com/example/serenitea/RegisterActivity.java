@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //check nếu user chưa nhập field
         if (TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Please input your Username", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please input your Email", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pwd)){
             Toast.makeText(this, "Please input your Password", Toast.LENGTH_SHORT).show();
@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     else{
                         String message = task.getException().getMessage();
-                        Toast.makeText(RegisterActivity.this, "Error occured: " + message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                     }
                     loadingBar.dismiss();
                 }
