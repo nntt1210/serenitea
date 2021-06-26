@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -108,6 +109,8 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
+                        SendUserToSetupActivity();
+
                         Toast.makeText(RegisterActivity.this, "Create account successfully", Toast.LENGTH_SHORT).show();
                     }
                     else{
@@ -124,7 +127,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void SendUserToSetupActivity(){
         //chuyển sang trang Profile
-
+        Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(setupIntent);
+        finish();
     }
 
 
