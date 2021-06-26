@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="Username"
+            android:hint="Email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,6 +33,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
 
+                android:id="@+id/login_username"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
                 android:drawableEnd="@drawable/ic_username"
@@ -54,6 +55,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
 
+                android:id="@+id/login_password"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
                 android:drawableEnd="@drawable/ic_password"
