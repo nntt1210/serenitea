@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="Email"
+            android:hint="Email address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,11 +32,34 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTxt_email"
+                android:layout_width="302dp"
+                android:layout_height="56dp"
+                android:drawableEnd="@drawable/ic_email"
+                android:drawableRight="@drawable/ic_email" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedTextField3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="Username"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField"
+            app:layout_constraintTop_toEndOf="@+id/outlinedTextField">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTxt_username"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
-                android:drawableEnd="@drawable/ic_username"
-                android:drawableRight="@drawable/ic_username" />
+                android:drawableEnd="@drawable/ic_person"
+                android:drawableRight="@drawable/ic_person" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,15 +73,15 @@
             android:hint="Password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
+            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField3">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTxt_password"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
-                android:drawableEnd="@drawable/ic_password"
-                android:drawableRight="@drawable/ic_password"
-                android:inputType="textPassword"/>
+                android:drawableEnd="@drawable/ic_lock"
+                android:drawableRight="@drawable/ic_lock"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="17dp"
             android:hint="Confirm Password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,9 +101,9 @@
                 android:id="@+id/editTxt_confirm"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
-                android:drawableEnd="@drawable/ic_password"
-                android:drawableRight="@drawable/ic_password"
-                android:inputType="textPassword"/>
+                android:drawableEnd="@drawable/ic_lock_open"
+                android:drawableRight="@drawable/ic_lock_open"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +114,7 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="Sign up"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:backgroundTint="#FF5C5F"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
