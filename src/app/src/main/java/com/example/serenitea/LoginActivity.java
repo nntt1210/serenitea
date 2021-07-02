@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 - chuyển sang trang ResetPasswordActivity --> SendUserToResetPasswordActivity()
 */
     private Button LoginButton;
+    private TextView ForgotPwd;
     private EditText Username, Password;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         //get input field
         Username = (EditText) findViewById(R.id.login_username);
         Password = (EditText) findViewById(R.id.login_password);
+        ForgotPwd = (TextView) findViewById(R.id.txt_forgotPass);
         LoginButton = (Button) findViewById(R.id.btn_login);
         loadingBar = new ProgressDialog(this);
 
@@ -57,6 +60,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AllowingUserToLogin();
+            }
+        });
+
+        ForgotPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendUserToForgotPasswordActivity();
             }
         });
 
@@ -114,6 +124,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void SendUserToEmotionActivity(){
         Intent emotionIntent = new Intent(LoginActivity.this, MainActivity.class);
+        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(emotionIntent);
+        finish();
+    }
+
+    private void SendUserToForgotPasswordActivity(){
+        Intent emotionIntent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
         emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
         finish();

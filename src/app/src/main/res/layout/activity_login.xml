@@ -84,11 +84,16 @@
             android:layout_marginTop="164dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="Forgot Password?"
+            android:onClick="onClick"
+            android:clickable="true"
             android:textColor="#1782CD"
+            android:textAllCaps="false"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.894"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="onClick" />
 
         <TextView
             android:id="@+id/txt_otherOption"
