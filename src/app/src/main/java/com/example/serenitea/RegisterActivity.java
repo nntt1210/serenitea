@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 /* Trang Đăng kí
 * Một số hàm chính:
@@ -28,6 +30,9 @@ public class RegisterActivity extends AppCompatActivity {
 * Chuyển sang trang Profile (SetupActivity) --> SendUserToSetupActivity()
 *
 * */
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])$");
+
+
     private EditText Username, UserPassword, UserConfirmPassword;
     private Button SignUpButton;
     private FirebaseAuth mAuth;
@@ -92,6 +97,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
         else if (TextUtils.isEmpty(pwd)){
             Toast.makeText(this, "Please input your Password", Toast.LENGTH_SHORT).show();
+        }
+        else if (!PASSWORD_PATTERN.matcher(pwd).matches()){
+            Toast.makeText(this, "Password must contain at least 1 lowercase letter, 1 uppercase letter and 1 number digit", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(confirmPwd)){
             Toast.makeText(this, "Please input your Confirm Password", Toast.LENGTH_SHORT).show();
