@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void SendUserToEmotionActivity(){
-        Intent emotionIntent = new Intent(LoginActivity.this,EmotionActivity.class);
+        Intent emotionIntent = new Intent(LoginActivity.this, MainActivity.class);
         emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
         finish();

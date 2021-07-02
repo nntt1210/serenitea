@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/group_item_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+    </group>
+    <group
+        android:id="@+id/group_item_2"
+        android:checkableBehavior="single">
+        <item android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile"/>
+    </group>
+    <group
+        android:id="@+id/group_item_3"
+        android:checkableBehavior="single">
+        <item android:id="@+id/nav_favorites"
+            android:icon="@drawable/ic_favorite"
+            android:iconTint="@color/white"
+            android:title="Favorites"/>
+    </group>
+    <group
+        android:id="@+id/group_item_4"
+        android:checkableBehavior="single">
+        <item android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_friends"
+            android:title="Friends"/>
+    </group>
+    <group
+        android:id="@+id/group_item_5"
+        android:checkableBehavior="single">
+        <item android:id="@+id/nav_statistics"
+            android:icon="@drawable/ic_statistics"
+            android:title="Statistics"/>
+    </group>
+
+</menu>
