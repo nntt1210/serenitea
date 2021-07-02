@@ -20,6 +20,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.installations.Utils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 /* Trang Đăng kí
@@ -88,10 +92,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         //check nếu user chưa nhập field
         if (TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Please input your Email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please input your email", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(pwd)){
             Toast.makeText(this, "Please input your Password", Toast.LENGTH_SHORT).show();
+        }
+        else if (!isValidPassword(pwd)){
+            Toast.makeText(this, "Password must contain at least 1 lowercase letter, 1 uppercase letter and 1 number digit", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(confirmPwd)){
             Toast.makeText(this, "Please input your Confirm Password", Toast.LENGTH_SHORT).show();
@@ -133,5 +140,18 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    public boolean isValidPassword(final String password) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
 
 }
