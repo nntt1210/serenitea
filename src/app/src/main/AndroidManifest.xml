@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
         <activity android:name=".ForgotPasswordActivity"></activity>
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".EmotionActivity" />
         <activity android:name=".FriendsActivity" />
         <activity android:name=".FindFriendActivity" />
@@ -18,11 +24,7 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".QuoteActivity" />
         <activity android:name=".LogoutActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".SetupActivity">
 
