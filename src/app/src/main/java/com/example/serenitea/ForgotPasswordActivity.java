@@ -69,8 +69,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                 startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
 
                                 //notification
-                                NotificationCompat.Builder builder = new NotificationCompat.Builder(ForgotPasswordActivity.this,"khuyen")
-                                        .setSmallIcon(R.drawable.ic_dropdown_arrow)
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(ForgotPasswordActivity.this,"serenitea")
+                                        .setSmallIcon(R.drawable.ic_email)
                                         .setContentTitle("Reset password for SERENITEA")
                                         .setContentText("Please check your Email Account if you want to reset your password");
 
