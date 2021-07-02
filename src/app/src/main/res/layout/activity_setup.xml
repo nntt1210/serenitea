@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="350dp"
-        android:layout_height="405dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -16,27 +16,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
+        <ImageButton
+            android:id="@+id/btn_choose_avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/avatar12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                tools:layout_editor_absoluteX="114dp"
-                tools:layout_editor_absoluteY="15dp"
-                tools:srcCompat="@tools:sample/avatars" />
-
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField"
@@ -48,7 +38,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView">
+            app:layout_constraintTop_toBottomOf="@+id/btn_choose_avatar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/setup_nickname"
@@ -98,9 +88,9 @@
             android:textSize="14sp"
             app:backgroundTint="#FF5C5F"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField1" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
