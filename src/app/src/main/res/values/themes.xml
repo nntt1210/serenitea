@@ -20,4 +20,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/black</item>
     </style>
+    <style name="ToolbarTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:textColorSecondary">@color/theme</item>
+    </style>
 </resources>

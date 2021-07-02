@@ -8,14 +8,19 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private ImageButton closeBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+        getSupportActionBar().setTitle("");
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -32,11 +39,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new MessageFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_home);
-//        }
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new EmotionActivity()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
+
+        closeBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.btn_close);
+        closeBtn.setOnClickListener(v -> drawer.closeDrawer(GravityCompat.START));
 
     }
 
@@ -76,41 +86,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+    //    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        //nếu user==null-->gọi SendUserToLoginActivity()
+//        SendUserToLogoutActivity();
+//    }
+
+    private void UserMenuSelector (MenuItem item){
+        //chuyển hướng trang khi chọn trên menu (vd: Đăng kí, đăng nhập, profile...)
+    }
+
+    private void SendUserToLogoutActivity (){
+        //chuyển sang trang Logout (trang ban đầu khi vô app)
+        Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
+        logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(logoutIntent);
+        finish();
+    }
 }
 
-
-
-//public class MainActivity extends BaseDrawerActivity {
-//
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
-//
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        // to check current activity in the navigation drawer
-//        navigationView.getMenu().getItem(0).setChecked(true);
-//    }
-//
-////    @Override
-////    protected void onStart() {
-////        super.onStart();
-////        //nếu user==null-->gọi SendUserToLoginActivity()
-////        SendUserToLogoutActivity();
-////    }
-//
-//    private void UserMenuSelector (MenuItem item){
-//        //chuyển hướng trang khi chọn trên menu (vd: Đăng kí, đăng nhập, profile...)
-//    }
-//
-//    private void SendUserToLogoutActivity (){
-//        //chuyển sang trang Logout (trang ban đầu khi vô app)
-//        Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
-//        logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(logoutIntent);
-//        finish();
-//    }
-//}
