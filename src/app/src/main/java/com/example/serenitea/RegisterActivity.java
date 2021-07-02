@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Please input your Password", Toast.LENGTH_SHORT).show();
         }
         else if (!isValidPassword(pwd)){
-            Toast.makeText(this, pwd, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password must contain at least 1 lowercase letter, 1 uppercase letter and 1 number digit", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(confirmPwd)){
             Toast.makeText(this, "Please input your Confirm Password", Toast.LENGTH_SHORT).show();
@@ -145,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern pattern;
         Matcher matcher;
 
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+        final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$";
 
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
