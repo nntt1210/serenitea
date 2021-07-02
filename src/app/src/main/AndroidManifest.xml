@@ -10,15 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
         <activity android:name=".ForgotPasswordActivity"></activity>
-        <activity android:name=".ProfileActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".AvatarActivity">
-        </activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".AvatarActivity"></activity>
         <activity android:name=".EmotionActivity" />
         <activity android:name=".FriendsActivity" />
         <activity android:name=".FindFriendActivity" />
@@ -33,6 +26,11 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
 
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
