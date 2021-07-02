@@ -6,46 +6,36 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
+    tools:context=".BaseDrawerActivity"
     tools:openDrawer="start"
     android:layout_marginRight="-64dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/design_default_color_primary"
-            android:elevation="4dp"
-            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:id="@+id/toolbar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:elevation="4dp"/>
 
         <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container"/>
 
         <Button
             android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="387dp"
-            android:layout_marginRight="387dp"
-            android:text="X"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="5dp"
+            android:text="X" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
     <com.google.android.material.navigation.NavigationView
@@ -59,7 +49,6 @@
         app:itemTextColor="@color/white"
         android:fitsSystemWindows="true"
         app:menu="@menu/drawer_menu"
-
         app:itemTextAppearance="@style/navigation_style"
 
         android:layout_marginEnd="-64dp"
