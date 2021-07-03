@@ -70,12 +70,13 @@
                 android:src="@drawable/menu_logo" />
 
             <Button
+                android:id="@+id/btn_logout"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="#EC8687"
                 android:drawableRight="@drawable/ic_log_out"
                 android:fontFamily="@font/open_sans_bold"
