@@ -18,6 +18,12 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -25,12 +31,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button LogoutButton;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference UsersRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         LogoutButton = (Button) findViewById(R.id.btn_logout);
 
@@ -62,6 +71,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 mAuth.signOut();
                 SendUserToLogoutActivity();
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null){
+            SendUserToLogoutActivity();
+        }
+        else{
+            CheckUserExistence();
+        }
+    }
+
+    private void CheckUserExistence() {
+        final String currentUserId  = mAuth.getCurrentUser().getUid();
+
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.hasChild(currentUserId)){
+                    SendUserToSetupActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -119,6 +160,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
         logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(logoutIntent);
+        finish();
+    }
+
+
+    private void SendUserToSetupActivity (){
+        //chuyển sang trang Logout (trang ban đầu khi vô app)
+        Intent intent =  new Intent(MainActivity.this, SetupActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 }

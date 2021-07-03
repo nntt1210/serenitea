@@ -1,11 +1,28 @@
 package com.example.serenitea;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SetupActivity extends AppCompatActivity {
 /* Trang Setup dùng để
@@ -16,16 +33,91 @@ public class SetupActivity extends AppCompatActivity {
 - Hàm update (có thể viết riêng, hoặc viết chung với hàm SaveAccountInformation() phía trên)
 - Một số hàm SendUserTo...Activity()
 * */
+    private EditText NickName, DoB;
+    private Spinner Gender;
+    private Button SaveInfoSetupButton;
+    private ProgressDialog loadingBar;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference UsersRef;
+
+    String currentUserId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
+
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //get text from input
+        NickName = (EditText) findViewById(R.id.setup_nickname);
+        Gender = (Spinner) findViewById(R.id.setup_gender);
+        DoB = (EditText) findViewById(R.id.setup_dob);
+        SaveInfoSetupButton = (Button) findViewById(R.id.btn_save);
+        loadingBar = new ProgressDialog(this);
+
+        //event click Save Button
+        SaveInfoSetupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveAccountSetupInformation();
+            }
+        });
+
+
+    }
+
+    private void SaveAccountSetupInformation() {
+        String nickname = NickName.getText().toString();
+        String gender = Gender.toString();
+        String dob = DoB.getText().toString();
+
+        if(TextUtils.isEmpty(nickname)){
+            Toast.makeText(this,"Please enter your name", Toast.LENGTH_SHORT).show();
+        }
+        // TODO: Check người dùng có chọn option nào không, kiểm tra lại so sánh với "Gender" đúng hay sai
+        else if(gender == "Gender"){
+            Toast.makeText(this,"Please choose your gender", Toast.LENGTH_SHORT).show();
+        }
+        // TODO: Validate DoB, nếu được thì nên tạo lịch, bấm chọn trong đó
+        else if(TextUtils.isEmpty(dob)){
+            Toast.makeText(this,"Please enter Date of birth", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            loadingBar.setTitle("Saving Information");
+            loadingBar.setMessage("Please wait a moment...");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
+
+            HashMap userMap = new HashMap();
+            userMap.put("nickname",nickname);
+            userMap.put("gender",gender);
+            userMap.put("dob",dob);
+            UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()){
+                        SendUserToEmotionActivity();
+                        Toast.makeText(SetupActivity.this,"Your information is saved successfully",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        String message = task.getException().getMessage();
+                        Toast.makeText(SetupActivity.this,"Error: " + message,Toast.LENGTH_LONG).show();
+                    }
+                    loadingBar.dismiss();
+                }
+            });
+        }
     }
 
     @Override
@@ -33,12 +125,11 @@ public class SetupActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void SaveAccountInformation(){
-        //lưu thông tin user vào database
-    }
-
-    private void ValidateAccountInfo(){
-        //check validate data trước khi update
+    private void SendUserToEmotionActivity(){
+        Intent emotionIntent = new Intent(SetupActivity.this, MainActivity.class);
+        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(emotionIntent);
+        finish();
     }
 
 }
