@@ -109,7 +109,8 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        SendUserToEmotionActivity();
+                        //SendUserToEmotionActivity();
+                        SendUserToSetupActivity();
                         Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
                     }
                     else{
@@ -134,6 +135,13 @@ public class LoginActivity extends AppCompatActivity {
 //        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
 //        finish();
+    }
+
+    private void SendUserToSetupActivity(){
+        Intent intent = new Intent(LoginActivity.this, SetupActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -35,6 +36,7 @@ public class SetupActivity extends AppCompatActivity {
 * */
     private EditText NickName, DoB;
     private Spinner Gender;
+    private String gender_value;
     private Button SaveInfoSetupButton;
     private ProgressDialog loadingBar;
 
@@ -66,6 +68,19 @@ public class SetupActivity extends AppCompatActivity {
         SaveInfoSetupButton = (Button) findViewById(R.id.btn_save);
         loadingBar = new ProgressDialog(this);
 
+        //select gender
+        Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gender_value = Gender.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         //event click Save Button
         SaveInfoSetupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,14 +94,14 @@ public class SetupActivity extends AppCompatActivity {
 
     private void SaveAccountSetupInformation() {
         String nickname = NickName.getText().toString();
-        String gender = Gender.toString();
+        String gender = gender_value;
         String dob = DoB.getText().toString();
 
         if(TextUtils.isEmpty(nickname)){
             Toast.makeText(this,"Please enter your name", Toast.LENGTH_SHORT).show();
         }
         // TODO: Check người dùng có chọn option nào không, kiểm tra lại so sánh với "Gender" đúng hay sai
-        else if(gender == "Gender"){
+        else if(gender.equals("Gender")){
             Toast.makeText(this,"Please choose your gender", Toast.LENGTH_SHORT).show();
         }
         // TODO: Validate DoB, nếu được thì nên tạo lịch, bấm chọn trong đó
