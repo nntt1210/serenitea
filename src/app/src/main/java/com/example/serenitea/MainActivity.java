@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
         LogoutButton = (Button) findViewById(R.id.btn_logout);
 
