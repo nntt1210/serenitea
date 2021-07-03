@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         //chuyển hướng trang khi chọn trên menu (vd: Đăng kí, đăng nhập, profile...)
     }
 
+    private void SendUserToEmotionActivity (){
+        Intent emotionIntent = new Intent(MainActivity.this, EmotionActivity.class);
+        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity (emotionIntent);
+        finish();
+    }
     private void SendUserToLogoutActivity (){
         //chuyển sang trang Logout (trang ban đầu khi vô app)
         Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
