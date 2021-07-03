@@ -17,14 +17,22 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     private ImageButton closeBtn;
+    private Button LogoutButton;
+
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        LogoutButton = (Button) findViewById(R.id.btn_logout);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,6 +56,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         closeBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.btn_close);
         closeBtn.setOnClickListener(v -> drawer.closeDrawer(GravityCompat.START));
 
+        //event click Logout Button
+        LogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                SendUserToLogoutActivity();
+            }
+        });
     }
 
     @Override

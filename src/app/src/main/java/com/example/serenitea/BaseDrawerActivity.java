@@ -21,23 +21,20 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     DrawerLayout drawer;
     FrameLayout frameLayout;
     NavigationView navigationView;
-    private Button LogoutButton;
 
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_drawer);
 
-        mAuth = FirebaseAuth.getInstance();
 
 //        getSupportActionBar().hide();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        LogoutButton = (Button) findViewById(R.id.btn_logout);
-        frameLayout = (FrameLayout)findViewById(R.id.fragment_container);
+
+        frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -53,21 +50,13 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
 //            navigationView.setCheckedItem(R.id.nav_home);
 //        }
 
-        //event click Logout Button
-        LogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //mAuth.signOut();
-                SendUserToLogoutActivity();
-            }
-        });
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         //to prevent current item select over and over
-        if (item.isChecked()){
+        if (item.isChecked()) {
             drawer.closeDrawer(GravityCompat.START);
             return false;
         }
@@ -102,7 +91,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
         }
     }
 
-    private void SendUserToLogoutActivity(){
+    private void SendUserToLogoutActivity() {
         Intent intent = new Intent(BaseDrawerActivity.this, LogoutActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
