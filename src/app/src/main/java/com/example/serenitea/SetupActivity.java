@@ -53,7 +53,7 @@ public class SetupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
@@ -97,10 +97,9 @@ public class SetupActivity extends AppCompatActivity {
         String gender = gender_value;
         String dob = DoB.getText().toString();
 
-        if(TextUtils.isEmpty(nickname)){
-            Toast.makeText(this,"Please enter your name", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(nickname)) {
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         }
-        // TODO: Check người dùng có chọn option nào không, kiểm tra lại so sánh với "Gender" đúng hay sai
         else if(gender.equals("Gender")){
             Toast.makeText(this,"Please choose your gender", Toast.LENGTH_SHORT).show();
         }
@@ -118,6 +117,7 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("nickname",nickname);
             userMap.put("gender",gender);
             userMap.put("dob",dob);
+            userMap.put("tea",5);
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
