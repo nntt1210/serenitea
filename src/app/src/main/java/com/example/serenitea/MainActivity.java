@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
 
-        LogoutButton = (Button) findViewById(R.id.btn_logout);
+//        LogoutButton = (Button) findViewById(R.id.btn_logout);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,13 +66,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         closeBtn.setOnClickListener(v -> drawer.closeDrawer(GravityCompat.START));
 
         //event click Logout Button
-        LogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                SendUserToLogoutActivity();
-            }
-        });
+//        LogoutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAuth.signOut();
+//                SendUserToLogoutActivity();
+//            }
+//        });
     }
 
     @Override
@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FriendsActivity()).commit();
                 break;
-            case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileActivity()).commit();
+            case R.id.nav_logout:
+                mAuth.signOut();
+                SendUserToLogoutActivity();
                 break;
 //            case R.id.nav_favorites:
 //                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();

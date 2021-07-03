@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="35dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="#F68182">
 
 
     <ImageButton
@@ -11,9 +11,65 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="30dp"
-        android:src="@drawable/ic_close"
         android:background="@android:color/transparent"
-        />
+        android:src="@drawable/ic_close" />
+
+    <ImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/avatar12"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="76dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp">
+
+        <TextView
+            android:id="@+id/txt_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_women"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Seonna"
+            android:textColor="@color/white"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/txt_dob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:drawableLeft="@drawable/ic_dob"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="15/08/2000"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/txt_cup_of_tea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="80dp"
+            android:drawableLeft="@drawable/ic_cup_of_tea"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="15"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+
 
 </RelativeLayout>
