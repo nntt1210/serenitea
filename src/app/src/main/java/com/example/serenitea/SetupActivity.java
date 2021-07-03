@@ -20,12 +20,6 @@ public class SetupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
-
-        //event click Back
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

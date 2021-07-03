@@ -16,7 +16,7 @@
                     android:top="10dp" />
                 <stroke
                     android:width="2dp"
-                    android:color="#666666"/>
+                    android:color="@color/text_input_box_stroke"/>
             </shape>
         </item>
         <item >
