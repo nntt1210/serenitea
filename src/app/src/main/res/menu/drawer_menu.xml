@@ -11,11 +11,11 @@
             android:title="Home" />
     </group>
     <group
-        android:id="@+id/group_item_2"
+        android:id="@+id/group_item_5"
         android:checkableBehavior="single">
-        <item android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_profile"
-            android:title="Profile"/>
+        <item android:id="@+id/nav_statistics"
+            android:icon="@drawable/ic_statistics"
+            android:title="Statistics"/>
     </group>
     <group
         android:id="@+id/group_item_3"
@@ -33,11 +33,19 @@
             android:title="Friends"/>
     </group>
     <group
-        android:id="@+id/group_item_5"
+        android:id="@+id/group_item_6"
         android:checkableBehavior="single">
-        <item android:id="@+id/nav_statistics"
-            android:icon="@drawable/ic_statistics"
-            android:title="Statistics"/>
+        <item android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_outline_settings_24"
+            android:title="Settings"/>
     </group>
+    <group
+        android:id="@+id/group_item_7"
+        android:checkableBehavior="single">
+        <item android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_log_out"
+            android:title="Log out"/>
+    </group>
+
 
 </menu>
