@@ -131,9 +131,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void SendUserToForgotPasswordActivity(){
         Intent emotionIntent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
-        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
-        finish();
+//        finish();
     }
 
 }
