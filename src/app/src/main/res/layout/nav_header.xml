@@ -2,8 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:background="#F68182">
+    android:background="#F68182"
+    tools:context=".ProfileActivity">
 
 
     <ImageButton
