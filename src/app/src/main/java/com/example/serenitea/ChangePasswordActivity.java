@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class ChangePasswordActivity extends Fragment {
 
         //get input field
         //TODO: Bên giao diện, với mỗi field để kiểu Text để khi enter nó qua field khác
+        //TODO: Khi chọn 1 field thì có giao diện field màu tím, có giao diện field màu hồng
         UpdatePasswordButton = (Button) getView().findViewById(R.id.btn_change_pwd);
         NewPassword = (EditText) getView().findViewById(R.id.reset_password);
         ConfirmNewPassword = (EditText) getView().findViewById(R.id.reset_confirm_password);
@@ -88,6 +90,7 @@ public class ChangePasswordActivity extends Fragment {
             currentUser.updatePassword(pwd).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
+                    SendUserToEmotionActivity();
                     Toast.makeText(getActivity(), "Change password successfully", Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -100,6 +103,12 @@ public class ChangePasswordActivity extends Fragment {
             loadingBar.dismiss();
         }
 
+    }
+
+    private void SendUserToEmotionActivity() {
+        Intent intent = new Intent(ChangePasswordActivity.this.getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity (intent);
     }
 
     private boolean isValidPassword(final String password) {
