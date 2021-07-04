@@ -57,7 +57,7 @@ public class LogoutActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnLogin = findViewById(R.id.btn_login);
+        btnLogin = findViewById(R.id.btn_change_pwd);
         btnSignup = findViewById(R.id.btn_signup);
     }
 

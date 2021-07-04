@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         Username = (EditText) findViewById(R.id.login_username);
         Password = (EditText) findViewById(R.id.login_password);
         ForgotPwd = (TextView) findViewById(R.id.txt_forgotPass);
-        LoginButton = (Button) findViewById(R.id.btn_login);
+        LoginButton = (Button) findViewById(R.id.btn_change_pwd);
         loadingBar = new ProgressDialog(this);
 
         //event click LoginButton
