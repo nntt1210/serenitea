@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
-        <activity android:name=".AvatarActivity"></activity>
+        <activity android:name=".EditProfileActivity">
+        </activity>
+        <activity android:name=".AvatarActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".FindFriendActivity" />
         <activity android:name=".PersonProfileActivity" />
@@ -24,14 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetupActivity">
-
-        </activity>
+        <activity android:name=".SetupActivity"></activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" android:name=".MainActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
-        
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
