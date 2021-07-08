@@ -148,7 +148,7 @@ public class EmotionActivity extends Fragment {
 //    }
     private void SendUserToQuoteActivity (){
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
-        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         quoteIntent.putExtra("emotion", emotion);
         startActivity(quoteIntent);
  //       finish();
