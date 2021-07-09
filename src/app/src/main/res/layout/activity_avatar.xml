@@ -6,208 +6,238 @@
     android:layout_height="match_parent"
     tools:context=".AvatarActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraint_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/avatar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Select your avatar"
+        android:textAllCaps="true"
+        android:textColor="@color/textColor"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/avatar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_semibold"
-                android:text="Select your avatar"
-                android:textAllCaps="true"
-                android:textColor="@color/textColor"
-                android:textSize="32sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <GridView
+        android:id="@+id/simpleGridView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:columnWidth="100dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avatar_title" />
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/constraint_avatar"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHorizontal_bias="0.5"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <ImageButton
-                android:id="@+id/btn_avatar_1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/avatar_title" />
+    <!--            <TextView-->
+    <!--                android:id="@+id/avatar_title"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:fontFamily="@font/open_sans_semibold"-->
+    <!--                android:text="Select your avatar"-->
+    <!--                android:textAllCaps="true"-->
+    <!--                android:textColor="@color/textColor"-->
+    <!--                android:textSize="32sp"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintHorizontal_bias="0.5"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-            <ImageButton
-                android:id="@+id/btn_avatar_2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_2"
-                app:layout_constraintStart_toEndOf="@+id/btn_avatar_1"
-                app:layout_constraintTop_toBottomOf="@+id/avatar_title" />
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_1"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_1"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/avatar_title" />-->
 
-            <ImageButton
-                android:id="@+id/btn_avatar_3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_3"
-                app:layout_constraintStart_toEndOf="@+id/btn_avatar_2"
-                app:layout_constraintTop_toBottomOf="@+id/avatar_title" />
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_2"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_2"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/btn_avatar_1"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/avatar_title" />-->
+
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_3"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_3"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/btn_avatar_2"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/avatar_title" />-->
 
 
-            <ImageButton
-                android:id="@+id/btn_avatar_4"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_1" />
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_4"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_4"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_1" />-->
 
-            <ImageButton
-                android:id="@+id/btn_avatar_5"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_5"
-                app:layout_constraintStart_toEndOf="@+id/btn_avatar_4"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_2" />
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_5"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_5"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/btn_avatar_4"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_2" />-->
 
-            <ImageButton
-                android:id="@+id/btn_avatar_6"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_6"
-                app:layout_constraintStart_toEndOf="@+id/btn_avatar_5"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_3" />
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_6"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_6"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/btn_avatar_5"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_3" />-->
 
-            <ImageButton
-                android:id="@+id/btn_avatar_7"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_7"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_4" />
-            <ImageButton
-                android:id="@+id/btn_avatar_8"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_8"
-                app:layout_constraintStart_toEndOf="@id/btn_avatar_7"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_5" />
-            <ImageButton
-                android:id="@+id/btn_avatar_9"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_9"
-                app:layout_constraintStart_toEndOf="@id/btn_avatar_8"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_6" />
-            <ImageButton
-                android:id="@+id/btn_avatar_10"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_10"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_7" />
-            <ImageButton
-                android:id="@+id/btn_avatar_11"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_11"
-                app:layout_constraintStart_toEndOf="@id/btn_avatar_10"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_8" />
-            <ImageButton
-                android:id="@+id/btn_avatar_12"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_12"
-                app:layout_constraintStart_toEndOf="@id/btn_avatar_11"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_9" />
-            <ImageButton
-                android:id="@+id/btn_avatar_13"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_13"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_10" />
-            <ImageButton
-                android:id="@+id/btn_avatar_14"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_14"
-                app:layout_constraintStart_toEndOf="@id/btn_avatar_13"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_11" />
-            <ImageButton
-                android:id="@+id/btn_avatar_15"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/avatar_15"
-                app:layout_constraintStart_toEndOf="@id/btn_avatar_14"
-                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_12" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_7"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_7"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_4" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_8"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_8"-->
+    <!--                app:layout_constraintStart_toEndOf="@id/btn_avatar_7"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_5" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_9"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_9"-->
+    <!--                app:layout_constraintStart_toEndOf="@id/btn_avatar_8"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_6" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_10"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_10"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_7" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_11"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_11"-->
+    <!--                app:layout_constraintStart_toEndOf="@id/btn_avatar_10"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_8" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_12"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_12"-->
+    <!--                app:layout_constraintStart_toEndOf="@id/btn_avatar_11"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_9" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_13"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_13"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_10" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_14"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_14"-->
+    <!--                app:layout_constraintStart_toEndOf="@id/btn_avatar_13"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_11" />-->
+    <!--            <ImageButton-->
+    <!--                android:id="@+id/btn_avatar_15"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="100dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:layout_marginStart="20dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:background="@android:color/transparent"-->
+    <!--                android:scaleType="fitXY"-->
+    <!--                android:src="@drawable/avatar_15"-->
+    <!--                app:layout_constraintStart_toEndOf="@id/btn_avatar_14"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/btn_avatar_12" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
