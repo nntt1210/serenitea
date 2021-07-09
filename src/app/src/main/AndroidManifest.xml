@@ -11,14 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
-        <activity android:name=".FavoriteActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".AvatarActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
@@ -28,7 +20,11 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".QuoteActivity" />
         <activity android:name=".LogoutActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".SetupActivity" />
         <activity android:name=".RegisterActivity" />
