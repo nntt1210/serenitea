@@ -19,11 +19,11 @@ public class EmotionActivity extends Fragment {
 * */
 
     private int emotion = 0;
-    private ImageButton btnDissatisfied;
+    private ImageButton btnSad;
+    private ImageButton btnWorried;
+    private ImageButton btnAngry;
     private ImageButton btnNeutral;
-    private ImageButton btnSatisfied;
     private ImageButton btnHappy;
-    private ImageButton btnVerysatisfied;
 
     @Nullable
     @Override
@@ -34,19 +34,19 @@ public class EmotionActivity extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        btnDissatisfied = (ImageButton) getView().findViewById(R.id.emotion_dissatisfied);
-        btnHappy = (ImageButton) getView().findViewById(R.id.emotion_happy);
+        btnSad = (ImageButton) getView().findViewById(R.id.emotion_sad);
+        btnWorried = (ImageButton) getView().findViewById(R.id.emotion_worried);
+        btnAngry = (ImageButton) getView().findViewById(R.id.emotion_angry);
         btnNeutral = (ImageButton) getView().findViewById(R.id.emotion_neutral);
-        btnSatisfied = (ImageButton) getView().findViewById(R.id.emotion_satisfied);
-        btnVerysatisfied = (ImageButton) getView().findViewById(R.id.emotion_very_satisfied);
+        btnHappy = (ImageButton) getView().findViewById(R.id.emotion_happy);
 
-        btnDissatisfied.setOnClickListener(new View.OnClickListener() {
+        btnSad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changebtnDissatisfied();
             }
         });
-        btnHappy.setOnClickListener(new View.OnClickListener() {
+        btnWorried.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changebtnHappy();
@@ -58,13 +58,13 @@ public class EmotionActivity extends Fragment {
                 changebtnNeutral();
             }
         });
-        btnSatisfied.setOnClickListener(new View.OnClickListener() {
+        btnAngry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changebtnSatisfied();
             }
         });
-        btnVerysatisfied.setOnClickListener(new View.OnClickListener() {
+        btnHappy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changebtnVerysatisfied();
@@ -72,48 +72,6 @@ public class EmotionActivity extends Fragment {
         });
 
     }
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_emotion);
-//
-//        btnDissatisfied = (ImageButton)findViewById(R.id.emotion_dissatisfied);
-//        btnHappy = (ImageButton)findViewById(R.id.emotion_happy);
-//        btnNeutral = (ImageButton)findViewById(R.id.emotion_neutral);
-//        btnSatisfied = (ImageButton)findViewById(R.id.emotion_satisfied);
-//        btnVerysatisfied = (ImageButton)findViewById(R.id.emotion_very_satisfied);
-//
-//        btnDissatisfied.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changebtnDissatisfied();
-//            }
-//        });
-//        btnHappy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changebtnHappy();
-//            }
-//        });
-//        btnNeutral.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changebtnNeutral();
-//            }
-//        });
-//        btnSatisfied.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changebtnSatisfied();
-//            }
-//        });
-//        btnVerysatisfied.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changebtnVerysatisfied();
-//            }
-//        });
-//    }
 
     private void changebtnDissatisfied ()
     {
