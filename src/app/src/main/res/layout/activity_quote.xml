@@ -16,9 +16,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/text_quote"
             android:layout_width="336dp"
-            android:layout_height="486dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center"
             android:text=" "
@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/text_quote">
 
             <ImageButton
                 android:id="@+id/btn_favorite"
