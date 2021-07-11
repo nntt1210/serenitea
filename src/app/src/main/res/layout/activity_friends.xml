@@ -6,53 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".FriendsActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/friend_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
+    <EditText
+        android:id="@+id/search_friend_bar"
+        android:layout_width="280dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/search_friend_bar"
+        android:drawableRight="@drawable/ic_search"
+        android:hint="Search for a friend"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/black"
-            android:gravity="center|right"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:gravity="center">
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginRight="50dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_arrow_left" />
-
-                <EditText
-                    android:id="@+id/search_friend_bar"
-                    android:layout_width="280dp"
-                    android:layout_height="31dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/search_friend_bar"
-                    android:drawableRight="@drawable/ic_search"
-                    android:hint="Search for a friend"></EditText>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
         android:id="@+id/grid_view_friend"
@@ -60,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:columnWidth="100dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
@@ -68,6 +33,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/search_friend_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

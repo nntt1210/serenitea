@@ -24,8 +24,8 @@ public class FriendsActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_friends, container, false);
 
-        Toolbar toolbar = view.findViewById(R.id.friend_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+//        Toolbar toolbar = view.findViewById(R.id.friend_toolbar);
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         listFriend = new ArrayList<>();
         listFriend.add(new Friend("Mint", "avatar_11"));
@@ -33,7 +33,7 @@ public class FriendsActivity extends Fragment {
         listFriend.add(new Friend("Dic", "avatar_10"));
 
         friendGrid = (GridView)view.findViewById(R.id.grid_view_friend); // init GridView
-        // Create an object of CustomAdapter and set Adapter to GirdView
+        // Create an object FriendAdapter and set Adapter to GirdView
         FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
         friendGrid.setAdapter(friendAdapter);
         return view;
