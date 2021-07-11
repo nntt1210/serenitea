@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FavoriteActivity()).commit();
                 break;
+            case R.id.nav_settings:
+                SendUserToSettingsActivity();
+                break;
             case R.id.nav_logout:
                 mAuth.signOut();
                 SendUserToLogoutActivity();
@@ -159,22 +162,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //chuyển hướng trang khi chọn trên menu (vd: Đăng kí, đăng nhập, profile...)
     }
 
-    private void SendUserToEmotionActivity (){
+    private void SendUserToEmotionActivity(){
         Intent emotionIntent = new Intent(MainActivity.this, EmotionActivity.class);
         emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity (emotionIntent);
+        startActivity(emotionIntent);
         finish();
     }
-    private void SendUserToLogoutActivity (){
+    private void SendUserToSettingsActivity() {
+        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+    private void SendUserToLogoutActivity(){
         //chuyển sang trang Logout (trang ban đầu khi vô app)
         Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
-        logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(logoutIntent);
-        finish();
     }
 
 
-    private void SendUserToSetupActivity (){
+    private void SendUserToSetupActivity(){
         //chuyển sang trang Logout (trang ban đầu khi vô app)
         Intent intent =  new Intent(MainActivity.this, SetupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

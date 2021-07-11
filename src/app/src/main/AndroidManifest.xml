@@ -14,6 +14,9 @@
         <activity
             android:name=".AvatarActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
+        
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".FindFriendActivity" />
         <activity android:name=".PersonProfileActivity" />
