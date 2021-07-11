@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class FavoriteListViewAdapter extends BaseAdapter {
 
-    //Dữ liệu liên kết bởi Adapter là một mảng các sản phẩm
     final ArrayList<Quote> listFavorite;
 
     FavoriteListViewAdapter(ArrayList<Quote> listFavorite) {
@@ -18,14 +17,11 @@ public class FavoriteListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        //Trả về tổng số phần tử, nó được gọi bởi ListView
         return listFavorite.size();
     }
 
     @Override
     public Object getItem(int position) {
-        //Trả về dữ liệu ở vị trí position của Adapter, tương ứng là phần tử
-        //có chỉ số position trong listProduct
         return listFavorite.get(position);
     }
 
