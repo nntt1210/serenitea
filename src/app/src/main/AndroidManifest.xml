@@ -11,13 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
+        <activity android:name=".FriendRequestActivity"></activity>
         <activity
             android:name=".AvatarActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
-        <activity android:name=".SettingsActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
-        <activity android:name=".EditProfileActivity"/>
-        <activity android:name=".ChangePasswordActivity"/>
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".FindFriendActivity" />
         <activity android:name=".PersonProfileActivity" />
