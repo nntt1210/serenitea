@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ public class SetupActivity extends AppCompatActivity {
 - Hàm update (có thể viết riêng, hoặc viết chung với hàm SaveAccountInformation() phía trên)
 - Một số hàm SendUserTo...Activity()
 * */
+    private ImageButton btnChooseAvatar;
+    private Integer avatar;
     private EditText NickName, DoB;
     private Spinner Gender;
     private String gender_value;
@@ -55,18 +58,26 @@ public class SetupActivity extends AppCompatActivity {
 
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
 
-        //event click Back
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //get text from input
+        btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
+        avatar = (Integer)getIntent().getIntExtra("AVATAR", R.drawable.avatar_2);
+        btnChooseAvatar.setImageResource(avatar);
+
         NickName = (EditText) findViewById(R.id.setup_nickname);
         Gender = (Spinner) findViewById(R.id.setup_gender);
         DoB = (EditText) findViewById(R.id.setup_dob);
         SaveInfoSetupButton = (Button) findViewById(R.id.btn_save);
         loadingBar = new ProgressDialog(this);
+
+        //select avatar
+//        btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent avatarIntent = new Intent(SetupActivity.this, AvatarActivity.class);
+//                startActivity(avatarIntent);
+//            }
+//        });
 
         //select gender
         Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

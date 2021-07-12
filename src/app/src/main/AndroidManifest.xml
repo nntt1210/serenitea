@@ -30,7 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetupActivity" />
+        <activity android:name=".SetupActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+
+        </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity

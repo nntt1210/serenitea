@@ -116,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        SendUserToSetupActivity();
+                        SendUserToAvatarActivity();
 
                         Toast.makeText(RegisterActivity.this, "Create account successfully", Toast.LENGTH_SHORT).show();
                     }
@@ -132,11 +132,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void SendUserToSetupActivity(){
-        //chuyển sang trang Profile
-        Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
-        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(setupIntent);
+    private void SendUserToAvatarActivity(){
+        //chuyển sang chọn avatar
+        Intent avatarIntent = new Intent(RegisterActivity.this, AvatarActivity.class);
+        avatarIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(avatarIntent);
         finish();
     }
 
