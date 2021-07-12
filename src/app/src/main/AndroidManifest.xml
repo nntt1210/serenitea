@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
         <activity
-            android:name=".AvatarActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
+            android:name=".AvatarActivity"></activity>
         <activity android:name=".SettingsActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
         <activity android:name=".EditProfileActivity"/>

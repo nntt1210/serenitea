@@ -9,8 +9,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class EditProfileActivity extends AppCompatActivity {
+
+    private ImageButton btnChooseAvatar;
+    private Integer avatar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +27,20 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setTitle("");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        avatar = (Integer)getIntent().getIntExtra("EDIT_AVATAR", R.drawable.avatar_2);
+        btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
+        if (avatar != null) {
+            btnChooseAvatar.setImageResource(avatar);
+        }
+        btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EditProfileActivity.this, AvatarActivity.class);
+                intent.putExtra("EDIT_AVATAR", 0);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

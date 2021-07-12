@@ -59,11 +59,12 @@ public class SetupActivity extends AppCompatActivity {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
 
 
-        //get text from input
+
         btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
         avatar = (Integer)getIntent().getIntExtra("AVATAR", R.drawable.avatar_2);
         btnChooseAvatar.setImageResource(avatar);
 
+        //get text from input
         NickName = (EditText) findViewById(R.id.setup_nickname);
         Gender = (Spinner) findViewById(R.id.setup_gender);
         DoB = (EditText) findViewById(R.id.setup_dob);
