@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public DrawerLayout drawer;
-    private ImageButton closeBtn;
+    private ImageButton closeBtn, friendRequestBtn;
     private Button LogoutButton;
 
     private FirebaseAuth mAuth;
@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         closeBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.btn_close);
         closeBtn.setOnClickListener(v -> drawer.closeDrawer(GravityCompat.START));
+
+        friendRequestBtn = (ImageButton)findViewById(R.id.btn_group_add);
+        friendRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent friendRequestIntent = new Intent(MainActivity.this, FriendRequestActivity.class);
+                startActivity(friendRequestIntent);
+            }
+        });
 
         //event click Logout Button
 //        LogoutButton.setOnClickListener(new View.OnClickListener() {
