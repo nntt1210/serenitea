@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +41,12 @@ public class FriendAdapter extends BaseAdapter {
         final int resourceId = resources.getIdentifier(listFriend.get(i).avatar_id, "drawable", context.getPackageName());
         ImageButton btn = (ImageButton)view.findViewById(R.id.friend_avatar); // get the reference of ImageView
         btn.setImageResource(resourceId);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((GridView)viewGroup).performItemClick(v,i,0);
+            }
+        });
         TextView nickname = (TextView)view.findViewById(R.id.friend_nickname);
         nickname.setText(listFriend.get(i).nickname);
         return view;
