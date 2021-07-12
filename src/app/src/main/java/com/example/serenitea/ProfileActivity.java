@@ -51,15 +51,15 @@ public class ProfileActivity extends Fragment {
            public void onDataChange(DataSnapshot snapshot) {
                if (snapshot.exists())
                {
-                   String name = snapshot.child("name").getValue().toString();
+                   String name = snapshot.child("nickname").getValue().toString();
                    String gender=snapshot.child("gender").getValue().toString();
                    String dob=snapshot.child("dob").getValue().toString();
-                   //String cot=snapshot.child("cupoftea").getValue().toString();  CUPS OF TEA
+                   String cot=snapshot.child("tea").getValue().toString();
 
 
                    txtInfo.setText(name);
                    txtDob.setText(dob);
-                   txtCot.setText("1");// cups of tea
+                   txtCot.setText(cot);// cups of tea
                }
            }
 
