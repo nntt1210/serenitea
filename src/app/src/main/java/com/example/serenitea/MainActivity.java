@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawer;
+    public DrawerLayout drawer;
     private ImageButton closeBtn;
     private Button LogoutButton;
 
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
         toggle.syncState();
 
         if (savedInstanceState == null) {
@@ -113,14 +114,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new EmotionActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_friends:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FriendsActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_favorites:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FavoriteActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_settings:
                 SendUserToSettingsActivity();
@@ -136,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
 //                break;
         }
-        drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

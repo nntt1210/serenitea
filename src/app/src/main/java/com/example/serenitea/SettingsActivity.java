@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    private DrawerLayout drawer;
+//    private DrawerLayout drawer;
     private ImageButton closeBtn, backBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +33,25 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 //        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
 //        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
-        getSupportActionBar().setTitle("");
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+//        getSupportActionBar().setTitle("");
 
-        drawer = findViewById(R.id.settings_layout);
+//        drawer = findViewById(R.id.settings_layout);
+
         NavigationView navigationView = findViewById(R.id.settings_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+//                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_settings_container,
-                    new EditProfileActivity()).commit();
-            navigationView.setCheckedItem(R.id.nav_edit);
+//            drawer.openDrawer(GravityCompat.START);
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_settings_container,
+//                    new EditProfileActivity()).commit();
+//            navigationView.setCheckedItem(R.id.nav_edit);
         }
 
         backBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.back_button);
@@ -59,7 +62,15 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             }
         });
         closeBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.btn_settings_close);
-        closeBtn.setOnClickListener(v -> drawer.closeDrawer(GravityCompat.START));
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -67,15 +78,14 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_edit:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_settings_container,
-                        new EditProfileActivity()).commit();
+                Intent editProfileIntent = new Intent(SettingsActivity.this, EditProfileActivity.class);
+                startActivity(editProfileIntent);
                 break;
             case R.id.nav_change_password:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_settings_container,
-                        new ChangePasswordActivity()).commit();
+                Intent changePasswordIntent = new Intent(SettingsActivity.this, ChangePasswordActivity.class);
+                startActivity(changePasswordIntent);
                 break;
         }
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
