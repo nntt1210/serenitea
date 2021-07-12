@@ -41,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_women"
+            android:drawableTint="@color/theme"
             android:fontFamily="@font/open_sans_bold"
             android:text="Khuyen"
             android:textColor="@color/textColor"
@@ -56,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_dob"
+            android:drawableTint="@color/theme"
             android:drawablePadding="5dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="24/01/2001"
@@ -72,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_cup_of_tea"
+            android:drawableTint="@color/theme"
             android:drawablePadding="5dp"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/open_sans_bold"
@@ -85,12 +88,12 @@
 
 
         <Button
-            android:id="@+id/btn_edit"
+            android:id="@+id/btn_send_quote"
             android:layout_width="167dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/open_sans_extrabold"
-            android:text="Add friend"
+            android:text="Send a quote"
             android:textSize="14sp"
             app:backgroundTint="#FF5C5F"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -28,14 +30,27 @@ public class FriendsActivity extends Fragment {
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         listFriend = new ArrayList<>();
-        listFriend.add(new Friend("Mint", "avatar_11"));
-        listFriend.add(new Friend("Ziem", "avatar_3"));
-        listFriend.add(new Friend("Dic", "avatar_10"));
+        listFriend.add(new Friend("Mint", "avatar_11", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Ziem", "avatar_3", "24/01/2001", 23, "Female"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
 
         friendGrid = (GridView)view.findViewById(R.id.grid_view_friend); // init GridView
         // Create an object FriendAdapter and set Adapter to GirdView
         FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
         friendGrid.setAdapter(friendAdapter);
+        friendGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), PersonProfileActivity.class);
+                intent.putExtra("VIEW_FRIEND", 0);
+                intent.putExtra("FRIEND_AVATAR", listFriend.get(position).avatar_id);
+                intent.putExtra("FRIEND_NICKNAME", listFriend.get(position).nickname);
+                intent.putExtra("FRIEND_DOB", listFriend.get(position).dob);
+                intent.putExtra("FRIEND_CUP_OF_TEA", listFriend.get(position).cup_of_tea);
+                intent.putExtra("FRIEND_GENDER", listFriend.get(position).gender);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

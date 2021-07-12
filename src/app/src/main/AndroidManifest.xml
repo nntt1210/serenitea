@@ -13,13 +13,11 @@
         android:theme="@style/Theme.Serenitea">
         <activity android:name=".FriendRequestActivity"></activity>
         <activity
-            android:name=".AvatarActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
-        <activity
-            android:name=".SettingsActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".ChangePasswordActivity" />
+            android:name=".AvatarActivity"></activity>
+        <activity android:name=".SettingsActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
+        <activity android:name=".EditProfileActivity"/>
+        <activity android:name=".ChangePasswordActivity"/>
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".FindFriendActivity" />
         <activity android:name=".PersonProfileActivity" />
@@ -32,7 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetupActivity" />
+        <activity android:name=".SetupActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+
+        </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity
