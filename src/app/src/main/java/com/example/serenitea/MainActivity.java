@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageButton closeBtn;
     private Button LogoutButton;
     private TextView txtInfo, txtDob, txtCot;
+    private ArrayList<String> data;
     ProfileActivity profileFragment;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
@@ -48,14 +49,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        profileFragment = new ProfileActivity();
+        data = profileFragment.getData();
+
+
+
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         txtInfo= headerView.findViewById(R.id.nav_txt_info);
         txtDob= headerView.findViewById(R.id.nav_txt_dob);
         txtCot= headerView.findViewById((R.id.nav_txt_cup_of_tea));
 
-        txtInfo.setText("TAM NGUYEN");
-
+        if (data.size() == 3) {
+            txtInfo.setText(data.get(0));
+            txtDob.setText(data.get(1));
+            txtCot.setText(data.get(2));
+        }
 
         mAuth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");

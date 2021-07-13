@@ -35,7 +35,7 @@ public class ProfileActivity extends Fragment {
     private FirebaseAuth mAuth;
     private String curUser;
     private String name,dob,cot;
-    private String data;
+    private ArrayList<String> data;
 
     OnDataPass dataPasser;
 
@@ -58,6 +58,14 @@ public class ProfileActivity extends Fragment {
         return view;
     }
 
+    protected ArrayList<String> getData() {
+        data = new ArrayList<>();
+        data.add("TAM NGUYEN");
+        data.add("12/10/2001");
+        data.add("15");
+//        setProfile();
+        return data;
+    }
 
     protected void setProfile()
     {
@@ -75,6 +83,9 @@ public class ProfileActivity extends Fragment {
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
 
+                    data.add(name);
+                    data.add(dob);
+                    data.add(cot);
                 }
             }
 
