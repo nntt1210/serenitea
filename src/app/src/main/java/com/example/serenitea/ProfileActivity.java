@@ -1,18 +1,13 @@
 package com.example.serenitea;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,8 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Calendar;
 
 public class ProfileActivity extends Fragment {
 /* Trang Profile của user
@@ -33,46 +26,51 @@ public class ProfileActivity extends Fragment {
 * */
     private TextView txtInfo, txtDob, txtCot;
     //private ImageView imgAva;
-    private DatabaseReference mDatabase;
+    private DatabaseReference userRef;
     private FirebaseAuth mAuth;
     private String curUser;
-
+    private String name,dob,cot;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.nav_header, container, false);   cái này của Tam này
-       View view=inflater.inflate(R.layout.activity_profile, container, false);
-       txtInfo= view.findViewById(R.id.txt_info);
-       txtDob= view.findViewById(R.id.txt_dob);
-       txtCot= view.findViewById((R.id.txt_cup_of_tea));
+
+       View view=inflater.inflate(R.layout.nav_header, container, false);
+       txtInfo= (TextView) view.findViewById(R.id.nav_txt_info);
+       txtDob=(TextView) view.findViewById(R.id.nav_txt_dob);
+       txtCot= (TextView) view.findViewById((R.id.nav_txt_cup_of_tea));
        //imgAva=view.findViewById(R.id.image_avatar);
+        setProfile();
 
-       mDatabase.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot snapshot) {
-               if (snapshot.exists())
-               {
-                   String name = snapshot.child("nickname").getValue().toString();
-                   String gender=snapshot.child("gender").getValue().toString();
-                   String dob=snapshot.child("dob").getValue().toString();
-                   String cot=snapshot.child("tea").getValue().toString();
-
-
-                   txtInfo.setText(name);
-                   txtDob.setText(dob);
-                   txtCot.setText(cot);// cups of tea
-               }
-           }
-
-           @Override
-           public void onCancelled(DatabaseError error) {
-
-           }
-       });
         return view;
     }
+    protected void setProfile()
+    {
+        mAuth=FirebaseAuth.getInstance();
+        curUser=mAuth.getCurrentUser().getUid();
+        userRef= FirebaseDatabase.getInstance().getReference().child("users").child(curUser);
 
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                    name = snapshot.child("nickname").getValue().toString();
+                    //String gender=snapshot.child("gender").getValue().toString();
+                    dob=snapshot.child("dob").getValue().toString();
+                    cot=snapshot.child("tea").getValue().toString();
 
+                    txtInfo.setText(name);
+                    txtDob.setText(dob);
+                    txtCot.setText(cot);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull  DatabaseError error) {
+
+            }
+        });
+    }
 
 
 

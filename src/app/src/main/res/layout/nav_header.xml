@@ -33,7 +33,7 @@
         android:layout_marginTop="170dp">
 
         <TextView
-            android:id="@+id/txt_info"
+            android:id="@+id/nav_txt_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -45,7 +45,7 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/txt_dob"
+            android:id="@+id/nav_txt_dob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -58,7 +58,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/txt_cup_of_tea"
+            android:id="@+id/nav_txt_cup_of_tea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
