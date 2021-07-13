@@ -35,6 +35,7 @@ public class SetupActivity extends AppCompatActivity {
 - Hàm update (có thể viết riêng, hoặc viết chung với hàm SaveAccountInformation() phía trên)
 - Một số hàm SendUserTo...Activity()
 * */
+    //TODO: Sau khi sign up, không thể lưu information, cần check lại phần chọn avatar và setup
     private ImageButton btnChooseAvatar;
     private Integer avatar;
     private EditText NickName, DoB;
