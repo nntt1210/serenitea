@@ -31,7 +31,7 @@ public class AvatarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_avatar);
 
         avatar = (Integer)getIntent().getIntExtra("EDIT_AVATAR", 0);
-        if (avatar == 0) {
+        if (avatar == 1) {
             //event click Back
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("");
@@ -49,7 +49,7 @@ public class AvatarActivity extends AppCompatActivity {
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(avatar == 0) {
+                if(avatar == 1) {
                     Intent intent = new Intent(AvatarActivity.this, EditProfileActivity.class);
                     intent.putExtra("EDIT_AVATAR", logos[position]);
                     startActivity(intent);

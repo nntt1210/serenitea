@@ -37,7 +37,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EditProfileActivity.this, AvatarActivity.class);
-                intent.putExtra("EDIT_AVATAR", 0);
+                intent.putExtra("EDIT_AVATAR", 1);
                 startActivity(intent);
             }
         });
