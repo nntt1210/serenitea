@@ -10,10 +10,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,18 +27,35 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProfileActivity.OnDataPass {
     public DrawerLayout drawer;
     private ImageButton closeBtn;
     private Button LogoutButton;
-
+    private TextView txtInfo, txtDob, txtCot;
+    ProfileActivity profileFragment;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
+
+    @Override
+    public void onDataPass(String data) {
+        Log.d("DATA", data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        txtInfo= headerView.findViewById(R.id.nav_txt_info);
+        txtDob= headerView.findViewById(R.id.nav_txt_dob);
+        txtCot= headerView.findViewById((R.id.nav_txt_cup_of_tea));
+
+        txtInfo.setText("TAM NGUYEN");
+
 
         mAuth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -49,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setTitle("");
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);

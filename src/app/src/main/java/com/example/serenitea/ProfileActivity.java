@@ -4,18 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class ProfileActivity extends Fragment {
 /* Trang Profile của user
@@ -30,19 +35,30 @@ public class ProfileActivity extends Fragment {
     private FirebaseAuth mAuth;
     private String curUser;
     private String name,dob,cot;
+    private String data;
+
+    OnDataPass dataPasser;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPasser = (OnDataPass) context;
+    }
+
+    public void passData(String data) {
+        dataPasser.onDataPass(data);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-       View view=inflater.inflate(R.layout.nav_header, container, false);
-       txtInfo= (TextView) view.findViewById(R.id.nav_txt_info);
-       txtDob=(TextView) view.findViewById(R.id.nav_txt_dob);
-       txtCot= (TextView) view.findViewById((R.id.nav_txt_cup_of_tea));
-       //imgAva=view.findViewById(R.id.image_avatar);
-        setProfile();
-
+        View view=inflater.inflate(R.layout.nav_header, container, false);
+        passData("TAM NGUYEN");
+//        setProfile();
         return view;
     }
+
+
     protected void setProfile()
     {
         mAuth=FirebaseAuth.getInstance();
@@ -59,9 +75,6 @@ public class ProfileActivity extends Fragment {
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
 
-                    txtInfo.setText(name);
-                    txtDob.setText(dob);
-                    txtCot.setText(cot);
                 }
             }
 
@@ -72,6 +85,7 @@ public class ProfileActivity extends Fragment {
         });
     }
 
-
-
+    public interface OnDataPass {
+        public void onDataPass(String data);
+    }
 }
