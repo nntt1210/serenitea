@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:523903788506:android:971e4b4d3eebbb9b1a4ce3",
+        "mobilesdk_app_id": "1:523903788506:android:bbc5a63f55b9ca861a4ce3",
         "android_client_info": {
           "package_name": "com.example.serenitea"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "523903788506-stg3l205iltp35968ms2n37iosdnvv0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.serenitea",
+            "certificate_hash": "ce79c63599a0b0a0a8df37881aae63cbe6dedbcc"
+          }
+        },
         {
           "client_id": "523903788506-eau08f846hkkadqdnt8n1lcql2bfqh4i.apps.googleusercontent.com",
           "client_type": 3
