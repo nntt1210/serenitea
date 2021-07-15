@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(LoginActivity.this);
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
-        FacebookLoginButton = (ImageButton) findViewById(R.id.custom_fb_btn);
+        FacebookLoginButton = (ImageButton) findViewById(R.id.btn_facebook);
         FacebookLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
