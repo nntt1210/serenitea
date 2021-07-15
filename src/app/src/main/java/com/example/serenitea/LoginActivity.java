@@ -19,6 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,12 +34,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import com.facebook.FacebookSdk;
+
 public class LoginActivity extends AppCompatActivity {
-//màn hình login
+    //màn hình login
 /* Một số hàm chính:
 - check user có login thành công --> AllowingUserToLogin()
 - chuyển sang giao diện chính (EmotionActivity) --> SendUserToEmotionActivity()
@@ -41,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 */
     private Button LoginButton;
     private ImageButton GoogleLoginButton;
+    private LoginButton FacebookLoginButton;
     private TextView ForgotPwd;
     private EditText Username, Password;
     private FirebaseAuth mAuth;
@@ -48,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
     private final static int RC_SIGN_IN = 123;
+
+    CallbackManager mCallbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +112,29 @@ public class LoginActivity extends AppCompatActivity {
                 signInUsingGoogle();
             }
         });
+
+        //Facebook button
+        //Initialize for Facebook SDK
+        FacebookSdk.sdkInitialize(LoginActivity.this);
+        // Initialize Facebook Login button
+        mCallbackManager = CallbackManager.Factory.create();
+        FacebookLoginButton = (LoginButton) findViewById(R.id.btn_facebook);
+        FacebookLoginButton.setReadPermissions("email", "public_profile");
+        FacebookLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+                //Toast.makeText(LoginActivity.this,"success",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
     }
 
     @Override
@@ -113,22 +148,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
 
     }
 
-    private void AllowingUserToLogin(){//nếu Login thành công -> gọi SendUserToMainActivity()
+    private void AllowingUserToLogin() {//nếu Login thành công -> gọi SendUserToMainActivity()
         String username = Username.getText().toString();
         String pwd = Password.getText().toString();
 
-        if (TextUtils.isEmpty(username)){
+        if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Please input your Email", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(pwd)){
+        } else if (TextUtils.isEmpty(pwd)) {
             Toast.makeText(this, "Please input your Password", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        } else {
             loadingBar.setTitle("Login");
             loadingBar.setMessage("Please wait a moment...");
             loadingBar.show();
@@ -137,11 +170,10 @@ public class LoginActivity extends AppCompatActivity {
             mAuth.signInWithEmailAndPassword(username, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         SendUserToEmotionActivity();
                         Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
+                    } else {
                         String message = task.getException().getMessage();
                         Toast.makeText(LoginActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                     }
@@ -151,21 +183,21 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void SendUserToEmotionActivity(){
+    private void SendUserToEmotionActivity() {
         Intent emotionIntent = new Intent(LoginActivity.this, MainActivity.class);
         emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
         finish();
     }
 
-    private void SendUserToForgotPasswordActivity(){
-        Intent emotionIntent = new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+    private void SendUserToForgotPasswordActivity() {
+        Intent emotionIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
 //        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
 //        finish();
     }
 
-    private void SendUserToSetupActivity(){
+    private void SendUserToSetupActivity() {
         Intent intent = new Intent(LoginActivity.this, SetupActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -176,8 +208,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -188,7 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
-                Toast.makeText(this,"Error:" + e.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -217,4 +251,32 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        loadingBar.setTitle("Login");
+        loadingBar.setMessage("Please wait a moment...");
+        loadingBar.show();
+        loadingBar.setCanceledOnTouchOutside(true);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            SendUserToEmotionActivity();
+                            Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            String message = task.getException().getMessage();
+                            Toast.makeText(LoginActivity.this, "Error: "+message,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        loadingBar.dismiss();
+                    }
+                });
+    }
+
 }
