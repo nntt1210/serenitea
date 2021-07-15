@@ -23,6 +23,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,6 +42,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import com.facebook.FacebookSdk;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
     //màn hình login
 /* Một số hàm chính:
@@ -50,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 */
     private Button LoginButton;
     private ImageButton GoogleLoginButton;
-    private LoginButton FacebookLoginButton;
+    private ImageButton FacebookLoginButton;
     private TextView ForgotPwd;
     private EditText Username, Password;
     private FirebaseAuth mAuth;
@@ -118,21 +121,26 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(LoginActivity.this);
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
-        FacebookLoginButton = (LoginButton) findViewById(R.id.btn_facebook);
-        FacebookLoginButton.setReadPermissions("email", "public_profile");
-        FacebookLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        FacebookLoginButton = (ImageButton) findViewById(R.id.custom_fb_btn);
+        FacebookLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-                //Toast.makeText(LoginActivity.this,"success",Toast.LENGTH_SHORT).show();
-            }
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email", "public_profile"));
+                LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                        //Toast.makeText(LoginActivity.this,"success",Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onCancel() {
-            }
+                    @Override
+                    public void onCancel() {
+                    }
 
-            @Override
-            public void onError(FacebookException error) {
+                    @Override
+                    public void onError(FacebookException error) {
+                    }
+                });
             }
         });
     }
@@ -271,7 +279,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             String message = task.getException().getMessage();
-                            Toast.makeText(LoginActivity.this, "Error: "+message,
+                            Toast.makeText(LoginActivity.this, "Error: " + message,
                                     Toast.LENGTH_SHORT).show();
                         }
                         loadingBar.dismiss();
