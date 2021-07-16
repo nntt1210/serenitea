@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageButton closeBtn;
     private TextView txtInfo, txtDob, txtCot;
     private String curUser;
-    private String name,dob,cot;
+    private String name,dob,cot,gender;
 //    private ArrayList<String> mdata;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef, userRef;
@@ -110,13 +111,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (snapshot.exists())
                 {
                     name = snapshot.child("nickname").getValue().toString();
-                    //String gender=snapshot.child("gender").getValue().toString();
+                    gender=snapshot.child("gender").getValue().toString();
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
 
-                    txtInfo.setText(name);
+                    txtInfo.setText(gender);
                     txtDob.setText(dob);
                     txtCot.setText(cot);
+
+
+                    if  (gender.equals("Female")){
+                     Drawable f = getResources().getDrawable(R.drawable.ic_women);
+                     txtInfo.setCompoundDrawablesWithIntrinsicBounds(f,null,null,null);
+                    }
+                    else if (gender.equals("Male")){
+                    Drawable m=getResources().getDrawable(R.drawable.ic_men);
+                    txtInfo.setCompoundDrawablesWithIntrinsicBounds(m,null,null,null);
+                    }
                 }
             }
 
