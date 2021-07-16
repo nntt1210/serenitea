@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +37,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public DrawerLayout drawer;
     private ImageButton closeBtn, friendRequestBtn;
     private TextView txtInfo, txtDob, txtCot;
+    private ImageView avatar;
     private String curUser;
-    private String name,dob,cot,gender;
+    private String name,dob,cot,gender, avatar_id;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef, userRef;
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
+        avatar = headerView.findViewById(R.id.image_avatar);
         txtInfo= headerView.findViewById(R.id.nav_txt_info);
         txtDob= headerView.findViewById(R.id.nav_txt_dob);
         txtCot= headerView.findViewById((R.id.nav_txt_cup_of_tea));
@@ -110,7 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     gender=snapshot.child("gender").getValue().toString();
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
+                    avatar_id=snapshot.child("avatar").getValue().toString();
 
+                    int resourceId = getResources().getIdentifier(avatar_id, "drawable", getPackageName());
+                    avatar.setImageResource(resourceId);
                     txtInfo.setText(name);
                     txtDob.setText(dob);
                     txtCot.setText(cot);

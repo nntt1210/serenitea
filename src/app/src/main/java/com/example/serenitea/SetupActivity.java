@@ -71,14 +71,6 @@ public class SetupActivity extends AppCompatActivity {
         SaveInfoSetupButton = (Button) findViewById(R.id.btn_save);
         loadingBar = new ProgressDialog(this);
 
-        //select avatar
-//        btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent avatarIntent = new Intent(SetupActivity.this, AvatarActivity.class);
-//                startActivity(avatarIntent);
-//            }
-//        });
 
         //select gender
         Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -105,6 +97,7 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private void SaveAccountSetupInformation() {
+        String avatar_id =  getResources().getResourceEntryName(avatar);
         String nickname = NickName.getText().toString();
         String gender = gender_value;
         String dob = DoB.getText().toString();
@@ -126,7 +119,7 @@ public class SetupActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(true);
 
             HashMap userMap = new HashMap();
-            userMap.put("avatar", "avatar_1");
+            userMap.put("avatar", avatar_id);
             userMap.put("nickname",nickname);
             userMap.put("gender",gender);
             userMap.put("dob",dob);
