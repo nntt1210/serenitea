@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
 
-                    txtInfo.setText(gender);
+                    txtInfo.setText(name);
                     txtDob.setText(dob);
                     txtCot.setText(cot);
 
