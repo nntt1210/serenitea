@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_profile"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:background="#F68182"
-    tools:context=".ProfileActivity">
+    android:background="#F68182">
 
 
     <ImageButton
@@ -33,19 +33,21 @@
         android:layout_marginTop="170dp">
 
         <TextView
-            android:id="@+id/txt_info"
+            android:id="@+id/nav_txt_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_women"
+            android:drawableLeft="@drawable/ic_men"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/white"
             android:fontFamily="@font/open_sans_bold"
             android:text="Seonna"
             android:textColor="@color/white"
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/txt_dob"
+            android:id="@+id/nav_txt_dob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -58,7 +60,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/txt_cup_of_tea"
+            android:id="@+id/nav_txt_cup_of_tea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

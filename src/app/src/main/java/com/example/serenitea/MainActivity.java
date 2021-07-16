@@ -9,14 +9,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.login.LoginManager;
+//import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,23 +30,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public DrawerLayout drawer;
     private ImageButton closeBtn, friendRequestBtn;
-    private Button LogoutButton;
-
+    private TextView txtInfo, txtDob, txtCot;
+    private String curUser;
+    private String name,dob,cot,gender;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef;
+    private DatabaseReference UsersRef, userRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        txtInfo= headerView.findViewById(R.id.nav_txt_info);
+        txtDob= headerView.findViewById(R.id.nav_txt_dob);
+        txtCot= headerView.findViewById((R.id.nav_txt_cup_of_tea));
+
         mAuth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-//        LogoutButton = (Button) findViewById(R.id.btn_logout);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setTitle("");
 
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -87,6 +97,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        });
     }
 
+    protected void setProfile()
+    {
+        curUser=mAuth.getCurrentUser().getUid();
+        userRef= FirebaseDatabase.getInstance().getReference().child("users").child(curUser);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists())
+                {
+                    name = snapshot.child("nickname").getValue().toString();
+                    gender=snapshot.child("gender").getValue().toString();
+                    dob=snapshot.child("dob").getValue().toString();
+                    cot=snapshot.child("tea").getValue().toString();
+
+                    txtInfo.setText(name);
+                    txtDob.setText(dob);
+                    txtCot.setText(cot);
+
+
+                    if  (gender.equals("Female")){
+                     Drawable f = getResources().getDrawable(R.drawable.ic_women);
+                     txtInfo.setCompoundDrawablesWithIntrinsicBounds(f,null,null,null);
+                    }
+                    else if (gender.equals("Male")){
+                    Drawable m=getResources().getDrawable(R.drawable.ic_men);
+                    txtInfo.setCompoundDrawablesWithIntrinsicBounds(m,null,null,null);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -98,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else{
             CheckUserExistence();
+            setProfile();
         }
     }
 
@@ -142,15 +190,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_logout:
                 mAuth.signOut();
-                LoginManager.getInstance().logOut();
+//                LoginManager.getInstance().logOut();
                 SendUserToLogoutActivity();
                 break;
-//            case R.id.nav_favorites:
-//                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.nav_statistics:
-//                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
-//                break;
         }
 
         return true;
@@ -202,5 +244,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
+
 }
 
