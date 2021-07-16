@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView txtInfo, txtDob, txtCot;
     private String curUser;
     private String name,dob,cot,gender;
-//    private ArrayList<String> mdata;
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef, userRef;
 
@@ -54,15 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-//        mdata = new ArrayList<String>();
-//        if (mdata.size() == 3) {
-//            txtInfo.setText(mdata.get(0));
-//            txtDob.setText(mdata.get(1));
-//            txtCot.setText(mdata.get(2));
-//        }
-
-//        LogoutButton = (Button) findViewById(R.id.btn_logout);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,28 +76,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         closeBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.btn_close);
         closeBtn.setOnClickListener(v -> drawer.closeDrawer(GravityCompat.START));
 
-        //event click Logout Button
-//        LogoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAuth.signOut();
-//                SendUserToLogoutActivity();
-//            }
-//        });
     }
 
     protected void setProfile()
     {
-
-//        mAuth=FirebaseAuth.getInstance();
         curUser=mAuth.getCurrentUser().getUid();
         userRef= FirebaseDatabase.getInstance().getReference().child("users").child(curUser);
-
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mdata = new ArrayList<String>();
-
                 if (snapshot.exists())
                 {
                     name = snapshot.child("nickname").getValue().toString();
@@ -196,12 +173,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mAuth.signOut();
                 SendUserToLogoutActivity();
                 break;
-//            case R.id.nav_favorites:
-//                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.nav_statistics:
-//                Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
-//                break;
         }
 
         return true;
