@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProfileActivity.OnDataPass {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public DrawerLayout drawer;
     private ImageButton closeBtn;
     private Button LogoutButton;
@@ -39,10 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
 
-    @Override
-    public void onDataPass(String data) {
-        Log.d("DATA", data);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -37,23 +37,11 @@ public class ProfileActivity extends Fragment {
     private String name,dob,cot;
     private ArrayList<String> data;
 
-    OnDataPass dataPasser;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        dataPasser = (OnDataPass) context;
-    }
-
-    public void passData(String data) {
-        dataPasser.onDataPass(data);
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.nav_header, container, false);
-        passData("TAM NGUYEN");
 //        setProfile();
         return view;
     }
@@ -96,7 +84,4 @@ public class ProfileActivity extends Fragment {
         });
     }
 
-    public interface OnDataPass {
-        public void onDataPass(String data);
-    }
 }
