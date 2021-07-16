@@ -114,9 +114,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
                     avatar_id=snapshot.child("avatar").getValue().toString();
-
-                    int resourceId = getResources().getIdentifier(avatar_id, "drawable", getPackageName());
-                    avatar.setImageResource(resourceId);
+                    if (avatar_id == null) {
+                        avatar.setImageResource(R.drawable.avatar_2);
+                    }
+                    else {
+                        int resourceId = getResources().getIdentifier(avatar_id, "drawable", getPackageName());
+                        avatar.setImageResource(resourceId);
+                    }
                     txtInfo.setText(name);
                     txtDob.setText(dob);
                     txtCot.setText(cot);
