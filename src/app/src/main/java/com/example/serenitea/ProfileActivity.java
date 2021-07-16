@@ -37,6 +37,11 @@ public class ProfileActivity extends Fragment {
     private String name,dob,cot;
     private ArrayList<String> data;
 
+    private InterfaceListener mListenerForResult;
+
+//    public ProfileActivity(InterfaceListener mListenerForResult) {
+//        this.mListenerForResult = mListenerForResult;
+//    }
 
     @Nullable
     @Override
@@ -47,16 +52,12 @@ public class ProfileActivity extends Fragment {
     }
 
     protected ArrayList<String> getData() {
-        data = new ArrayList<>();
-        data.add("TAM NGUYEN");
-        data.add("12/10/2001");
-        data.add("15");
-//        setProfile();
         return data;
     }
 
     protected void setProfile()
     {
+
         mAuth=FirebaseAuth.getInstance();
         curUser=mAuth.getCurrentUser().getUid();
         userRef= FirebaseDatabase.getInstance().getReference().child("users").child(curUser);
@@ -64,6 +65,12 @@ public class ProfileActivity extends Fragment {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                data = new ArrayList<String>();
+                data.add("TAM NGUYEN");
+                data.add("12/10/2001");
+                data.add("15");
+                mListenerForResult.obtainValue(data);
+
                 if (snapshot.exists())
                 {
                     name = snapshot.child("nickname").getValue().toString();
@@ -71,9 +78,11 @@ public class ProfileActivity extends Fragment {
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
 
-                    data.add(name);
-                    data.add(dob);
-                    data.add(cot);
+
+
+//                    data.add(name);
+//                    data.add(dob);
+//                    data.add(cot);
                 }
             }
 
@@ -84,4 +93,9 @@ public class ProfileActivity extends Fragment {
         });
     }
 
+    public interface InterfaceListener {
+        void obtainValue(ArrayList<String> data);
+    }
 }
+
+

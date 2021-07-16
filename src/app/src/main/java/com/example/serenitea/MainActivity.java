@@ -29,15 +29,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public DrawerLayout drawer;
     private ImageButton closeBtn;
-    private Button LogoutButton;
     private TextView txtInfo, txtDob, txtCot;
-    private ArrayList<String> data;
-    ProfileActivity profileFragment;
+    private String curUser;
+    private String name,dob,cot;
+//    private ArrayList<String> mdata;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef;
+    private DatabaseReference UsersRef, userRef;
 
 
     @Override
@@ -45,25 +45,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        profileFragment = new ProfileActivity();
-        data = profileFragment.getData();
-
-
-
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         txtInfo= headerView.findViewById(R.id.nav_txt_info);
         txtDob= headerView.findViewById(R.id.nav_txt_dob);
         txtCot= headerView.findViewById((R.id.nav_txt_cup_of_tea));
 
-        if (data.size() == 3) {
-            txtInfo.setText(data.get(0));
-            txtDob.setText(data.get(1));
-            txtCot.setText(data.get(2));
-        }
-
         mAuth = FirebaseAuth.getInstance();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+//        mdata = new ArrayList<String>();
+//        if (mdata.size() == 3) {
+//            txtInfo.setText(mdata.get(0));
+//            txtDob.setText(mdata.get(1));
+//            txtCot.setText(mdata.get(2));
+//        }
 
 //        LogoutButton = (Button) findViewById(R.id.btn_logout);
 
@@ -99,6 +95,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        });
     }
 
+    protected void setProfile()
+    {
+
+//        mAuth=FirebaseAuth.getInstance();
+        curUser=mAuth.getCurrentUser().getUid();
+        userRef= FirebaseDatabase.getInstance().getReference().child("users").child(curUser);
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                mdata = new ArrayList<String>();
+
+                if (snapshot.exists())
+                {
+                    name = snapshot.child("nickname").getValue().toString();
+                    //String gender=snapshot.child("gender").getValue().toString();
+                    dob=snapshot.child("dob").getValue().toString();
+                    cot=snapshot.child("tea").getValue().toString();
+
+                    txtInfo.setText(name);
+                    txtDob.setText(dob);
+                    txtCot.setText(cot);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -110,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else{
             CheckUserExistence();
+            setProfile();
         }
     }
 
@@ -213,5 +242,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
+
 }
 
