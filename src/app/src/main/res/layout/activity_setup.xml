@@ -59,6 +59,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/outlinedTextField" />
 
+
+<!--        <EditText-->
+<!--            android:id="@+id/birthday"-->
+<!--            android:layout_height="56dp"-->
+<!--            android:layout_width="302dp"-->
+<!--            android:clickable="false"-->
+<!--            android:cursorVisible="false"-->
+<!--            android:focusable="false"-->
+<!--            android:focusableInTouchMode="false"-->
+<!--            android:hint="Date of birth"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/setup_gender"/>-->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField1"
             style="@style/PinkTextInputLayoutStyle"
@@ -72,7 +86,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/setup_dob"
-                android:inputType="text"
+                android:drawableRight="@drawable/ic_calendar"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:layout_width="302dp"
                 android:layout_height="56dp" />
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -24,7 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class SetupActivity extends AppCompatActivity {
 /* Trang Setup dùng để
@@ -42,11 +47,19 @@ public class SetupActivity extends AppCompatActivity {
     private String gender_value;
     private Button SaveInfoSetupButton;
     private ProgressDialog loadingBar;
-
+    final Calendar myCalendar = Calendar.getInstance();
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
 
     String currentUserId;
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        DoB.setText(sdf.format(myCalendar.getTime()));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +83,30 @@ public class SetupActivity extends AppCompatActivity {
         DoB = (EditText) findViewById(R.id.setup_dob);
         SaveInfoSetupButton = (Button) findViewById(R.id.btn_save);
         loadingBar = new ProgressDialog(this);
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        DoB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(SetupActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         //select avatar
 //        btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
