@@ -3,6 +3,7 @@ package com.example.serenitea;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -33,11 +34,28 @@ public class FriendsActivity extends Fragment {
         listFriend.add(new Friend("Mint", "avatar_11", "24/01/2001", 23, "Male"));
         listFriend.add(new Friend("Ziem", "avatar_3", "24/01/2001", 23, "Female"));
         listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Tam", "avatar_4", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Khuyen", "avatar_5", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Huyen", "avatar_6", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Thu", "avatar_7", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Chau", "avatar_8", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
+        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
 
-        friendGrid = (GridView)view.findViewById(R.id.grid_view_friend); // init GridView
+
+
+
+        friendGrid = (ExpandableHeightGridView)view.findViewById(R.id.grid_view_friend); // init GridView
+//        friendGrid.setExpanded(true);
         // Create an object FriendAdapter and set Adapter to GirdView
         FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
         friendGrid.setAdapter(friendAdapter);
+
         friendGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
