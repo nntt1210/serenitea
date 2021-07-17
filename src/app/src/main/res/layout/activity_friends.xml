@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container_scroll_view"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="50dp"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <EditText
+        android:id="@+id/search_friend_bar"
+        android:layout_width="320dp"
+        android:layout_height="31dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/search_friend_bar"
+        android:drawableRight="@drawable/ic_search"
+        android:hint="Search for a friend" />
+    <ScrollView
+        android:id="@+id/container_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_friend_bar"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/search_friend_bar"
-            android:layout_width="350dp"
-            android:layout_height="31dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/search_friend_bar"
-            android:drawableRight="@drawable/ic_search"
-            android:hint="Search for a friend" />
-        <com.example.serenitea.ExpandableHeightGridView
-            android:id="@+id/grid_view_friend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:nestedScrollingEnabled="true"
-            android:columnWidth="100dp"
-            android:numColumns="3"
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <com.example.serenitea.ExpandableHeightGridView
+                android:id="@+id/grid_view_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:nestedScrollingEnabled="true"
+                android:columnWidth="100dp"
+                android:numColumns="3"
 
-            android:verticalSpacing="10dp" />
-    </RelativeLayout>
+                android:verticalSpacing="10dp" />
+        </RelativeLayout>
 
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>
