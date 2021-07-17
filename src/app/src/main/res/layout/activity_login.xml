@@ -32,8 +32,8 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
-
                 android:id="@+id/login_username"
+                android:inputType="text"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
                 android:drawableEnd="@drawable/ic_email"

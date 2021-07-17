@@ -41,6 +41,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/setup_nickname"
+                android:inputType="text"
                 android:layout_width="302dp"
                 android:layout_height="56dp" />
 
@@ -71,6 +72,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/setup_dob"
+                android:inputType="text"
                 android:layout_width="302dp"
                 android:layout_height="56dp" />
 
