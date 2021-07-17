@@ -23,7 +23,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Ziem"
-            android:textColor="#5F4322"
+            android:textColor="@color/text_friend"
             android:textSize="28sp" />
     </RelativeLayout>
 

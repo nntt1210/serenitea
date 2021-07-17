@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Sophie"
-            android:textColor="#5F4322"
+            android:textColor="@color/text_friend_request"
             android:textSize="28sp" />
 
         <Button
@@ -28,7 +28,7 @@
             android:layout_width="128dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/friend_request_nickname"
-            android:backgroundTint="#FF5C5F"
+            android:backgroundTint="@color/background_pink"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="Accept"
             android:textSize="14sp" />
@@ -40,10 +40,10 @@
             android:layout_below="@+id/friend_request_nickname"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/btn_accept_friend_request"
-            android:backgroundTint="#D8D5D5"
+            android:backgroundTint="@color/background_delete"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="Delete"
-            android:textColor="#535353"
+            android:textColor="@color/text_delete"
             android:textSize="14sp" />
 
     </RelativeLayout>

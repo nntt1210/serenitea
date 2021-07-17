@@ -3,7 +3,7 @@
     android:id="@+id/favorite_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FEE9EA"
+    android:background="@color/background_favorite"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="1"
-        android:textColor="#F46F71"
+        android:textColor="@color/theme"
         android:textSize="13sp" />
 
     <ImageButton
@@ -39,7 +39,7 @@
         android:layout_marginBottom="30dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is."
-        android:textColor="#5F4322"
+        android:textColor="@color/text_favorite"
         android:textSize="14sp"
         android:alpha=".54"/>
 </RelativeLayout>
