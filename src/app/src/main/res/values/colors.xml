@@ -10,5 +10,19 @@
     <color name="textColor">#573916</color>
     <color name="white_200">#F4F4F8</color>
     <color name="theme">#F46F71</color>
-    <color name="hint_text_input">#FF5C5F</color>
+    <color name="outline_pink">#FF5C5F</color>
+    <color name="outline_blue">#1782CD</color>
+    <color name="background_blue">#0B2B42</color>
+    <color name="background_pink">#FF5C5F</color>
+    <color name="background_menu">#F68182</color>
+    <color name="background_favorite">#FEE9EA</color>
+    <color name="background_delete">#D8D5D5</color>
+    <color name="text_label_blue">#3492D3</color>
+    <color name="text_label_pink">#FF5C5F</color>
+    <color name="text_delete">#535353</color>
+    <color name="text_blue">#1782CD</color>
+    <color name="text_other">#041724</color>
+    <color name="text_favorite">#5F4322</color>
+    <color name="text_friend">#5F4322</color>
+    <color name="text_friend_request">#5F4322</color>
 </resources>

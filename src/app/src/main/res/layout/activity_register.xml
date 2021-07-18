@@ -20,7 +20,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/PinkTextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -33,6 +33,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTxt_username"
+                android:inputType="text"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
                 android:drawableEnd="@drawable/ic_email"
@@ -42,7 +43,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/PinkTextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -64,7 +65,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField2"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/PinkTextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -92,7 +93,7 @@
             android:fontFamily="@font/open_sans_extrabold"
             android:text="Sign up"
             android:textSize="14sp"
-            app:backgroundTint="#FF5C5F"
+            app:backgroundTint="@color/background_pink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +106,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="OR"
-            android:textColor="#041724"
+            android:textColor="@color/text_other"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

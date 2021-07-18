@@ -20,7 +20,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/BlueTextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -32,8 +32,8 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
-
                 android:id="@+id/login_username"
+                android:inputType="text"
                 android:layout_width="302dp"
                 android:layout_height="56dp"
                 android:drawableEnd="@drawable/ic_email"
@@ -43,7 +43,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlinedTextField1"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/BlueTextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -71,7 +71,7 @@
             android:fontFamily="@font/open_sans_extrabold"
             android:text="Log in"
             android:textSize="14sp"
-            app:backgroundTint="#0B2B42"
+            app:backgroundTint="@color/background_blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +86,7 @@
             android:text="Forgot Password?"
             android:onClick="onClick"
             android:clickable="true"
-            android:textColor="#1782CD"
+            android:textColor="@color/text_blue"
             android:textAllCaps="false"
             android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="OR"
-            android:textColor="#041724"
+            android:textColor="@color/text_other"
             app:layout_constraintBottom_toTopOf="@+id/social_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

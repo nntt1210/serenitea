@@ -237,7 +237,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void SendUserToLogoutActivity(){
         //chuyển sang trang Logout (trang ban đầu khi vô app)
         Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
+        logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(logoutIntent);
+        finish();
     }
 
 

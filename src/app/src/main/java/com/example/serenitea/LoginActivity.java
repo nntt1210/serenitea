@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Back");
+        actionBar.setTitle("");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
