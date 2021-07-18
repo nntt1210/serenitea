@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -31,9 +32,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
 //    private DrawerLayout drawer;
     private TextView txtInfo, txtDob, txtCot;
+    private ImageView avatar;
     private ImageButton closeBtn, backBtn;
     private String curUser;
-    private String name,dob,cot,gender;
+    private String name,dob,cot,gender, avatar_id;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
     @Override
@@ -43,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.settings_nav_view);
         View headerView = navigationView.getHeaderView(0);
+        avatar = headerView.findViewById(R.id.image_avatar);
         txtInfo= headerView.findViewById(R.id.txt_info);
         txtDob= headerView.findViewById(R.id.txt_dob);
         txtCot= headerView.findViewById((R.id.txt_cup_of_tea));
@@ -87,7 +90,14 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                     gender=snapshot.child("gender").getValue().toString();
                     dob=snapshot.child("dob").getValue().toString();
                     cot=snapshot.child("tea").getValue().toString();
-
+                    avatar_id=snapshot.child("avatar").getValue().toString();
+                    if (avatar_id == null) {
+                        avatar.setImageResource(R.drawable.avatar_2);
+                    }
+                    else {
+                        int resourceId = getResources().getIdentifier(avatar_id, "drawable", getPackageName());
+                        avatar.setImageResource(resourceId);
+                    }
                     txtInfo.setText(name);
                     txtDob.setText(dob);
                     txtCot.setText(cot);
