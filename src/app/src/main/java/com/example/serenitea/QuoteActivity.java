@@ -55,7 +55,7 @@ public class QuoteActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //id dissatisfied: 21 - 40, happy: 1 - 10; neutral: 41 - 50; satisfied: 61 - 70; very satisfied: 81 - 90
+    //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
 
     private void GetEmotion ()
     {
@@ -77,17 +77,17 @@ public class QuoteActivity extends AppCompatActivity {
                 Emotion = "happy";
                 break;
             case 3: // neutral
-                qid = (int)(Math.random() * ((50 - 41) + 1)) + 41;
+                qid = (int)(Math.random() * ((90 - 81) + 1)) + 81;
                 QuoteID = "00" + String.valueOf(qid);
                 Emotion = "neutral";
                 break;
             case 4: // angry
-                qid = (int)(Math.random() * ((70 - 61) + 1)) + 61;
+                qid = (int)(Math.random() * ((71 - 61) + 1)) + 61;
                 QuoteID = "00" + String.valueOf(qid);
                 Emotion = "angry";
                 break;
             case 5: // nervous
-                qid = (int)(Math.random() * ((90 - 81) + 1)) + 81;
+                qid = (int)(Math.random() * ((60 - 41) + 1)) + 41;
                 QuoteID = "00" + String.valueOf(qid);
                 Emotion = "nervous";
                 break;
