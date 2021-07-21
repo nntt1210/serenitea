@@ -5,11 +5,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ Một số hàm:
     private Integer cup_of_tea;
     private ImageView image_avatar;
     private TextView txtNickname, txtDob, txtCup;
+    private Button btn_send_or_add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ Một số hàm:
         txtNickname = (TextView)findViewById(R.id.txt_info);
         txtDob = (TextView)findViewById(R.id.txt_dob);
         txtCup = (TextView)findViewById(R.id.txt_cup_of_tea);
+        btn_send_or_add = (Button)findViewById(R.id.btn_send_or_add);
 
         view_friend = (Integer)getIntent().getIntExtra("VIEW_FRIEND", 0);
         if (view_friend == 0) {
@@ -64,6 +69,13 @@ Một số hàm:
                     txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_women, 0, 0, 0);
                     break;
             }
+            btn_send_or_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
+                    startActivity(sendQuoteIntent);
+                }
+            });
         }
     }
 
