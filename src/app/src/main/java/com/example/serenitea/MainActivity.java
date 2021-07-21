@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public DrawerLayout drawer;
-    private ImageButton closeBtn, friendRequestBtn;
+    private ImageButton closeBtn, friendRequestBtn, notiBtn;
     private TextView txtInfo, txtDob, txtCot;
     private ImageView avatar;
     private String curUser;
@@ -81,6 +81,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 Intent friendRequestIntent = new Intent(MainActivity.this, FriendRequestActivity.class);
                 startActivity(friendRequestIntent);
+            }
+        });
+
+        notiBtn = (ImageButton)findViewById(R.id.btn_notification);
+        notiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notiIntent = new Intent(MainActivity.this, NotificationActivity.class);
+                startActivity(notiIntent);
             }
         });
 

@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
         <activity android:name=".SendQuoteActivity"></activity>
+        <activity android:name=".NotificationActivity"></activity>
         <activity android:name=".FriendRequestActivity" />
         <activity android:name=".AvatarActivity" />
         <activity
