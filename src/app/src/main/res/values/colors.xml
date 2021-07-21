@@ -25,4 +25,5 @@
     <color name="text_favorite">#5F4322</color>
     <color name="text_friend">#5F4322</color>
     <color name="text_friend_request">#5F4322</color>
+    <color name="text_noti">#5F4322</color>
 </resources>
