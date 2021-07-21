@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/favorite_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_favorite"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/send_quote_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is."
+        android:textColor="@color/text_favorite"
+        android:textSize="14sp"
+        android:alpha=".54"/>
+</RelativeLayout>
