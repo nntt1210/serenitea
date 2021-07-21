@@ -43,13 +43,13 @@ public class EmotionActivity extends Fragment {
         btnSad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changebtnDissatisfied();
+                changebtnSad();
             }
         });
         btnWorried.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changebtnHappy();
+                changebtnWorried();
             }
         });
         btnNeutral.setOnClickListener(new View.OnClickListener() {
@@ -61,19 +61,19 @@ public class EmotionActivity extends Fragment {
         btnAngry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changebtnSatisfied();
+                changebtnAngry();
             }
         });
         btnHappy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changebtnVerysatisfied();
+                changebtnHappy();
             }
         });
 
     }
 
-    private void changebtnDissatisfied ()
+    private void changebtnSad ()
     {
         emotion = 1;
         SendUserToQuoteActivity();
@@ -88,12 +88,12 @@ public class EmotionActivity extends Fragment {
         emotion = 3;
         SendUserToQuoteActivity();
     }
-    private void changebtnSatisfied ()
+    private void changebtnAngry ()
     {
         emotion = 4;
         SendUserToQuoteActivity();
     }
-    private void changebtnVerysatisfied ()
+    private void changebtnWorried ()
     {
         emotion = 5;
         SendUserToQuoteActivity();
