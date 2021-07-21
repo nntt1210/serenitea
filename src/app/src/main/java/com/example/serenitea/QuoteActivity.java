@@ -77,17 +77,17 @@ public class QuoteActivity extends AppCompatActivity {
                 Emotion = "happy";
                 break;
             case 3: // neutral
-                qid = (int)(Math.random() * ((50 - 41) + 1)) + 41;
+                qid = (int)(Math.random() * ((90 - 81) + 1)) + 81;
                 QuoteID = "00" + String.valueOf(qid);
                 Emotion = "neutral";
                 break;
             case 4: // angry
-                qid = (int)(Math.random() * ((70 - 61) + 1)) + 61;
+                qid = (int)(Math.random() * ((71 - 61) + 1)) + 61;
                 QuoteID = "00" + String.valueOf(qid);
                 Emotion = "angry";
                 break;
             case 5: // nervous
-                qid = (int)(Math.random() * ((90 - 81) + 1)) + 81;
+                qid = (int)(Math.random() * ((60 - 41) + 1)) + 41;
                 QuoteID = "00" + String.valueOf(qid);
                 Emotion = "nervous";
                 break;
