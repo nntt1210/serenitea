@@ -55,7 +55,7 @@ public class QuoteActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //id dissatisfied: 21 - 40, happy: 1 - 10; neutral: 41 - 50; satisfied: 61 - 70; very satisfied: 81 - 90
+    //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
 
     private void GetEmotion ()
     {
