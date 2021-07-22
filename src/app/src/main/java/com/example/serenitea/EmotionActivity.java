@@ -40,7 +40,7 @@ public class EmotionActivity extends Fragment {
     private FirebaseAuth mAuth;
     private String curUser;
     private String curEmo;
-    private int update;
+    private int update = 1;
 
     @Nullable
     @Override
@@ -51,43 +51,17 @@ public class EmotionActivity extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        btnSad = (ImageButton) getView().findViewById(R.id.emotion_sad);
-        btnWorried = (ImageButton) getView().findViewById(R.id.emotion_worried);
-        btnAngry = (ImageButton) getView().findViewById(R.id.emotion_angry);
-        btnNeutral = (ImageButton) getView().findViewById(R.id.emotion_neutral);
-        btnHappy = (ImageButton) getView().findViewById(R.id.emotion_happy);
+        btnSad = getView().findViewById(R.id.emotion_sad);
+        btnWorried = getView().findViewById(R.id.emotion_worried);
+        btnAngry = getView().findViewById(R.id.emotion_angry);
+        btnNeutral = getView().findViewById(R.id.emotion_neutral);
+        btnHappy = getView().findViewById(R.id.emotion_happy);
 
-        btnSad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changebtnSad();
-            }
-        });
-        btnWorried.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changebtnWorried();
-            }
-        });
-        btnNeutral.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changebtnNeutral();
-            }
-        });
-        btnAngry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changebtnAngry();
-            }
-        });
-        btnHappy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changebtnHappy();
-            }
-        });
-
+        btnSad.setOnClickListener(v -> changebtnSad());
+        btnWorried.setOnClickListener(v -> changebtnWorried());
+        btnNeutral.setOnClickListener(v -> changebtnNeutral());
+        btnAngry.setOnClickListener(v -> changebtnAngry());
+        btnHappy.setOnClickListener(v -> changebtnHappy());
     }
 
     private void changebtnSad ()
@@ -126,61 +100,31 @@ public class EmotionActivity extends Fragment {
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
+        String m = String.valueOf(month);
+        String d = String.valueOf(day);
         mAuth=FirebaseAuth.getInstance();
         curUser = mAuth.getCurrentUser().getUid();
-        diaryRef = FirebaseDatabase.getInstance().getReference().child("diary").child(curUser);
-        diaryRef.addValueEventListener(new ValueEventListener() {
+        diaryRef = FirebaseDatabase.getInstance().getReference().child("diary/"+curUser+"/"+m+"/"+d);
+        diaryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(String.valueOf(month)).exists())
+                if(snapshot.exists())
                 {
-                    if (snapshot.child(String.valueOf(month)).child(String.valueOf(day)).exists()) {
-                        curEmo = snapshot.child(String.valueOf(month)).child(String.valueOf(day)).getValue().toString();
-                        update = Integer.parseInt(curEmo);
-                        switch (emotion) {
-                            case 1:
-                                update = update - 2;
-                                break;
-                            case 2:
-                                update = update + 2;
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                update = update - 1;
-                                break;
-                            case 5:
-                                update = update - 1;
-                                break;
-                        }
-                    }
+                    curEmo = snapshot.child(String.valueOf(emotion)).getValue().toString();
+                    update = Integer.parseInt(curEmo);
+                    update = update + 1;
                 }
-                else {
-                    switch (emotion) {
-                        case 1:
-                            update = -2;
-                            break;
-                        case 2:
-                            update = 2;
-                            break;
-                        case 3:
-                            update = 0;
-                            break;
-                        case 4:
-                            update = -1;
-                            break;
-                        case 5:
-                            update = -1;
-                            break;
-                    }
+                else
+                {
+                    update = 1;
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        diaryRef = FirebaseDatabase.getInstance().getReference().child("diary").child(curUser).child(String.valueOf(month)).child(String.valueOf(day));
-        diaryRef.setValue(update);
+        diaryRef.child(String.valueOf(emotion)).setValue(update);
     }
 
 //    @Override
