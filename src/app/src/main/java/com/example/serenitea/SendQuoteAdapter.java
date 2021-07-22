@@ -28,7 +28,7 @@ public class SendQuoteAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         //Trả về một ID của phần
-        return listSendQuote.get(position).quoteID;
+        return listSendQuote.get(position).getQuoteID();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SendQuoteAdapter extends BaseAdapter {
 
         //Bind sữ liệu phần tử vào View
         Quote quote = (Quote)getItem(position);
-        ((TextView)viewProduct.findViewById(R.id.send_quote_content)).setText(String.format("%s", quote.content));
+        ((TextView)viewProduct.findViewById(R.id.send_quote_content)).setText(String.format("%s", quote.getContent()));
 
 
         return viewProduct;

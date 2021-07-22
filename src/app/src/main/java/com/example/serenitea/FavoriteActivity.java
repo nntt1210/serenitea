@@ -1,14 +1,13 @@
 package com.example.serenitea;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -27,20 +26,20 @@ public class FavoriteActivity extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        listFavorite = new ArrayList<>();
-        listFavorite.add(new Quote(1, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(2, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-        favoriteListViewAdapter = new FavoriteListViewAdapter(listFavorite);
-
-        listViewFavorite = getView().findViewById(R.id.list_favorite);
-        listViewFavorite.setAdapter(favoriteListViewAdapter);
+//        listFavorite = new ArrayList<>();
+//        listFavorite.add(new Quote(1, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(2, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        listFavorite.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
+//        favoriteListViewAdapter = new FavoriteListViewAdapter(listFavorite);
+//
+//        listViewFavorite = getView().findViewById(R.id.list_favorite);
+//        listViewFavorite.setAdapter(favoriteListViewAdapter);
     }
 
 
