@@ -110,13 +110,20 @@ public class EmotionActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists())
                 {
-                    curEmo = snapshot.child(String.valueOf(emotion)).getValue().toString();
-                    update = Integer.parseInt(curEmo);
-                    update = update + 1;
+                    if (snapshot.hasChild(String.valueOf(emotion))) {
+                        curEmo = snapshot.child(String.valueOf(emotion)).getValue().toString();
+                        update = Integer.parseInt(curEmo);
+                        update = update + 1;
+                    }
+                    else {
+                        update = 1;
+                    }
+                    diaryRef.child(String.valueOf(emotion)).setValue(update);
                 }
                 else
                 {
                     update = 1;
+                    diaryRef.child(String.valueOf(emotion)).setValue(update);
                 }
             }
 
@@ -124,7 +131,7 @@ public class EmotionActivity extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        diaryRef.child(String.valueOf(emotion)).setValue(update);
+
     }
 
 //    @Override
