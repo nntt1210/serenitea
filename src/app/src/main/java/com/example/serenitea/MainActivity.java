@@ -198,6 +198,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new FavoriteActivity()).commit();
                 drawer.closeDrawer(GravityCompat.START);
                 break;
+            case R.id.nav_statistics:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new StatisticsActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
+                break;
             case R.id.nav_settings:
                 SendUserToSettingsActivity();
                 break;

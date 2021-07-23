@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
-        <activity android:name=".SendQuoteActivity"></activity>
-        <activity android:name=".NotificationActivity"></activity>
+        <activity android:name=".StatisticsActivity"></activity>
+        <activity android:name=".SendQuoteActivity" />
+        <activity android:name=".NotificationActivity" />
         <activity android:name=".FriendRequestActivity" />
         <activity android:name=".AvatarActivity" />
         <activity
@@ -35,7 +36,7 @@
         </activity>
         <activity
             android:name=".SetupActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity
