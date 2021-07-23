@@ -161,7 +161,8 @@ public class SendQuoteActivity extends AppCompatActivity {
 
 
     private void SaveSentQuoteToDatabase(String quoteID) {
-        String data_ref = "sendQuotes/" + currentUserId + "/" + receiverID + "/" + quoteID;
+        String data_send_ref = "sendQuotes/" + currentUserId + "/" + receiverID + "/" + quoteID;
+        String data_receive_ref = "receiveQuotes/" + receiverID + "/" + currentUserId + "/" + quoteID;
         DatabaseReference sendQuoteRef = RootRef.child("sendQuotes").child(currentUserId).child(receiverID);
 
         Calendar calendar = Calendar.getInstance();
@@ -170,18 +171,31 @@ public class SendQuoteActivity extends AppCompatActivity {
 
         Map sendMap = new HashMap();
         sendMap.put("date", saveCurrentDate);
-        sendMap.put("status", "sent");
+//        sendMap.put("status", "sent");
 
         Map detailSendMap = new HashMap();
-        detailSendMap.put(data_ref, sendMap);
+        detailSendMap.put(data_send_ref, sendMap);
+
+        Map detailReceiveMap = new HashMap();
+        detailReceiveMap.put(data_receive_ref, sendMap);
 
         RootRef.updateChildren(detailSendMap).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
-                }
-                else{
+                if (task.isSuccessful()) {
+//                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
+                    RootRef.updateChildren(detailReceiveMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
+                            } else {
+                                String message = task.getException().getMessage();
+                                Toast.makeText(SendQuoteActivity.this, "Error" + message, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(SendQuoteActivity.this, "Error" + message, Toast.LENGTH_LONG).show();
                 }
