@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -7,32 +8,39 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SendQuoteActivity extends AppCompatActivity {
-
-    ArrayList<Quote> listSendQuote;
-    SendQuoteAdapter sendQuoteAdapter;
-    ListView listViewSendQuote;
     private FirebaseAuth mAuth;
-    private DatabaseReference SendQuoteRef;
+    private DatabaseReference RootRef, FavoriteQuoteRef, QuoteRef;
     String currentUserId;
     private RecyclerView sendQuoteList;
+    private String receiverID = "FRIEND_ID", quoteID;
+    private String saveCurrentDate;
 
 
     @Override
@@ -43,7 +51,9 @@ public class SendQuoteActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
 
-        SendQuoteRef = FirebaseDatabase.getInstance().getReference().child("favorite").child(currentUserId);
+        RootRef = FirebaseDatabase.getInstance().getReference();
+        FavoriteQuoteRef = RootRef.child("favorite").child(currentUserId);
+        QuoteRef = RootRef.child("quotes");
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
@@ -51,21 +61,8 @@ public class SendQuoteActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-//        listSendQuote = new ArrayList<>();
-//        listSendQuote.add(new Quote(1, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-//        listSendQuote.add(new Quote(2, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-//        listSendQuote.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-//        listSendQuote.add(new Quote(3, "When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is.", "02/07/2021"));
-//
-//
-//        sendQuoteAdapter = new SendQuoteAdapter(listSendQuote);
-//
-//        listViewSendQuote = findViewById(R.id.list_send_quote);
-//        listViewSendQuote.setAdapter(sendQuoteAdapter);
-
         sendQuoteList = (RecyclerView) findViewById(R.id.list_send_quote);
         sendQuoteList.setLayoutManager(new LinearLayoutManager(this));
-
 
         DisplayAllSendQuote();
     }
@@ -74,14 +71,48 @@ public class SendQuoteActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Quote> options =
                 new FirebaseRecyclerOptions.Builder<Quote>()
-                        .setQuery(SendQuoteRef, Quote.class)
+                        .setQuery(FavoriteQuoteRef, Quote.class)
                         .build();
 
         FirebaseRecyclerAdapter<Quote, SendQuoteViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Quote, SendQuoteViewHolder>(options) {
 
             @Override
             protected void onBindViewHolder(@NonNull SendQuoteActivity.SendQuoteViewHolder holder, int position, Quote model) {
-                    holder.contentQuote.setText(model.getContent());
+                String each_quote_id = getRef(position).getKey();
+                QuoteRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            final String content_each_quote = snapshot.child(each_quote_id).child("content").getValue().toString();
+                            holder.setContent(content_each_quote);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                //click event on each quote
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        Toast.makeText(SendQuoteActivity.this, each_quote_id, Toast.LENGTH_LONG).show();
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SendQuoteActivity.this);
+                        builder.setMessage("Send this quote to FRIEND_NAME?").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SaveSentQuoteToDatabase(each_quote_id);
+                            }
+                        }).setNegativeButton("Cancel", null);
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
+                    }
+                });
             }
 
             @NonNull
@@ -98,18 +129,20 @@ public class SendQuoteActivity extends AppCompatActivity {
         firebaseRecyclerAdapter.startListening();
     }
 
+
     public static class SendQuoteViewHolder extends RecyclerView.ViewHolder {
-        TextView contentQuote;
+        TextView textViewContentQuote;
 
         public SendQuoteViewHolder(@NonNull View itemView) {
             super(itemView);
-            contentQuote = itemView.findViewById(R.id.send_quote_content);
+            textViewContentQuote = itemView.findViewById(R.id.send_quote_content);
         }
 
         public void setQuoteID(int id) {
         }
 
         public void setContent(String content) {
+            textViewContentQuote.setText(content);
         }
 
         public void setDate(String date) {
@@ -126,5 +159,34 @@ public class SendQuoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void SaveSentQuoteToDatabase(String quoteID) {
+        String data_ref = "sendQuotes/" + currentUserId + "/" + receiverID + "/" + quoteID;
+        DatabaseReference sendQuoteRef = RootRef.child("sendQuotes").child(currentUserId).child(receiverID);
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+        Map sendMap = new HashMap();
+        sendMap.put("date", saveCurrentDate);
+        sendMap.put("status", "sent");
+
+        Map detailSendMap = new HashMap();
+        detailSendMap.put(data_ref, sendMap);
+
+        RootRef.updateChildren(detailSendMap).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(SendQuoteActivity.this, "Error" + message, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 
 }
