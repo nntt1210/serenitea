@@ -39,7 +39,7 @@ public class SendQuoteActivity extends AppCompatActivity {
     private DatabaseReference RootRef, FavoriteQuoteRef, QuoteRef;
     String currentUserId;
     private RecyclerView sendQuoteList;
-    private String receiverID = "FRIEND_ID", quoteID;
+    private String receiverID = "UfYEfxRnWDfKtTuIwet0ErVvfWd2", quoteID;
     private String saveCurrentDate, saveCurrentTime;
 
 
@@ -161,8 +161,8 @@ public class SendQuoteActivity extends AppCompatActivity {
 
 
     private void SaveSentQuoteToDatabase(String quoteID) {
-        String data_ref = "notification/" + receiverID + "/" + currentUserId;
-        DatabaseReference notiKey = RootRef.child("notification").child(receiverID).child(currentUserId).push();
+        String data_ref = "notification/" + receiverID;
+        DatabaseReference notiKey = RootRef.child("notification").child(receiverID).push();
         String noti_push_id = notiKey.getKey();
 
         //get date
@@ -179,6 +179,7 @@ public class SendQuoteActivity extends AppCompatActivity {
         sendMap.put("date", saveCurrentDate);
         sendMap.put("time", saveCurrentTime);
         sendMap.put("quote", quoteID);
+        sendMap.put("from", currentUserId);
 
         Map detailSendMap = new HashMap();
         detailSendMap.put(data_ref + "/" + noti_push_id, sendMap);
