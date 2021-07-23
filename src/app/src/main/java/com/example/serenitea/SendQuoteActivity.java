@@ -40,7 +40,7 @@ public class SendQuoteActivity extends AppCompatActivity {
     String currentUserId;
     private RecyclerView sendQuoteList;
     private String receiverID = "FRIEND_ID", quoteID;
-    private String saveCurrentDate;
+    private String saveCurrentDate, saveCurrentTime;
 
 
     @Override
@@ -161,40 +161,33 @@ public class SendQuoteActivity extends AppCompatActivity {
 
 
     private void SaveSentQuoteToDatabase(String quoteID) {
-        String data_send_ref = "sendQuotes/" + currentUserId + "/" + receiverID + "/" + quoteID;
-        String data_receive_ref = "receiveQuotes/" + receiverID + "/" + currentUserId + "/" + quoteID;
-        DatabaseReference sendQuoteRef = RootRef.child("sendQuotes").child(currentUserId).child(receiverID);
+        String data_ref = "notification/" + receiverID + "/" + currentUserId;
+        DatabaseReference notiKey = RootRef.child("notification").child(receiverID).child(currentUserId).push();
+        String noti_push_id = notiKey.getKey();
 
+        //get date
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
+        //get time
+        Calendar time = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm aa");
+        saveCurrentTime = currentTime.format(time.getTime());
+
         Map sendMap = new HashMap();
         sendMap.put("date", saveCurrentDate);
-//        sendMap.put("status", "sent");
+        sendMap.put("time", saveCurrentTime);
+        sendMap.put("quote", quoteID);
 
         Map detailSendMap = new HashMap();
-        detailSendMap.put(data_send_ref, sendMap);
-
-        Map detailReceiveMap = new HashMap();
-        detailReceiveMap.put(data_receive_ref, sendMap);
+        detailSendMap.put(data_ref + "/" + noti_push_id, sendMap);
 
         RootRef.updateChildren(detailSendMap).addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
-//                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
-                    RootRef.updateChildren(detailReceiveMap).addOnCompleteListener(new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
-                            } else {
-                                String message = task.getException().getMessage();
-                                Toast.makeText(SendQuoteActivity.this, "Error" + message, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
                 } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(SendQuoteActivity.this, "Error" + message, Toast.LENGTH_LONG).show();
