@@ -29,7 +29,6 @@ public class QuoteActivity extends AppCompatActivity {
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
-    private String Emotion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,6 @@ public class QuoteActivity extends AppCompatActivity {
             case 1: // dissatisfied - sad
                 qid = (int)(Math.random() * ((30 - 21) + 1)) + 21;
                 QuoteID = "00" + String.valueOf(qid);
-                Emotion = "dissatisfied";
                 break;
             case 2: // happy
                 qid = (int)(Math.random() * ((10 - 1) + 1)) + 1;
@@ -74,28 +72,24 @@ public class QuoteActivity extends AppCompatActivity {
                     QuoteID = "00" + String.valueOf(qid);
                 else
                     QuoteID = "000" + String.valueOf(qid);
-                Emotion = "happy";
                 break;
             case 3: // neutral
                 qid = (int)(Math.random() * ((90 - 81) + 1)) + 81;
                 QuoteID = "00" + String.valueOf(qid);
-                Emotion = "neutral";
                 break;
             case 4: // angry
                 qid = (int)(Math.random() * ((71 - 61) + 1)) + 61;
                 QuoteID = "00" + String.valueOf(qid);
-                Emotion = "angry";
                 break;
             case 5: // nervous
                 qid = (int)(Math.random() * ((60 - 41) + 1)) + 41;
                 QuoteID = "00" + String.valueOf(qid);
-                Emotion = "nervous";
                 break;
         }
     }
     private void GenerateQuote ()
     {
-        mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(Emotion).child(QuoteID);
+        mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
