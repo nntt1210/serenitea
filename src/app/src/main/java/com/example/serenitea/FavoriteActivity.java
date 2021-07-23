@@ -69,6 +69,24 @@ public class FavoriteActivity extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull FavoriteActivity.FavoriteViewHolder holder, int position, Quote model) {
                 String each_quote_id = getRef(position).getKey();
+
+                FavoriteQuoteRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            final String each_date = snapshot.child(each_quote_id).child("date").getValue().toString();
+                            //Toast.makeText(getActivity(),each_date,Toast.LENGTH_LONG).show();
+                            holder.setDate(each_date);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
                 QuoteRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -77,6 +95,7 @@ public class FavoriteActivity extends Fragment {
                             holder.setContent(content_each_quote);
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
@@ -95,7 +114,7 @@ public class FavoriteActivity extends Fragment {
             @NonNull
             @Override
             public FavoriteActivity.FavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.send_quote_view, parent, false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_view, parent, false);
                 FavoriteActivity.FavoriteViewHolder favHolder = new FavoriteActivity.FavoriteViewHolder(view);
                 return favHolder;
             }
@@ -108,10 +127,12 @@ public class FavoriteActivity extends Fragment {
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         TextView textViewContentQuote;
+        TextView textViewFavoriteDate;
 
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewContentQuote = itemView.findViewById(R.id.send_quote_content);
+            textViewContentQuote = itemView.findViewById(R.id.favorite_content);
+            textViewFavoriteDate = itemView.findViewById(R.id.favorite_date);
         }
 
         public void setQuoteID(int id) {
@@ -122,6 +143,7 @@ public class FavoriteActivity extends Fragment {
         }
 
         public void setDate(String date) {
+            textViewFavoriteDate.setText(date);
         }
     }
 
