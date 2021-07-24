@@ -142,6 +142,11 @@ public class StatisticsActivity extends Fragment {
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.getXAxis().setDrawGridLines(false);
+        chart.getAxisLeft().setAxisMinimum(0f);
+        chart.getAxisRight().setAxisMinimum(0f);
+//        chart.getXAxis().setCenterAxisLabels(false);
+//        chart.getXAxis().setGranularity(1f);
+
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
@@ -273,6 +278,18 @@ public class StatisticsActivity extends Fragment {
                         set.setDrawIcons(true);
 
                         BarData data = new BarData(set);
+                        data.setValueFormatter(new ValueFormatter() {
+                            @Override
+                            public String getFormattedValue(float value) {
+
+                                if (value > 0){
+                                    return super.getFormattedValue(value);
+                                }else{
+                                    return "";
+                                }
+                            }
+
+                        });
                         data.setBarWidth(0.9f); // set custom bar width
                         chart.setData(data);
                         chart.setFitBars(true); // make the x-axis fit exactly all bars
