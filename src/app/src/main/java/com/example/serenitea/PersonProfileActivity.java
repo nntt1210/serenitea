@@ -24,6 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class PersonProfileActivity extends AppCompatActivity {
     /* Trang Profile của người khác (không phải của bản thân)
     Một số hàm:
@@ -42,7 +45,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private String currentUserId, CURRENT_STATE;
-    private DatabaseReference RootRef, RequestRef, UserRef;
+    private DatabaseReference RootRef, RequestRef, UserRef, FriendsRef;
     private String saveCurrentDate, saveCurrentTime;
 
     @Override
@@ -56,6 +59,7 @@ public class PersonProfileActivity extends AppCompatActivity {
         RootRef = FirebaseDatabase.getInstance().getReference();
         RequestRef = RootRef.child("friendRequests");
         UserRef = RootRef.child("users");
+        FriendsRef = RootRef.child("friends");
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
@@ -76,6 +80,9 @@ public class PersonProfileActivity extends AppCompatActivity {
                     if (CURRENT_STATE.equals("request_sent")) {
                         CancelFriendRequest();
                     }
+                    if (CURRENT_STATE.equals("request_received")) {
+                        AcceptFriendRequest();
+                    }
 
                 }
             });
@@ -88,10 +95,52 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     }
 
-    private void CancelFriendRequest() {
-        String send_ref = "friendRequests/" + currentUserId;
-        String receive_ref = "friendRequests/" + other_user_id;
+    private void AcceptFriendRequest() {
+        //get date
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
 
+        FriendsRef.child(currentUserId).child(other_user_id).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    //add friend in DB
+                    FriendsRef.child(other_user_id).child(currentUserId).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                //remove request in DB
+                                RequestRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            RequestRef.child(other_user_id).child(currentUserId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        btn_add_friend.setEnabled(true);
+                                                        CURRENT_STATE = "friends";
+                                                        btn_add_friend.setText("Unfriend");
+
+                                                        btn_decline.setVisibility(View.INVISIBLE);
+                                                        btn_decline.setEnabled(false);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+    private void CancelFriendRequest() {
         RequestRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -113,9 +162,6 @@ public class PersonProfileActivity extends AppCompatActivity {
     }
 
     private void SaveRequestToDatabase() {
-        String send_ref = "friendRequests/" + currentUserId;
-        String receive_ref = "friendRequests/" + other_user_id;
-
         RequestRef.child(currentUserId).child(other_user_id).child("type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -212,6 +258,12 @@ public class PersonProfileActivity extends AppCompatActivity {
                     if (request_type.equals("sent")) {
                         CURRENT_STATE = "request_sent";
                         btn_add_friend.setText("Cancel Friend Request");
+                    } else if (request_type.equals("received")) {
+                        CURRENT_STATE = "request_received";
+                        btn_add_friend.setText("Accept Friend Request");
+
+                        btn_decline.setVisibility(View.VISIBLE);
+                        btn_decline.setEnabled(true);
                     }
                 }
             }
