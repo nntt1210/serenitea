@@ -97,16 +97,30 @@
             app:backgroundTint="@color/background_pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_cup_of_tea" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_cup_of_tea"
+            app:layout_constraintVertical_bias="0.169" />
+
         <Button
             android:id="@+id/btn_add"
             android:layout_width="167dp"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="Add friend"
+            android:textSize="14sp"
+            app:backgroundTint="@color/background_pink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_send" />
+        <Button
+            android:id="@+id/btn_decline"
+            android:layout_width="167dp"
+            android:layout_height="60dp"
+            android:fontFamily="@font/open_sans_extrabold"
+            android:text="Decline Friend Request"
             android:textSize="14sp"
             app:backgroundTint="@color/background_pink"
             app:layout_constraintBottom_toBottomOf="parent"

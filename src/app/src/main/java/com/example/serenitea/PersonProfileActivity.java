@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,11 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import com.google.firebase.database.ValueEventListener;
 
 public class PersonProfileActivity extends AppCompatActivity {
     /* Trang Profile của người khác (không phải của bản thân)
@@ -37,7 +36,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     private Integer cup_of_tea;
     private ImageView image_avatar;
     private TextView txtNickname, txtDob, txtCup;
-    private Button btn_send, btn_add;
+    private Button btn_send_quote, btn_add_friend, btn_decline;
 
     private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";
 
@@ -65,72 +64,57 @@ public class PersonProfileActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         InitializeFields();
-
-        view_friend = (Integer) getIntent().getIntExtra("VIEW_FRIEND", 0);
-        if (view_friend == 0) {
-            nickname = getIntent().getStringExtra("FRIEND_NICKNAME");
-            avatar = getIntent().getStringExtra("FRIEND_AVATAR");
-            dob = getIntent().getStringExtra("FRIEND_DOB");
-            gender = getIntent().getStringExtra("FRIEND_GENDER");
-            cup_of_tea = (Integer) getIntent().getIntExtra("FRIEND_CUP_OF_TEA", 0);
-
-            Resources resources = getApplicationContext().getResources();
-            final int resourceId = resources.getIdentifier(avatar, "drawable", getApplicationContext().getPackageName());
-            image_avatar.setImageResource(resourceId);
-            txtNickname.setText(nickname);
-            txtDob.setText(dob);
-            txtCup.setText(cup_of_tea.toString());
-            switch (gender) {
-                case "Male":
-                    txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_men, 0, 0, 0);
-                    break;
-                case "Female":
-                    txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_women, 0, 0, 0);
-                    break;
-            }
-            btn_send.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
-                    startActivity(sendQuoteIntent);
-                }
-            });
-
-            btn_add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SaveRequestToDatabase();
-                }
-            });
-        }
-
-        btn_send.setVisibility(View.INVISIBLE);
-        btn_send.setEnabled(false);
-
+        UpdateInfo();
         if (!currentUserId.equals(other_user_id)) {
+            btn_add_friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btn_add_friend.setEnabled(false);
+                    if (CURRENT_STATE.equals("not_friends")) {
+                        SaveRequestToDatabase();
+                    }
+                    if (CURRENT_STATE.equals("request_sent")) {
+                        CancelFriendRequest();
+                    }
 
+                }
+            });
         } else {
-            btn_send.setVisibility(View.INVISIBLE);
-            btn_send.setEnabled(false);
-            btn_add.setVisibility(View.INVISIBLE);
-            btn_add.setEnabled(false);
+            btn_decline.setVisibility(View.INVISIBLE);
+            btn_decline.setEnabled(false);
+            btn_add_friend.setVisibility(View.INVISIBLE);
+            btn_add_friend.setEnabled(false);
         }
 
+    }
+
+    private void CancelFriendRequest() {
+        String send_ref = "friendRequests/" + currentUserId;
+        String receive_ref = "friendRequests/" + other_user_id;
+
+        RequestRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    RequestRef.child(other_user_id).child(currentUserId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+//                                Toast.makeText(PersonProfileActivity.this, "request has been sent", Toast.LENGTH_LONG).show();
+                                btn_add_friend.setEnabled(true);
+                                CURRENT_STATE = "not_friends";
+                                btn_add_friend.setText("Add Friend");
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void SaveRequestToDatabase() {
         String send_ref = "friendRequests/" + currentUserId;
         String receive_ref = "friendRequests/" + other_user_id;
-
-        //get date
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
-        saveCurrentDate = currentDate.format(calendar.getTime());
-
-        //get time
-        Calendar time = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm aa");
-        saveCurrentTime = currentTime.format(time.getTime());
 
         RequestRef.child(currentUserId).child(other_user_id).child("type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -140,7 +124,10 @@ public class PersonProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(PersonProfileActivity.this, "request has been sent", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(PersonProfileActivity.this, "request has been sent", Toast.LENGTH_LONG).show();
+                                btn_add_friend.setEnabled(true);
+                                CURRENT_STATE = "request_sent";
+                                btn_add_friend.setText("Cancel Friend Request");
                             }
                         }
                     });
@@ -164,10 +151,75 @@ public class PersonProfileActivity extends AppCompatActivity {
         txtNickname = (TextView) findViewById(R.id.txt_info);
         txtDob = (TextView) findViewById(R.id.txt_dob);
         txtCup = (TextView) findViewById(R.id.txt_cup_of_tea);
-        btn_send = (Button) findViewById(R.id.btn_send);
-        btn_add = (Button) findViewById(R.id.btn_add);
+        btn_send_quote = (Button) findViewById(R.id.btn_send);
+        btn_add_friend = (Button) findViewById(R.id.btn_add);
+        btn_decline = (Button) findViewById(R.id.btn_decline);
 
         CURRENT_STATE = "not_friends";
 
+        btn_send_quote.setVisibility(View.INVISIBLE);
+        btn_send_quote.setEnabled(false);
+        btn_decline.setVisibility(View.INVISIBLE);
+        btn_decline.setEnabled(false);
+    }
+
+    private void UpdateInfo() {
+
+        view_friend = (Integer) getIntent().getIntExtra("VIEW_FRIEND", 0);
+        if (view_friend == 0) {
+            nickname = getIntent().getStringExtra("FRIEND_NICKNAME");
+            avatar = getIntent().getStringExtra("FRIEND_AVATAR");
+            dob = getIntent().getStringExtra("FRIEND_DOB");
+            gender = getIntent().getStringExtra("FRIEND_GENDER");
+            cup_of_tea = (Integer) getIntent().getIntExtra("FRIEND_CUP_OF_TEA", 0);
+
+            Resources resources = getApplicationContext().getResources();
+            final int resourceId = resources.getIdentifier(avatar, "drawable", getApplicationContext().getPackageName());
+            image_avatar.setImageResource(resourceId);
+            txtNickname.setText(nickname);
+            txtDob.setText(dob);
+            txtCup.setText(cup_of_tea.toString());
+            switch (gender) {
+                case "Male":
+                    txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_men, 0, 0, 0);
+                    break;
+                case "Female":
+                    txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_women, 0, 0, 0);
+                    break;
+            }
+            btn_send_quote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
+                    startActivity(sendQuoteIntent);
+                }
+            });
+
+        }
+
+        btn_send_quote.setVisibility(View.INVISIBLE);
+        btn_send_quote.setEnabled(false);
+        MaintenanceOfButton();
+    }
+
+    private void MaintenanceOfButton() {
+        RequestRef.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(other_user_id)) {
+                    String request_type = snapshot.child(other_user_id).child("type").getValue().toString();
+
+                    if (request_type.equals("sent")) {
+                        CURRENT_STATE = "request_sent";
+                        btn_add_friend.setText("Cancel Friend Request");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
