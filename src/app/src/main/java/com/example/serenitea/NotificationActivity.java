@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -157,7 +158,7 @@ public class NotificationActivity extends AppCompatActivity {
 //        notiList.setAdapter(firebaseRecyclerAdapter);
 //        firebaseRecyclerAdapter.startListening();
 
-        notificationAdapter = new NotificationAdapter(notificationList);
+        notificationAdapter = new NotificationAdapter(notificationList, getApplicationContext());
         notiList = (RecyclerView) findViewById(R.id.list_notification);
         linearLayoutManager = new LinearLayoutManager(this);
         notiList.setHasFixedSize(true);

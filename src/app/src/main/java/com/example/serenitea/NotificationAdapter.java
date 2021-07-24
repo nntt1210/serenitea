@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private List<Notification> notiList;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference, UserRef;
+    private Context context;
 
-    public NotificationAdapter(List<Notification> notiList) {
+    public NotificationAdapter(List<Notification> notiList, Context context) {
         this.notiList = notiList;
+        this.context = context;
     }
 
     public class NotiViewHolder extends RecyclerView.ViewHolder {
@@ -37,8 +40,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             textViewNotification = itemView.findViewById(R.id.notification_content);
         }
         public void setAvatar(String id) {
-            //int resource = getResources().getIdentifier(id, "drawable", getPackageName());
-            //imageViewAvatar.setImageResource(resource);
+            int resource = context.getResources().getIdentifier(id, "drawable", context.getPackageName());
+            imageViewAvatar.setImageResource(resource);
         }
         public void setContent(String content) {
             textViewNotification.setText(content + " sent you a quote.");
@@ -71,6 +74,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     holder.setContent(snapshot.child(fromUserID).child("nickname").getValue().toString());
+                    holder.setAvatar(snapshot.child(fromUserID).child("avatar").getValue().toString());
                 }
             }
 
