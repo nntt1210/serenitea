@@ -43,10 +43,11 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
     //private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
+    //private String other_user_id = "XL6JAqdvWOMoGddEG14JyEgLVBx2";//a@gmail.com
 
     private FirebaseAuth mAuth;
     private String currentUserId, CURRENT_STATE;
-    private DatabaseReference RootRef, RequestRef, UserRef, FriendsRef;
+    private DatabaseReference RootRef, RequestRef, ReceiveRef, UserRef, FriendsRef;
     private String saveCurrentDate, saveCurrentTime;
 
     @Override
@@ -59,6 +60,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 
         RootRef = FirebaseDatabase.getInstance().getReference();
         RequestRef = RootRef.child("friendRequests");
+        ReceiveRef = RootRef.child("receiveFriendRequests");
         UserRef = RootRef.child("users");
         FriendsRef = RootRef.child("friends");
 
@@ -123,17 +125,12 @@ public class PersonProfileActivity extends AppCompatActivity {
     }
 
     private void AcceptFriendRequest() {
-        //get date
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
-        saveCurrentDate = currentDate.format(calendar.getTime());
-
-        FriendsRef.child(currentUserId).child(other_user_id).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FriendsRef.child(currentUserId).child(other_user_id).child("type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     //add friend in DB
-                    FriendsRef.child(other_user_id).child(currentUserId).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    FriendsRef.child(other_user_id).child(currentUserId).child("type").setValue("received").addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -146,16 +143,24 @@ public class PersonProfileActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        btn_add_friend.setEnabled(true);
-                                                        CURRENT_STATE = "friends";
-                                                        btn_add_friend.setText("Unfriend");
+
+                                                        ReceiveRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    btn_add_friend.setEnabled(true);
+                                                                    CURRENT_STATE = "friends";
+                                                                    btn_add_friend.setText("Unfriend");
 
 
-                                                        btn_decline.setVisibility(View.INVISIBLE);
-                                                        btn_decline.setEnabled(false);
+                                                                    btn_decline.setVisibility(View.INVISIBLE);
+                                                                    btn_decline.setEnabled(false);
 
-                                                        btn_send_quote.setVisibility(View.VISIBLE);
-                                                        btn_send_quote.setEnabled(true);
+                                                                    btn_send_quote.setVisibility(View.VISIBLE);
+                                                                    btn_send_quote.setEnabled(true);
+                                                                }
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             });
@@ -180,12 +185,19 @@ public class PersonProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                btn_add_friend.setEnabled(true);
-                                CURRENT_STATE = "not_friends";
-                                btn_add_friend.setText("Add Friend");
+                                ReceiveRef.child(other_user_id).child(currentUserId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            btn_add_friend.setEnabled(true);
+                                            CURRENT_STATE = "not_friends";
+                                            btn_add_friend.setText("Add Friend");
 
-                                btn_decline.setVisibility(View.INVISIBLE);
-                                btn_decline.setEnabled(false);
+                                            btn_decline.setVisibility(View.INVISIBLE);
+                                            btn_decline.setEnabled(false);
+                                        }
+                                    }
+                                });
                             }
                         }
                     });
@@ -195,6 +207,11 @@ public class PersonProfileActivity extends AppCompatActivity {
     }
 
     private void SaveRequestToDatabase() {
+        //get date
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
         RequestRef.child(currentUserId).child(other_user_id).child("type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -203,10 +220,16 @@ public class PersonProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-//                                Toast.makeText(PersonProfileActivity.this, "request has been sent", Toast.LENGTH_LONG).show();
-                                btn_add_friend.setEnabled(true);
-                                CURRENT_STATE = "request_sent";
-                                btn_add_friend.setText("Cancel Request");
+                                ReceiveRef.child(other_user_id).child(currentUserId).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            btn_add_friend.setEnabled(true);
+                                            CURRENT_STATE = "request_sent";
+                                            btn_add_friend.setText("Cancel Request");
+                                        }
+                                    }
+                                });
                             }
                         }
                     });
@@ -277,7 +300,7 @@ public class PersonProfileActivity extends AppCompatActivity {
             btn_decline.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CancelFriendRequest();
+                    DeclineFriendRequest();
                 }
             });
 
@@ -286,6 +309,36 @@ public class PersonProfileActivity extends AppCompatActivity {
         btn_send_quote.setVisibility(View.INVISIBLE);
         btn_send_quote.setEnabled(false);
         MaintenanceOfButton();
+    }
+
+    private void DeclineFriendRequest() {
+        RequestRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    RequestRef.child(other_user_id).child(currentUserId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                ReceiveRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            btn_add_friend.setEnabled(true);
+                                            CURRENT_STATE = "not_friends";
+                                            btn_add_friend.setText("Add Friend");
+
+                                            btn_decline.setVisibility(View.INVISIBLE);
+                                            btn_decline.setEnabled(false);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void MaintenanceOfButton() {
