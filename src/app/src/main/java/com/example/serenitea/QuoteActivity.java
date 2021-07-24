@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class QuoteActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         QuoteView = (TextView)findViewById(R.id.text_quote);
+        QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GetEmotion();
         GenerateQuote();
     }
