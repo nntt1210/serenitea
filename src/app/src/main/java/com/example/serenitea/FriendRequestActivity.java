@@ -28,12 +28,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class FriendRequestActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef, ReceiveRef, UserRef, FriendsRef, RequestRef;
     String currentUserId;
     private RecyclerView requestList;
+    private String saveCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class FriendRequestActivity extends AppCompatActivity {
 
         RootRef = FirebaseDatabase.getInstance().getReference();
         ReceiveRef = RootRef.child("receiveFriendRequests").child(currentUserId);
+        RequestRef = RootRef.child("friendRequests");
+        FriendsRef = RootRef.child("friends");
         UserRef = RootRef.child("users");
 
         //event click Back
@@ -174,6 +180,7 @@ public class FriendRequestActivity extends AppCompatActivity {
     }
 
     private void DeclineFriendRequest(String other_user_id) {
+//        Toast.makeText(FriendRequestActivity.this, "decline "+other_user_id, Toast.LENGTH_LONG).show();
         RequestRef.child(currentUserId).child(other_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -182,7 +189,7 @@ public class FriendRequestActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                ReceiveRef.child(currentUserId).child(other_user_id).removeValue();
+                                ReceiveRef.child(other_user_id).removeValue();
                             }
                         }
                     });
@@ -192,12 +199,18 @@ public class FriendRequestActivity extends AppCompatActivity {
     }
 
     private void AcceptFriendRequest(String other_user_id) {
-        FriendsRef.child(currentUserId).child(other_user_id).child("type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
+        //get date
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+
+        FriendsRef.child(currentUserId).child(other_user_id).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     //add friend in DB
-                    FriendsRef.child(other_user_id).child(currentUserId).child("type").setValue("received").addOnCompleteListener(new OnCompleteListener<Void>() {
+                    FriendsRef.child(other_user_id).child(currentUserId).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -210,7 +223,7 @@ public class FriendRequestActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        ReceiveRef.child(currentUserId).child(other_user_id).removeValue();
+                                                        ReceiveRef.child(other_user_id).removeValue();
                                                     }
                                                 }
                                             });
