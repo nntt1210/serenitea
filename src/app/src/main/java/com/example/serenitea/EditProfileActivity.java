@@ -167,7 +167,8 @@ public class EditProfileActivity extends AppCompatActivity {
     public void Save()
     {
         if (isNameChanged()||isDoBChanged()||isGenderChanged())
-            Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
+            {Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
+                SendUserToSettingActivity();}
         else
             Toast.makeText(EditProfileActivity.this,"Data is the same and can not be changed",Toast.LENGTH_SHORT).show();
     }
@@ -197,5 +198,11 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         else
             return false;
+    }
+    private void SendUserToSettingActivity() {
+        Intent intent = new Intent(EditProfileActivity.this, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }
