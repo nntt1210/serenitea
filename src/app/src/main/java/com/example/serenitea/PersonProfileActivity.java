@@ -27,7 +27,7 @@ Một số hàm:
     private Integer cup_of_tea;
     private ImageView image_avatar;
     private TextView txtNickname, txtDob, txtCup;
-    private Button btn_send_or_add;
+    private Button btn_send, btn_add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,8 @@ Một số hàm:
         txtNickname = (TextView)findViewById(R.id.txt_info);
         txtDob = (TextView)findViewById(R.id.txt_dob);
         txtCup = (TextView)findViewById(R.id.txt_cup_of_tea);
-        btn_send_or_add = (Button)findViewById(R.id.btn_send_or_add);
+        btn_send = (Button)findViewById(R.id.btn_send);
+        btn_add = (Button)findViewById(R.id.btn_add);
 
         view_friend = (Integer)getIntent().getIntExtra("VIEW_FRIEND", 0);
         if (view_friend == 0) {
@@ -68,7 +69,7 @@ Một số hàm:
                     txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_women, 0, 0, 0);
                     break;
             }
-            btn_send_or_add.setOnClickListener(new View.OnClickListener() {
+            btn_send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
