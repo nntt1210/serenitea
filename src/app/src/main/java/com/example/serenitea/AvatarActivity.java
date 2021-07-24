@@ -53,12 +53,14 @@ public class AvatarActivity extends AppCompatActivity {
                     Intent intent = new Intent(AvatarActivity.this, EditProfileActivity.class);
                     intent.putExtra("EDIT_AVATAR", logos[position]);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     if(view.getId() == R.id.btn) {
                         Intent intent = new Intent(AvatarActivity.this, SetupActivity.class);
                         intent.putExtra("AVATAR", logos[position]);
                         startActivity(intent);
+                        finish();
                     }
                 }
             }

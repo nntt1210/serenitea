@@ -78,6 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(EditProfileActivity.this, AvatarActivity.class);
                 intent.putExtra("EDIT_AVATAR", 1);
                 startActivity(intent);
+                finish();
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -164,8 +165,8 @@ public class EditProfileActivity extends AppCompatActivity {
         if (isNameChanged()||isDoBChanged()||isGenderChanged()||isAvaChanged())
             {
                 Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
-                SendUserToSettingActivity();
                 finish();
+//                SendUserToSettingActivity();
             }
         else
             Toast.makeText(EditProfileActivity.this,"Data is the same and can not be changed",Toast.LENGTH_SHORT).show();
