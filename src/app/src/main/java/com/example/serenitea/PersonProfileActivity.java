@@ -41,8 +41,8 @@ public class PersonProfileActivity extends AppCompatActivity {
     private TextView txtNickname, txtDob, txtCup;
     private Button btn_send_quote, btn_add_friend, btn_decline;
 
-    //private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
-    private String other_user_id = "vGInau6zh9cIkW4KLeO4GGl2DWg1";//b@ny.com
+    private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
+    //private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
 
     private FirebaseAuth mAuth;
     private String currentUserId, CURRENT_STATE;
