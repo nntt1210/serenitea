@@ -67,9 +67,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setDefault();
 
-        avatar = (Integer)getIntent().getIntExtra("EDIT_AVATAR", R.drawable.avatar_2);
+        avatar = (Integer)getIntent().getIntExtra("EDIT_AVATAR", 0);
         btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
-        if (avatar != null) {
+        if (avatar != 0) {
             btnChooseAvatar.setImageResource(avatar);
         }
         btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +112,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     dob = snapshot.child("dob").getValue().toString();
                     cot = snapshot.child("tea").getValue().toString();
                     ava_id=snapshot.child("avatar").getValue().toString();
+                    if (avatar == 0) {
+                        int resourceId = getResources().getIdentifier(ava_id, "drawable", getApplicationContext().getPackageName());
+                        btnChooseAvatar.setImageResource(resourceId);
+                    }
                     txtNickName.setText(name);
                     DoB.setText(dob);
                     getDMY(dob);
@@ -157,9 +161,11 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     public void Save()
     {
-        if (isNameChanged()||isDoBChanged()||isGenderChanged())
-            {Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
-                SendUserToSettingActivity();}
+        if (isNameChanged()||isDoBChanged()||isGenderChanged()||isAvaChanged())
+            {
+                Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
+                finish();
+            }
         else
             Toast.makeText(EditProfileActivity.this,"Data is the same and can not be changed",Toast.LENGTH_SHORT).show();
     }
@@ -191,9 +197,10 @@ public class EditProfileActivity extends AppCompatActivity {
             return false;
     }
     public boolean isAvaChanged(){
-        if ((!ava_id.equals(spGender.getSelectedItem().toString())) &&(!spGender.getSelectedItem().toString().equals("Gender")))
+        String avatar_id =  getResources().getResourceEntryName(avatar);
+        if ((!ava_id.equals(avatar_id)))
         {
-            userRef.child("gender").setValue(spGender.getSelectedItem().toString());
+            userRef.child("avatar").setValue(avatar_id);
             return true;
         }
         else
