@@ -42,7 +42,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     private Button btn_send_quote, btn_add_friend, btn_decline;
 
     //private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
-    private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
+    private String other_user_id = "vGInau6zh9cIkW4KLeO4GGl2DWg1";//b@ny.com
 
     private FirebaseAuth mAuth;
     private String currentUserId, CURRENT_STATE;
@@ -150,6 +150,7 @@ public class PersonProfileActivity extends AppCompatActivity {
                                                         CURRENT_STATE = "friends";
                                                         btn_add_friend.setText("Unfriend");
 
+
                                                         btn_decline.setVisibility(View.INVISIBLE);
                                                         btn_decline.setEnabled(false);
 
@@ -205,7 +206,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 //                                Toast.makeText(PersonProfileActivity.this, "request has been sent", Toast.LENGTH_LONG).show();
                                 btn_add_friend.setEnabled(true);
                                 CURRENT_STATE = "request_sent";
-                                btn_add_friend.setText("Cancel Friend Request");
+                                btn_add_friend.setText("Cancel Request");
                             }
                         }
                     });
@@ -296,10 +297,10 @@ public class PersonProfileActivity extends AppCompatActivity {
 
                     if (request_type.equals("sent")) {
                         CURRENT_STATE = "request_sent";
-                        btn_add_friend.setText("Cancel Friend Request");
+                        btn_add_friend.setText("Cancel Request");
                     } else if (request_type.equals("received")) {
                         CURRENT_STATE = "request_received";
-                        btn_add_friend.setText("Accept Friend Request");
+                        btn_add_friend.setText("Accept");
 
                         btn_decline.setVisibility(View.VISIBLE);
                         btn_decline.setEnabled(true);
