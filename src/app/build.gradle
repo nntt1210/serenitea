@@ -10,7 +10,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/Users/Study/serenitea/src/app/external/debug.keystore")
+            storeFile file("/external/debug.keystore")
         }
     }
 
@@ -56,4 +56,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:7.2.0'
 }

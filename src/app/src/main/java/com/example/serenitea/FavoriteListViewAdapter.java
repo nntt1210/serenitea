@@ -28,7 +28,7 @@ public class FavoriteListViewAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         //Trả về một ID của phần
-        return listFavorite.get(position).quoteID;
+        return listFavorite.get(position).getQuoteID();
     }
 
     @Override
@@ -44,8 +44,8 @@ public class FavoriteListViewAdapter extends BaseAdapter {
 
         //Bind sữ liệu phần tử vào View
         Quote quote = (Quote)getItem(position);
-        ((TextView)viewProduct.findViewById(R.id.favorite_content)).setText(String.format("%s", quote.content));
-        ((TextView)viewProduct.findViewById(R.id.favorite_date)).setText(String.format("%s", quote.date));
+        ((TextView)viewProduct.findViewById(R.id.favorite_content)).setText(String.format("%s", quote.getContent()));
+        ((TextView)viewProduct.findViewById(R.id.favorite_date)).setText(String.format("%s", quote.getDate()));
 
 
         return viewProduct;
