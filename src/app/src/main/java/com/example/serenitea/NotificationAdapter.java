@@ -39,10 +39,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             imageViewAvatar = itemView.findViewById(R.id.notification_avatar);
             textViewNotification = itemView.findViewById(R.id.notification_content);
         }
+
         public void setAvatar(String id) {
             int resource = context.getResources().getIdentifier(id, "drawable", context.getPackageName());
             imageViewAvatar.setImageResource(resource);
         }
+
         public void setContent(String content) {
             textViewNotification.setText(content + " sent you a quote.");
         }
@@ -72,7 +74,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         UserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     holder.setContent(snapshot.child(fromUserID).child("nickname").getValue().toString());
                     holder.setAvatar(snapshot.child(fromUserID).child("avatar").getValue().toString());
                 }
