@@ -44,11 +44,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private Integer avatar;
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private DatabaseReference userRef;
-    private String name,dob,cot,gender;
+    private String name,dob,cot,gender,ava_id;
     private int db_day, db_month, db_year;
     private String curUser;
     private DatePickerDialog picker;
-    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,6 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSave= (Button) findViewById(R.id.btn_save);
 
         setDefault();
-
 
         avatar = (Integer)getIntent().getIntExtra("EDIT_AVATAR", R.drawable.avatar_2);
         btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
@@ -88,13 +86,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 Save();
             }
         });
-    }
-
-    private void updateLabel() {
-        String myFormat = "dd/MM/yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        DoB.setText(sdf.format(myCalendar.getTime()));
     }
 
     @Override
@@ -120,6 +111,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     gender = snapshot.child("gender").getValue().toString();
                     dob = snapshot.child("dob").getValue().toString();
                     cot = snapshot.child("tea").getValue().toString();
+                    ava_id=snapshot.child("avatar").getValue().toString();
                     txtNickName.setText(name);
                     DoB.setText(dob);
                     getDMY(dob);
@@ -154,7 +146,6 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError error) { }
 
         });
-
 
     }
     public void getDMY(String dob)
@@ -192,6 +183,15 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     public boolean isGenderChanged(){
         if ((!gender.equals(spGender.getSelectedItem().toString())) &&(!spGender.getSelectedItem().toString().equals("Gender")))
+        {
+            userRef.child("gender").setValue(spGender.getSelectedItem().toString());
+            return true;
+        }
+        else
+            return false;
+    }
+    public boolean isAvaChanged(){
+        if ((!ava_id.equals(spGender.getSelectedItem().toString())) &&(!spGender.getSelectedItem().toString().equals("Gender")))
         {
             userRef.child("gender").setValue(spGender.getSelectedItem().toString());
             return true;
