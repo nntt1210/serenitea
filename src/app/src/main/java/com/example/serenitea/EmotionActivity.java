@@ -122,6 +122,11 @@ public class EmotionActivity extends Fragment {
                 }
                 else
                 {
+                    for(int i = 0; i<5; i++)
+                    {
+                        update = 0;
+                        diaryRef.child(String.valueOf(i+1)).setValue(update);
+                    }
                     update = 1;
                     diaryRef.child(String.valueOf(emotion)).setValue(update);
                 }
