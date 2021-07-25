@@ -146,7 +146,7 @@ public class SetupActivity extends AppCompatActivity {
         String nickname = NickName.getText().toString();
         String gender = gender_value;
         String dob = DoB.getText().toString();
-
+        String email=mAuth.getCurrentUser().getEmail().toString();
         if(TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         }
@@ -168,6 +168,7 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("nickname",nickname);
             userMap.put("gender",gender);
             userMap.put("dob",dob);
+            userMap.put("email",email);
             userMap.put("tea",5);
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
