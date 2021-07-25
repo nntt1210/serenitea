@@ -1,11 +1,17 @@
 package com.example.serenitea;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -67,18 +73,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setDefault();
 
-        avatar = (Integer)getIntent().getIntExtra("EDIT_AVATAR", 0);
         btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
-        if (avatar != 0) {
-            btnChooseAvatar.setImageResource(avatar);
-        }
+
         btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EditProfileActivity.this, AvatarActivity.class);
                 intent.putExtra("EDIT_AVATAR", 1);
                 startActivity(intent);
-                finish();
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +89,16 @@ public class EditProfileActivity extends AppCompatActivity {
                 Save();
             }
         });
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sp = getSharedPreferences("EDIT", 0);
+        avatar = sp.getInt("EDIT_AVATAR", 0);
+        btnChooseAvatar.setImageResource(avatar);
     }
 
     @Override
@@ -113,10 +125,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     dob = snapshot.child("dob").getValue().toString();
                     cot = snapshot.child("tea").getValue().toString();
                     ava_id=snapshot.child("avatar").getValue().toString();
-                    if (avatar == 0) {
-                        int resourceId = getResources().getIdentifier(ava_id, "drawable", getApplicationContext().getPackageName());
-                        btnChooseAvatar.setImageResource(resourceId);
-                    }
+                    int resourceId = getResources().getIdentifier(ava_id, "drawable", getApplicationContext().getPackageName());
+                    btnChooseAvatar.setImageResource(resourceId);
                     txtNickName.setText(name);
                     DoB.setText(dob);
                     getDMY(dob);
@@ -166,7 +176,6 @@ public class EditProfileActivity extends AppCompatActivity {
             {
                 Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
                 finish();
-//                SendUserToSettingActivity();
             }
         else
             Toast.makeText(EditProfileActivity.this,"Data is the same and can not be changed",Toast.LENGTH_SHORT).show();

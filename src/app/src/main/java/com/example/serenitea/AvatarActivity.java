@@ -5,7 +5,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -50,9 +52,10 @@ public class AvatarActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(avatar == 1) {
-                    Intent intent = new Intent(AvatarActivity.this, EditProfileActivity.class);
-                    intent.putExtra("EDIT_AVATAR", logos[position]);
-                    startActivity(intent);
+                    SharedPreferences sp = getSharedPreferences("EDIT", 0);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putInt("EDIT_AVATAR",logos[position]);
+                    editor.commit();
                     finish();
                 }
                 else {
