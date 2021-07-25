@@ -172,7 +172,8 @@ public class EditProfileActivity extends AppCompatActivity {
     }
     public void Save()
     {
-        if (isNameChanged()||isDoBChanged()||isGenderChanged()||isAvaChanged())
+        boolean flag1=isNameChanged(),flag2=isDoBChanged(),flag3=isGenderChanged(),flag4=isAvaChanged();
+        if (flag1||flag2||flag3||flag4)
             {
                 Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
                 finish();
