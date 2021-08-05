@@ -1,14 +1,8 @@
 package com.example.serenitea;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,6 +14,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,18 +25,19 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
 public class SetupActivity extends AppCompatActivity {
-/* Trang Setup dùng để
-- Sau khi user đăng kí xong, hiện trang này để user điền thông tin cá nhân.
-- Khi cần chỉnh sửa profile.
-* Một số hàm:
-- Kiểm tra và lưu info user xuống database --> SaveAccountInformation()
-- Hàm update (có thể viết riêng, hoặc viết chung với hàm SaveAccountInformation() phía trên)
-- Một số hàm SendUserTo...Activity()
-* */
+    /* Trang Setup dùng để
+    - Sau khi user đăng kí xong, hiện trang này để user điền thông tin cá nhân.
+    - Khi cần chỉnh sửa profile.
+    * Một số hàm:
+    - Kiểm tra và lưu info user xuống database --> SaveAccountInformation()
+    - Hàm update (có thể viết riêng, hoặc viết chung với hàm SaveAccountInformation() phía trên)
+    - Một số hàm SendUserTo...Activity()
+    * */
     private ImageButton btnChooseAvatar;
     private Integer avatar;
     private EditText NickName, DoB;
@@ -72,9 +70,8 @@ public class SetupActivity extends AppCompatActivity {
         UsersRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId);
 
 
-
-        btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
-        avatar = (Integer)getIntent().getIntExtra("AVATAR", R.drawable.avatar_2);
+        btnChooseAvatar = (ImageButton) findViewById(R.id.btn_choose_avatar);
+        avatar = (Integer) getIntent().getIntExtra("AVATAR", R.drawable.avatar_2);
         btnChooseAvatar.setImageResource(avatar);
 
         //get text from input
@@ -108,15 +105,6 @@ public class SetupActivity extends AppCompatActivity {
             }
         });
 
-        //select avatar
-//        btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent avatarIntent = new Intent(SetupActivity.this, AvatarActivity.class);
-//                startActivity(avatarIntent);
-//            }
-//        });
-
         //select gender
         Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -137,27 +125,34 @@ public class SetupActivity extends AppCompatActivity {
                 SaveAccountSetupInformation();
             }
         });
-
-
     }
 
     private void SaveAccountSetupInformation() {
-        String avatar_id =  getResources().getResourceEntryName(avatar);
+        String avatar_id = getResources().getResourceEntryName(avatar);
         String nickname = NickName.getText().toString();
         String gender = gender_value;
         String dob = DoB.getText().toString();
+        boolean isValidateDate = true;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            if (format.parse(dob).after(date)) {
+                isValidateDate = false;
+            }
 
-        if(TextUtils.isEmpty(nickname)) {
+        } catch (java.text.ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (TextUtils.isEmpty(nickname)) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-        }
-        else if(gender.equals("Gender")){
-            Toast.makeText(this,"Please choose your gender", Toast.LENGTH_SHORT).show();
-        }
-        // TODO: Validate DoB, nếu được thì nên tạo lịch, bấm chọn trong đó
-        else if(TextUtils.isEmpty(dob)){
-            Toast.makeText(this,"Please enter Date of birth", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else if (gender.equals("Gender")) {
+            Toast.makeText(this, "Please choose your gender", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(dob)) {
+            Toast.makeText(this, "Please enter Date of birth", Toast.LENGTH_SHORT).show();
+        } else if (!isValidateDate) {
+            Toast.makeText(this, "Your DoB is not valid", Toast.LENGTH_SHORT).show();
+        } else {
             loadingBar.setTitle("Saving Information");
             loadingBar.setMessage("Please wait a moment...");
             loadingBar.show();
@@ -165,20 +160,19 @@ public class SetupActivity extends AppCompatActivity {
 
             HashMap userMap = new HashMap();
             userMap.put("avatar", avatar_id);
-            userMap.put("nickname",nickname);
-            userMap.put("gender",gender);
-            userMap.put("dob",dob);
-            userMap.put("tea",5);
+            userMap.put("nickname", nickname);
+            userMap.put("gender", gender);
+            userMap.put("dob", dob);
+            userMap.put("tea", 5);
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         SendUserToEmotionActivity();
-                        Toast.makeText(SetupActivity.this,"Your information is saved successfully",Toast.LENGTH_LONG).show();
-                    }
-                    else{
+                        Toast.makeText(SetupActivity.this, "Your information is saved successfully", Toast.LENGTH_LONG).show();
+                    } else {
                         String message = task.getException().getMessage();
-                        Toast.makeText(SetupActivity.this,"Error: " + message,Toast.LENGTH_LONG).show();
+                        Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_LONG).show();
                     }
                     loadingBar.dismiss();
                 }
@@ -191,7 +185,7 @@ public class SetupActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private void SendUserToEmotionActivity(){
+    private void SendUserToEmotionActivity() {
         Intent emotionIntent = new Intent(SetupActivity.this, MainActivity.class);
         emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(emotionIntent);
