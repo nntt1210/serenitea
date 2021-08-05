@@ -163,7 +163,7 @@ public class SetupActivity extends AppCompatActivity {
             userMap.put("nickname", nickname);
             userMap.put("gender", gender);
             userMap.put("dob", dob);
-            userMap.put("tea", 5);
+            userMap.put("tea", 0);
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
