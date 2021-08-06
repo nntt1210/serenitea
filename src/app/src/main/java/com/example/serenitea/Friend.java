@@ -6,6 +6,7 @@ public class Friend {
     String dob;
     int cup_of_tea;
     String gender;
+    String email;
 
     public Friend(String nickname, String avatar_id, String dob, int cup_of_tea, String gender) {
         this.nickname = nickname;
