@@ -51,7 +51,7 @@ public class Notification implements Comparable<Notification> {
 
     @Override
     public int compareTo(Notification o) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         try {
             return format.parse(o.getDate()).compareTo(format.parse(this.getDate()));

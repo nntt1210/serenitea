@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -67,10 +68,10 @@ public class FriendRequestActivity extends AppCompatActivity {
     }
 
     private void DisplayAllRequest() {
-
+        Query SortFriendRequest = ReceiveRef.orderByChild("date");
         FirebaseRecyclerOptions<Notification> options =
                 new FirebaseRecyclerOptions.Builder<Notification>()
-                        .setQuery(ReceiveRef, Notification.class)
+                        .setQuery(SortFriendRequest, Notification.class)
                         .build();
 
         FirebaseRecyclerAdapter<Notification, FriendRequestActivity.RequestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Notification, FriendRequestActivity.RequestViewHolder>(options) {
@@ -79,7 +80,7 @@ public class FriendRequestActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull FriendRequestActivity.RequestViewHolder holder, int position, Notification model) {
                 String each_sender = getRef(position).getKey();
 
-                ReceiveRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                SortFriendRequest.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
@@ -201,7 +202,7 @@ public class FriendRequestActivity extends AppCompatActivity {
     private void AcceptFriendRequest(String other_user_id) {
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
 
