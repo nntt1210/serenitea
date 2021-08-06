@@ -28,17 +28,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.widget.ImageButton;
+import android.widget.ListView;
+
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class FriendRequestActivity extends AppCompatActivity {
+
 
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef, ReceiveRef, UserRef, FriendsRef, RequestRef;
     String currentUserId;
     private RecyclerView requestList;
     private String saveCurrentDate;
-
+    private ImageButton btnClose;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +58,13 @@ public class FriendRequestActivity extends AppCompatActivity {
         FriendsRef = RootRef.child("friends");
         UserRef = RootRef.child("users");
 
-        //event click Back
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        btnClose = findViewById(R.id.btn_close_friend_req);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         requestList = (RecyclerView) findViewById(R.id.list_friend_request);
         requestList.setLayoutManager(new LinearLayoutManager(this));
@@ -168,16 +175,7 @@ public class FriendRequestActivity extends AppCompatActivity {
         }
 
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    
 
     private void DeclineFriendRequest(String other_user_id) {
 //        Toast.makeText(FriendRequestActivity.this, "decline "+other_user_id, Toast.LENGTH_LONG).show();
