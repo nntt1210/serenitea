@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -36,9 +38,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText txtNickName;
     private Spinner spGender;
     private Integer avatar;
-    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference userRef;
-    private String name,dob,cot,gender,ava_id;
+    private String name, dob, cot, gender, ava_id;
     private int db_day, db_month, db_year;
     private String curUser;
     private DatePickerDialog picker;
@@ -55,13 +57,13 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         DoB = (EditText) findViewById(R.id.setup_dob);
-        txtNickName= (EditText) findViewById(R.id.setup_nickname);
-        spGender= (Spinner) findViewById(R.id.spinner);
-        btnSave= (Button) findViewById(R.id.btn_save);
+        txtNickName = (EditText) findViewById(R.id.setup_nickname);
+        spGender = (Spinner) findViewById(R.id.spinner);
+        btnSave = (Button) findViewById(R.id.btn_save);
 
         setDefault();
 
-        btnChooseAvatar = (ImageButton)findViewById(R.id.btn_choose_avatar);
+        btnChooseAvatar = (ImageButton) findViewById(R.id.btn_choose_avatar);
 
         btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +79,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 Save();
             }
         });
-
     }
 
 
@@ -101,6 +102,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void setDefault() {
         curUser = mAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("users").child(curUser);
@@ -112,26 +114,25 @@ public class EditProfileActivity extends AppCompatActivity {
                     gender = snapshot.child("gender").getValue().toString();
                     dob = snapshot.child("dob").getValue().toString();
                     cot = snapshot.child("tea").getValue().toString();
-                    ava_id=snapshot.child("avatar").getValue().toString();
+                    ava_id = snapshot.child("avatar").getValue().toString();
                     int resourceId = getResources().getIdentifier(ava_id, "drawable", getApplicationContext().getPackageName());
                     btnChooseAvatar.setImageResource(resourceId);
                     txtNickName.setText(name);
                     DoB.setText(dob);
                     getDMY(dob);
-                    if (gender.equals("Female")){
+                    if (gender.equals("Female")) {
                         spGender.setSelection(2);
-                    }
-                    else if (gender.equals("Male")){
+                    } else if (gender.equals("Male")) {
                         spGender.setSelection(1);
                     }
                     DoB.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //final Calendar cldr = Calendar.getInstance();
-                            int day = db_day ;
+                            int day = db_day;
                             int month = db_month;
                             int year = db_year;
-                            month-=1;
+                            month -= 1;
                             // date picker dialog
                             picker = new DatePickerDialog(EditProfileActivity.this,
                                     new DatePickerDialog.OnDateSetListener() {
@@ -145,67 +146,80 @@ public class EditProfileActivity extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError error) { }
-
-        });
-
-    }
-    public void getDMY(String dob)
-    {
-        StringTokenizer str= new StringTokenizer(dob,"/");
-        db_day=Integer.parseInt(str.nextToken());
-        db_month=Integer.parseInt(str.nextToken());
-        db_year=Integer.parseInt(str.nextToken());
-    }
-    public void Save()
-    {
-        boolean flag1=isNameChanged(),flag2=isDoBChanged(),flag3=isGenderChanged(),flag4=isAvaChanged();
-        if (flag1||flag2||flag3||flag4)
-            {
-                Toast.makeText(EditProfileActivity.this,"Data has been changed",Toast.LENGTH_SHORT).show();
-                finish();
+            public void onCancelled(DatabaseError error) {
             }
-        else
-            Toast.makeText(EditProfileActivity.this,"Data is the same and can not be changed",Toast.LENGTH_SHORT).show();
+        });
     }
-    public boolean isNameChanged(){
-        if ((!name.equals(txtNickName.getText().toString())) &&(!txtNickName.getText().toString().isEmpty()) )
-        {
+
+    public void getDMY(String dob) {
+        StringTokenizer str = new StringTokenizer(dob, "/");
+        db_day = Integer.parseInt(str.nextToken());
+        db_month = Integer.parseInt(str.nextToken());
+        db_year = Integer.parseInt(str.nextToken());
+    }
+
+    public void Save() {
+        boolean flag1 = isNameChanged(), flag2 = isDoBChanged(), flag3 = isGenderChanged(), flag4 = isAvaChanged();
+
+        if (flag1 || flag2 || flag3 || flag4) {
+            Toast.makeText(EditProfileActivity.this, "Data has been changed", Toast.LENGTH_SHORT).show();
+            finish();
+        } else
+            Toast.makeText(EditProfileActivity.this, "Data is the same and can not be changed", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean isValidateDate() {
+        String newDate = DoB.getText().toString();
+        boolean isValid = true;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            if (format.parse(newDate).after(date)) {
+                isValid = false;
+            }
+
+        } catch (java.text.ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return isValid;
+    }
+
+    public boolean isNameChanged() {
+        if ((!name.equals(txtNickName.getText().toString())) && (!txtNickName.getText().toString().isEmpty())) {
             userRef.child("nickname").setValue(txtNickName.getText().toString());
             return true;
-        }
-        else
+        } else
             return false;
     }
-    public boolean isDoBChanged(){
-        if ((!dob.equals(DoB.getText().toString())) &&(!DoB.getText().toString().isEmpty()) )
-        {
+
+    public boolean isDoBChanged() {
+        if ((!dob.equals(DoB.getText().toString())) && (!DoB.getText().toString().isEmpty())) {
             userRef.child("dob").setValue(DoB.getText().toString());
             return true;
-        }
-        else
+        } else
             return false;
     }
-    public boolean isGenderChanged(){
-        if ((!gender.equals(spGender.getSelectedItem().toString())) &&(!spGender.getSelectedItem().toString().equals("Gender")))
-        {
+
+    public boolean isGenderChanged() {
+        if ((!gender.equals(spGender.getSelectedItem().toString())) && (!spGender.getSelectedItem().toString().equals("Gender"))) {
             userRef.child("gender").setValue(spGender.getSelectedItem().toString());
             return true;
-        }
-        else
+        } else
             return false;
     }
-    public boolean isAvaChanged(){
-        String avatar_id =  getResources().getResourceEntryName(avatar);
-        if ((!ava_id.equals(avatar_id)))
-        {
+
+    public boolean isAvaChanged() {
+        String avatar_id = getResources().getResourceEntryName(avatar);
+        if ((!ava_id.equals(avatar_id))) {
             userRef.child("avatar").setValue(avatar_id);
             return true;
-        }
-        else
+        } else
             return false;
     }
+
     private void SendUserToSettingActivity() {
         Intent intent = new Intent(EditProfileActivity.this, SettingsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
