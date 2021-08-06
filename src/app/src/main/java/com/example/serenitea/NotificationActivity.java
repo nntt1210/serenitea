@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class NotificationActivity extends AppCompatActivity {
 
+    private ImageButton btnClose;
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef, NotiRef, UserRef;
     String currentUserId;
@@ -44,11 +47,13 @@ public class NotificationActivity extends AppCompatActivity {
         NotiRef = RootRef.child("notification").child(currentUserId);
         UserRef = RootRef.child("users");
 
-        //event click Back
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("");
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        btnClose = findViewById(R.id.btn_close_noti);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         DisplayAllNotification();
 

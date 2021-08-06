@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.lang.Math;
@@ -30,6 +32,8 @@ public class QuoteActivity extends AppCompatActivity {
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
+    private ImageButton btnFavorite;
+    private Boolean btnFavoriteClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,25 @@ public class QuoteActivity extends AppCompatActivity {
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GetEmotion();
         GenerateQuote();
+
+        btnFavoriteClicked = new Boolean(false);
+        btnFavorite = findViewById(R.id.btn_favorite);
+        btnFavorite.setTag(btnFavoriteClicked);
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((Boolean)btnFavorite.getTag()) == false)
+                {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                    btnFavorite.setTag(new Boolean(true));
+                }
+                else
+                {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite);
+                    btnFavorite.setTag(new Boolean(false));
+                }
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
