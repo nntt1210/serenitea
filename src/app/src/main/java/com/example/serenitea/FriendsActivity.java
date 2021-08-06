@@ -32,11 +32,9 @@ public class FriendsActivity extends Fragment {
     private ImageButton btSearch;
     private String inSearch;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    ;
-    private DatabaseReference userRef;
-    private String curId = mAuth.getCurrentUser().getUid(), curEmail = mAuth.getCurrentUser().getEmail();
-    private String name = "", cot = "", dob = "", email = "", avatar = "", gender = "", id = "";
-    private ArrayList<Friend> list = null;
+    private DatabaseReference userRef,fr_listRef;
+    private String curId = mAuth.getCurrentUser().getUid();
+    private String id;
 
     @Nullable
     @Override
@@ -44,7 +42,7 @@ public class FriendsActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_friends, container, false);
 
         userRef = FirebaseDatabase.getInstance().getReference();
-
+        friendGrid = (ExpandableHeightGridView) view.findViewById(R.id.grid_view_friend); // init GridView
 //        Toolbar toolbar = view.findViewById(R.id.friend_toolbar);
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         searchBar = (EditText) view.findViewById(R.id.search_friend_bar);
@@ -59,6 +57,45 @@ public class FriendsActivity extends Fragment {
         });
 
         listFriend = new ArrayList<>();
+        fr_listRef=FirebaseDatabase.getInstance().getReference().child("friends").child(curId);
+        fr_listRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        String each_user_id =postSnapshot.getKey().toString();
+                        userRef=FirebaseDatabase.getInstance().getReference().child("users").child(each_user_id);
+                        userRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot sn) {
+                                if (sn.exists())
+                                {
+                                    String n= sn.child("nickname").getValue().toString(),
+                                            ava=sn.child("avatar").getValue().toString(),
+                                            d=sn.child("dob").getValue().toString(),
+                                            g=sn.child("gender").getValue().toString();
+                                    int cup=Integer.parseInt(sn.child("tea").getValue().toString());
+                                    listFriend.add(new Friend(n,ava,d,cup,g));
+                                    FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
+                                    friendGrid.setAdapter(friendAdapter);
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                String message = error.getMessage();
+                                Toast.makeText(getActivity(), "error: " + message, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                String message = error.getMessage();
+                Toast.makeText(getActivity(), "error: " + message, Toast.LENGTH_SHORT).show();
+            }
+        });
 //        listFriend.add(new Friend("Mint", "avatar_11", "24/01/2001", 23, "Male"));
 //        listFriend.add(new Friend("Ziem", "avatar_3", "24/01/2001", 23, "Female"));
 //        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
@@ -76,11 +113,11 @@ public class FriendsActivity extends Fragment {
 //        listFriend.add(new Friend("Dic", "avatar_10", "24/01/2001", 23, "Male"));
 
 
-        friendGrid = (ExpandableHeightGridView) view.findViewById(R.id.grid_view_friend); // init GridView
+        //friendGrid = (ExpandableHeightGridView) view.findViewById(R.id.grid_view_friend); // init GridView
 //        friendGrid.setExpanded(true);
         // Create an object FriendAdapter and set Adapter to GirdView
-        FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
-        friendGrid.setAdapter(friendAdapter);
+//        FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
+//        friendGrid.setAdapter(friendAdapter);
 
         friendGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,44 +135,6 @@ public class FriendsActivity extends Fragment {
         return view;
     }
 
-    //
-//        public void searchBtn() {
-//        inSearch = searchBar.getText().toString();
-//        boolean flag = getData();
-//        if (flag)
-//            Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
-//        else
-//            Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
-//    }
-//
-//        public boolean getData()
-//    {
-//        Query q = FirebaseDatabase.getInstance().getReference().child("users");
-//        q.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                for (DataSnapshot item : snapshot.getChildren())
-//                {
-//                    Friend u = item.getValue(Friend.class);
-//                    if (u.email.equals(inSearch)){
-//                        name=u.nickname;
-//                        gender=u.gender;
-//                        dob=u.dob;
-//                        avatar=u.avatar_id;
-//                        cot=Integer.toString(u.cup_of_tea);
-//                        id=item.getKey();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {  }
-//        });
-//        if (name.isEmpty())
-//             return false;
-//        else
-//            return true;
-//    }
     public void getData(String email) {
         final String each_user_email;
         DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -147,7 +146,10 @@ public class FriendsActivity extends Fragment {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         String each_user_email = postSnapshot.child("email").getValue().toString();
                         if (each_user_email.equals(email)) {
-                            //get user id
+                            id=postSnapshot.getKey();
+//                            Intent intent= new Intent(getActivity(),PersonProfileActivity.class);
+//                            intent.putExtra("SEARCH_USER",1);
+//                            intent.putExtra("USER_ID",id);
                             Toast.makeText(getActivity(), postSnapshot.getKey(), Toast.LENGTH_LONG).show();
                         }
                     }
@@ -164,4 +166,5 @@ public class FriendsActivity extends Fragment {
             }
         });
     }
+
 }
