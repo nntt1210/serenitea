@@ -167,7 +167,7 @@ public class SendQuoteActivity extends AppCompatActivity {
 
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         //get time
