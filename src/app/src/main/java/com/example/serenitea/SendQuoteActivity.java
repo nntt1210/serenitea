@@ -39,7 +39,7 @@ public class SendQuoteActivity extends AppCompatActivity {
     private DatabaseReference RootRef, FavoriteQuoteRef, QuoteRef;
     String currentUserId;
     private RecyclerView sendQuoteList;
-    private String receiverID = "UfYEfxRnWDfKtTuIwet0ErVvfWd2", quoteID;
+    private String receiverID = "dOY7tj1STpXCJ0DJ6ArwTNoI0052", quoteID;
     private String saveCurrentDate, saveCurrentTime;
 
 
@@ -167,17 +167,17 @@ public class SendQuoteActivity extends AppCompatActivity {
 
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         //get time
-        Calendar time = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm aa");
-        saveCurrentTime = currentTime.format(time.getTime());
+//        Calendar time = Calendar.getInstance();
+//        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm aa");
+//        saveCurrentTime = currentTime.format(time.getTime());
 
         Map sendMap = new HashMap();
         sendMap.put("date", saveCurrentDate);
-        sendMap.put("time", saveCurrentTime);
+//        sendMap.put("time", saveCurrentTime);
         sendMap.put("quote", quoteID);
         sendMap.put("from", currentUserId);
 

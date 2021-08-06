@@ -201,7 +201,7 @@ public class FriendRequestActivity extends AppCompatActivity {
     private void AcceptFriendRequest(String other_user_id) {
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
 

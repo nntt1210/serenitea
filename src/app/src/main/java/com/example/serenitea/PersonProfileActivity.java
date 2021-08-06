@@ -41,8 +41,9 @@ public class PersonProfileActivity extends AppCompatActivity {
     private TextView txtNickname, txtDob, txtCup;
     private Button btn_send_quote, btn_add_friend, btn_decline;
 
-    private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
-    //private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
+    //private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
+    //private String other_user_id = "ITmoQN4biTWXrhJekAhzPv2WCto1";//d@ny.com
+    private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
     //private String other_user_id = "XL6JAqdvWOMoGddEG14JyEgLVBx2";//a@gmail.com
 
     private FirebaseAuth mAuth;
@@ -127,7 +128,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     private void AcceptFriendRequest() {
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         FriendsRef.child(currentUserId).child(other_user_id).child("date").setValue(saveCurrentDate).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -214,7 +215,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     private void SaveRequestToDatabase() {
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         RequestRef.child(currentUserId).child(other_user_id).child("type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
