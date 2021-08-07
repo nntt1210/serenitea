@@ -1,10 +1,12 @@
 package com.example.serenitea;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,16 +30,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public NotificationAdapter(List<Notification> notiList, Context context) {
         this.notiList = notiList;
         this.context = context;
+//        Collections.sort(this.notiList );
     }
 
     public class NotiViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewAvatar;
         TextView textViewNotification;
+        LinearLayout layoutNotification;
 
         public NotiViewHolder(View itemView) {
             super(itemView);
             imageViewAvatar = itemView.findViewById(R.id.notification_avatar);
             textViewNotification = itemView.findViewById(R.id.notification_content);
+            layoutNotification = itemView.findViewById(R.id.layout_notification);
         }
 
         public void setAvatar(String id) {
@@ -47,6 +52,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         public void setContent(String content) {
             textViewNotification.setText(content + " sent you a quote.");
+        }
+
+        public void setBackgroundLayout() {
+            //đổi màu background của notification mới
+            layoutNotification.setBackgroundColor(Color.rgb(245, 194, 197));
         }
     }
 
@@ -66,8 +76,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         String fromUserID = notification.getFrom();
         String fromDate = notification.getDate();
-        String fromTime = notification.getTime();
         String fromQuote = notification.getQuote();
+        String fromStatus = notification.getStatus();
 
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("notification").child(currentUserID);
@@ -77,6 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 if (snapshot.exists()) {
                     holder.setContent(snapshot.child(fromUserID).child("nickname").getValue().toString());
                     holder.setAvatar(snapshot.child(fromUserID).child("avatar").getValue().toString());
+                    if (fromStatus.equals("sent")) holder.setBackgroundLayout();
                 }
             }
 

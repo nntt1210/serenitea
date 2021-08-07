@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import android.widget.ImageButton;
@@ -44,6 +45,8 @@ public class FriendRequestActivity extends AppCompatActivity {
     private RecyclerView requestList;
     private String saveCurrentDate;
     private ImageButton btnClose;
+    LinearLayoutManager linearLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,27 +69,31 @@ public class FriendRequestActivity extends AppCompatActivity {
             }
         });
 
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
         requestList = (RecyclerView) findViewById(R.id.list_friend_request);
-        requestList.setLayoutManager(new LinearLayoutManager(this));
+        requestList.setLayoutManager(linearLayoutManager);
 
         DisplayAllRequest();
 
     }
 
     private void DisplayAllRequest() {
-
-        FirebaseRecyclerOptions<Notification> options =
-                new FirebaseRecyclerOptions.Builder<Notification>()
-                        .setQuery(ReceiveRef, Notification.class)
+        Query SortFriendRequest = ReceiveRef.orderByChild("date");
+        FirebaseRecyclerOptions<FriendRequest> options =
+                new FirebaseRecyclerOptions.Builder<FriendRequest>()
+                        .setQuery(SortFriendRequest, FriendRequest.class)
                         .build();
 
-        FirebaseRecyclerAdapter<Notification, FriendRequestActivity.RequestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Notification, FriendRequestActivity.RequestViewHolder>(options) {
+        FirebaseRecyclerAdapter<FriendRequest, FriendRequestActivity.RequestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest, FriendRequestActivity.RequestViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull FriendRequestActivity.RequestViewHolder holder, int position, Notification model) {
+            protected void onBindViewHolder(@NonNull FriendRequestActivity.RequestViewHolder holder, int position, FriendRequest model) {
                 String each_sender = getRef(position).getKey();
 
-                ReceiveRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                SortFriendRequest.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
@@ -199,7 +206,7 @@ public class FriendRequestActivity extends AppCompatActivity {
     private void AcceptFriendRequest(String other_user_id) {
         //get date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
 

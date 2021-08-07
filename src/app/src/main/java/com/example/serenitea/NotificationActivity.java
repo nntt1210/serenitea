@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NotificationActivity extends AppCompatActivity {
@@ -69,6 +70,7 @@ public class NotificationActivity extends AppCompatActivity {
                     notificationList.add(notification);
                     notificationAdapter.notifyDataSetChanged();
                 }
+                Collections.sort(notificationList);
             }
 
             @Override
@@ -94,6 +96,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void DisplayAllNotification() {
+
         notificationAdapter = new NotificationAdapter(notificationList, getApplicationContext());
         notiList = (RecyclerView) findViewById(R.id.list_notification);
         linearLayoutManager = new LinearLayoutManager(this);
