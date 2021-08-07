@@ -39,6 +39,7 @@ public class FriendRequestActivity extends AppCompatActivity {
     String currentUserId;
     private RecyclerView requestList;
     private String saveCurrentDate;
+    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,12 @@ public class FriendRequestActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
         requestList = (RecyclerView) findViewById(R.id.list_friend_request);
-        requestList.setLayoutManager(new LinearLayoutManager(this));
+        requestList.setLayoutManager(linearLayoutManager);
 
         DisplayAllRequest();
 
@@ -69,15 +74,15 @@ public class FriendRequestActivity extends AppCompatActivity {
 
     private void DisplayAllRequest() {
         Query SortFriendRequest = ReceiveRef.orderByChild("date");
-        FirebaseRecyclerOptions<Notification> options =
-                new FirebaseRecyclerOptions.Builder<Notification>()
-                        .setQuery(SortFriendRequest, Notification.class)
+        FirebaseRecyclerOptions<FriendRequest> options =
+                new FirebaseRecyclerOptions.Builder<FriendRequest>()
+                        .setQuery(SortFriendRequest, FriendRequest.class)
                         .build();
 
-        FirebaseRecyclerAdapter<Notification, FriendRequestActivity.RequestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Notification, FriendRequestActivity.RequestViewHolder>(options) {
+        FirebaseRecyclerAdapter<FriendRequest, FriendRequestActivity.RequestViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FriendRequest, FriendRequestActivity.RequestViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull FriendRequestActivity.RequestViewHolder holder, int position, Notification model) {
+            protected void onBindViewHolder(@NonNull FriendRequestActivity.RequestViewHolder holder, int position, FriendRequest model) {
                 String each_sender = getRef(position).getKey();
 
                 SortFriendRequest.addListenerForSingleValueEvent(new ValueEventListener() {
