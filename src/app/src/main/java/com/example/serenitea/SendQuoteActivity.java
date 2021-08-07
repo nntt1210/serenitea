@@ -180,6 +180,7 @@ public class SendQuoteActivity extends AppCompatActivity {
 //        sendMap.put("time", saveCurrentTime);
         sendMap.put("quote", quoteID);
         sendMap.put("from", currentUserId);
+        sendMap.put("status", "sent");
 
         Map detailSendMap = new HashMap();
         detailSendMap.put(data_ref + "/" + noti_push_id, sendMap);
