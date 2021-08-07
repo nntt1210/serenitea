@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -89,7 +91,20 @@ public class PersonProfileActivity extends AppCompatActivity {
                         AcceptFriendRequest();
                     }
                     if (CURRENT_STATE.equals("friends")) {
-                        UnfriendAnExistingFriend();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(PersonProfileActivity.this);
+                        builder.setMessage("Are you sure you want to remove FRIEND NAME as your friend?").setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                UnfriendAnExistingFriend();
+                            }
+                        }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                btn_add_friend.setEnabled(true);
+                            }
+                        });
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     }
 
                 }
