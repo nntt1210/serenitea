@@ -56,7 +56,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         public void setBackgroundLayout() {
             //đổi màu background của notification mới
-            layoutNotification.setBackgroundColor(Color.rgb(216, 230, 235));
+            layoutNotification.setBackgroundColor(Color.rgb(245, 194, 197));
         }
     }
 
@@ -87,7 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 if (snapshot.exists()) {
                     holder.setContent(snapshot.child(fromUserID).child("nickname").getValue().toString());
                     holder.setAvatar(snapshot.child(fromUserID).child("avatar").getValue().toString());
-                    if (fromStatus.equals("received")) holder.setBackgroundLayout();
+                    if (fromStatus.equals("sent")) holder.setBackgroundLayout();
                 }
             }
 
