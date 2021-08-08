@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotificationActivity">
+    tools:context=".FriendRequestActivity">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Notifications"
+        android:text="Friend Requests"
         android:textAllCaps="true"
-        android:textColor="@color/text_noti"
+        android:textColor="@color/text_friend_request"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
-        android:id="@+id/btn_close_noti"
+        android:id="@+id/btn_close_friend_req"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -31,11 +32,11 @@
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/text_noti" />
+        app:tint="@color/text_friend_request" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_notification"
-        android:layout_width="match_parent"
+        android:id="@+id/list_friend_request"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
         android:divider="@android:color/transparent"
@@ -43,6 +44,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
