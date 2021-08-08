@@ -161,13 +161,16 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void Save() {
-        boolean flag1 = isNameChanged(), flag2 = isDoBChanged(), flag3 = isGenderChanged(), flag4 = isAvaChanged();
-
-        if (flag1 || flag2 || flag3 || flag4) {
-            Toast.makeText(EditProfileActivity.this, "Data has been changed", Toast.LENGTH_SHORT).show();
-            finish();
-        } else
-            Toast.makeText(EditProfileActivity.this, "Data is the same and can not be changed", Toast.LENGTH_SHORT).show();
+        if (!isValidateDate()) {
+            Toast.makeText(EditProfileActivity.this, "Your date of birth is not valid", Toast.LENGTH_SHORT).show();
+        } else {
+            boolean flag1 = isNameChanged(), flag2 = isDoBChanged(), flag3 = isGenderChanged(), flag4 = isAvaChanged();
+            if (flag1 || flag2 || flag3 || flag4) {
+                Toast.makeText(EditProfileActivity.this, "Data has been changed", Toast.LENGTH_SHORT).show();
+                finish();
+            } else
+                Toast.makeText(EditProfileActivity.this, "Data is the same and can not be changed", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean isValidateDate() {
