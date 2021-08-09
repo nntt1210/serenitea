@@ -74,6 +74,10 @@ public class AvatarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                SharedPreferences sp = getSharedPreferences("EDIT", 0);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("EDIT_AVATAR", -1);
+                editor.commit();
                 finish();
                 return true;
         }

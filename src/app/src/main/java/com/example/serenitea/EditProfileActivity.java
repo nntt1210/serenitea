@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -87,7 +88,10 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sp = getSharedPreferences("EDIT", 0);
         avatar = sp.getInt("EDIT_AVATAR", 0);
-        btnChooseAvatar.setImageResource(avatar);
+        if (avatar != -1)
+        {
+            btnChooseAvatar.setImageResource(avatar);
+        }
     }
 
     @Override
@@ -161,8 +165,12 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void Save() {
-        if (!isValidateDate()) {
-            Toast.makeText(EditProfileActivity.this, "Your date of birth is not valid", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(txtNickName.getText())) {
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+        } else if (spGender.getSelectedItem().toString().equals("Gender")) {
+            Toast.makeText(this, "Please choose your gender", Toast.LENGTH_SHORT).show();
+        } else if (!isValidateDate()) {
+            Toast.makeText(this, "Your DoB is not valid", Toast.LENGTH_SHORT).show();
         } else {
             boolean flag1 = isNameChanged(), flag2 = isDoBChanged(), flag3 = isGenderChanged(), flag4 = isAvaChanged();
             if (flag1 || flag2 || flag3 || flag4) {
