@@ -27,7 +27,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference, UserRef;
     private Context context;
-    private String fromQuote;
 
     public NotificationAdapter(List<Notification> notiList, Context context) {
         this.notiList = notiList;
@@ -79,7 +78,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         String fromUserID = notification.getFrom();
         String fromDate = notification.getDate();
         String fromKey = notification.getKey();
-        fromQuote = notification.getQuote();
+        String fromQuote = notification.getQuote();
         String fromStatus = notification.getStatus();
 
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
