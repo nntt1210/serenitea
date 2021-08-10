@@ -41,6 +41,8 @@ public class EmotionActivity extends Fragment {
     private String curUser;
     private String curEmo;
     private int update = 1;
+    private String curCup;
+    private int cup;
 
     @Nullable
     @Override
@@ -74,6 +76,7 @@ public class EmotionActivity extends Fragment {
     {
         emotion = 2;
         updateEmo();
+        updateCup();
         SendUserToQuoteActivity();
     }
     private void changebtnNeutral ()
@@ -94,7 +97,24 @@ public class EmotionActivity extends Fragment {
         updateEmo();
         SendUserToQuoteActivity();
     }
+    private void updateCup ()
+    {
+        DatabaseReference cupRef = FirebaseDatabase.getInstance().getReference().child("users/"+curUser);
+        cupRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                curCup = snapshot.child("tea").getValue().toString();
+                cup = Integer.parseInt(curCup);
+                cup = cup + 1;
+                cupRef.child("tea").setValue(cup);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void updateEmo ()
     {
         Calendar c = Calendar.getInstance();

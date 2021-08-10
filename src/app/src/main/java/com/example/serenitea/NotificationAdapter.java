@@ -1,6 +1,7 @@
 package com.example.serenitea;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference, UserRef;
     private Context context;
+    private String fromQuote;
 
     public NotificationAdapter(List<Notification> notiList, Context context) {
         this.notiList = notiList;
@@ -76,7 +78,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         String fromUserID = notification.getFrom();
         String fromDate = notification.getDate();
-        String fromQuote = notification.getQuote();
+        fromQuote = notification.getQuote();
         String fromStatus = notification.getStatus();
 
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -102,7 +104,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, QuoteNotificationActivity.class);
+                intent.putExtra("Quote", fromQuote);
+                context.startActivity(intent);
             }
         });
     }
