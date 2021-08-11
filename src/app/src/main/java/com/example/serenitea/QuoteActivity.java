@@ -61,6 +61,7 @@ public class QuoteActivity extends AppCompatActivity {
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
+        isFav(QuoteID);
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,5 +152,21 @@ public class QuoteActivity extends AppCompatActivity {
     public void removeFromFav(String QuoteID){
         Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
         Ref.child(QuoteID).removeValue();
+    }
+    public void isFav(String QuoteID)
+    {
+        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+        Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(QuoteID))
+                {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                    btnFavorite.setTag(new Boolean(true));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 }
