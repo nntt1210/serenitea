@@ -4,10 +4,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Notification implements Comparable<Notification> {
-    private String date, from, quote, status;
+    private String date, from, quote, status, key;
 
     public Notification() {
 
+    }
+
+    public Notification(String key) {
+        this.key = key;
     }
 
     public Notification(String date, String from, String quote, String status) {
@@ -41,12 +45,18 @@ public class Notification implements Comparable<Notification> {
         this.quote = quote;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() { return status; }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     @Override

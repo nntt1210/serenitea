@@ -1,6 +1,7 @@
 package com.example.serenitea;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         String fromUserID = notification.getFrom();
         String fromDate = notification.getDate();
+        String fromKey = notification.getKey();
         String fromQuote = notification.getQuote();
         String fromStatus = notification.getStatus();
 
@@ -102,7 +104,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                databaseReference.child(fromKey).child("status").setValue("received");
+                Intent intent = new Intent(context, QuoteNotificationActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Quote", fromQuote);
+                context.startActivity(intent);
             }
         });
     }

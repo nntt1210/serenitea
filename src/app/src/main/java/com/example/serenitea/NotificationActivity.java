@@ -1,7 +1,5 @@
 package com.example.serenitea;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,7 +7,6 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,18 +52,32 @@ public class NotificationActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        DisplayAllNotification();
-
-        FetchNotification();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FetchNotification();
+        DisplayAllNotification();
+    }
+
+    //    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        DisplayAllNotification();
+//
+//        FetchNotification();
+//    }
+
     private void FetchNotification() {
+        notificationList.clear();
         NotiRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if (snapshot.exists()) {
+                    String key = snapshot.getKey();
                     Notification notification = snapshot.getValue(Notification.class);
+                    notification.setKey(key);
                     notificationList.add(notification);
                     notificationAdapter.notifyDataSetChanged();
                 }
