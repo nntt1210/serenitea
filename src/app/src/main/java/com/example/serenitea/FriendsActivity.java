@@ -73,9 +73,11 @@ public class FriendsActivity extends Fragment {
                                     String n= sn.child("nickname").getValue().toString(),
                                             ava=sn.child("avatar").getValue().toString(),
                                             d=sn.child("dob").getValue().toString(),
-                                            g=sn.child("gender").getValue().toString();
+                                            g=sn.child("gender").getValue().toString(),
+                                            i=sn.getKey().toString();
+
                                     int cup=Integer.parseInt(sn.child("tea").getValue().toString());
-                                    listFriend.add(new Friend(n,ava,d,cup,g));
+                                    listFriend.add(new Friend(n,ava,d,cup,g,i));
                                     FriendAdapter friendAdapter = new FriendAdapter(getActivity().getApplicationContext(), listFriend);
                                     friendGrid.setAdapter(friendAdapter);
                                 }
@@ -123,6 +125,7 @@ public class FriendsActivity extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), PersonProfileActivity.class);
+                intent.putExtra("USER_ID",listFriend.get(position).id);
                 intent.putExtra("VIEW_FRIEND", 0);
                 intent.putExtra("FRIEND_AVATAR", listFriend.get(position).avatar_id);
                 intent.putExtra("FRIEND_NICKNAME", listFriend.get(position).nickname);
@@ -147,10 +150,11 @@ public class FriendsActivity extends Fragment {
                         String each_user_email = postSnapshot.child("email").getValue().toString();
                         if (each_user_email.equals(email)) {
                             id=postSnapshot.getKey();
-//                            Intent intent= new Intent(getActivity(),PersonProfileActivity.class);
-//                            intent.putExtra("SEARCH_USER",1);
-//                            intent.putExtra("USER_ID",id);
-                            Toast.makeText(getActivity(), postSnapshot.getKey(), Toast.LENGTH_LONG).show();
+                            Intent intent= new Intent(getActivity(),PersonProfileActivity.class);
+                            intent.putExtra("USER_ID",id);
+                            sendData(id,intent);
+                            startActivity(intent);
+
                         }
                     }
                    Toast.makeText(getActivity(),"hello", Toast.LENGTH_LONG).show();
@@ -166,5 +170,33 @@ public class FriendsActivity extends Fragment {
             }
         });
     }
+    public void sendData(String id, Intent i )
+    {
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String uname,udob,uava,ugender;
+                    int ucot;
+                    uname=snapshot.child("nickname") .getValue().toString();
+                    udob=snapshot.child("dob").getValue().toString();
+                    uava= snapshot.child("avatar").getValue().toString();
+                    ugender=snapshot.child("gender").getValue().toString();
+                    ucot=Integer.parseInt(snapshot.child("tea").getValue().toString());
 
+                    i.putExtra("VIEW_FRIEND", 0);
+                    i.putExtra("FRIEND_AVATAR", uava);
+                    i.putExtra("FRIEND_NICKNAME", uname);
+                    i.putExtra("FRIEND_DOB", udob);
+                    i.putExtra("FRIEND_CUP_OF_TEA", ucot);
+                    i.putExtra("FRIEND_GENDER", ugender);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }
