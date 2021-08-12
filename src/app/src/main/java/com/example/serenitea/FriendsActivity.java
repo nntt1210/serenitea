@@ -153,8 +153,6 @@ public class FriendsActivity extends Fragment {
                             Intent intent= new Intent(getActivity(),PersonProfileActivity.class);
                             intent.putExtra("USER_ID",id);
                             sendData(id,intent);
-                            startActivity(intent);
-
                         }
                     }
                    Toast.makeText(getActivity(),"hello", Toast.LENGTH_LONG).show();
@@ -191,6 +189,7 @@ public class FriendsActivity extends Fragment {
                     i.putExtra("FRIEND_DOB", udob);
                     i.putExtra("FRIEND_CUP_OF_TEA", ucot);
                     i.putExtra("FRIEND_GENDER", ugender);
+                    startActivity(i);
                 }
             }
             @Override
