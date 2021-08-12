@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -47,7 +48,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     //private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
     //private String other_user_id = "ITmoQN4biTWXrhJekAhzPv2WCto1";//d@ny.com
     //private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
-    private String other_user_id = "XL6JAqdvWOMoGddEG14JyEgLVBx2";//a@gmail.com
+    private String other_user_id ;//a@gmail.com
 
     private FirebaseAuth mAuth;
     private String currentUserId, CURRENT_STATE;
@@ -61,7 +62,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
-
+        other_user_id = getIntent().getStringExtra("USER_ID");
         RootRef = FirebaseDatabase.getInstance().getReference();
         RequestRef = RootRef.child("friendRequests");
         ReceiveRef = RootRef.child("receiveFriendRequests");
