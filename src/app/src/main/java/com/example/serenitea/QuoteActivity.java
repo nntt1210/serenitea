@@ -12,9 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.Math;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +40,8 @@ public class QuoteActivity extends AppCompatActivity {
     private String Quote;
     private ImageButton btnFavorite;
     private Boolean btnFavoriteClicked;
-
+    private String curUser= FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+    private DatabaseReference Ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,19 +61,24 @@ public class QuoteActivity extends AppCompatActivity {
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
+        isFav(QuoteID);
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((Boolean)btnFavorite.getTag()) == false)
+                if (QuoteID.isEmpty()==false)
+                {if (((Boolean)btnFavorite.getTag()) == false)
                 {
                     btnFavorite.setImageResource(R.drawable.ic_favorite_added);
                     btnFavorite.setTag(new Boolean(true));
+                    saveToFavQuote(QuoteID);
+
                 }
                 else
                 {
                     btnFavorite.setImageResource(R.drawable.ic_favorite);
                     btnFavorite.setTag(new Boolean(false));
-                }
+                    removeFromFav(QuoteID);
+                }}
             }
         });
     }
@@ -129,5 +141,32 @@ public class QuoteActivity extends AppCompatActivity {
     }
     public void setLikeButtonQuote(){
         
+    }
+    public void saveToFavQuote(String QuoteID){
+        Date d= Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = df.format(d);
+        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+        Ref.child(QuoteID).child("date").setValue(formattedDate);
+    }
+    public void removeFromFav(String QuoteID){
+        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+        Ref.child(QuoteID).removeValue();
+    }
+    public void isFav(String QuoteID)
+    {
+        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+        Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(QuoteID))
+                {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                    btnFavorite.setTag(new Boolean(true));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 }
