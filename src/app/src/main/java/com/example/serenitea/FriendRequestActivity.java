@@ -1,20 +1,16 @@
 package com.example.serenitea;
 
-import android.app.Person;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,11 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Toast;
-
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -48,7 +39,7 @@ public class FriendRequestActivity extends AppCompatActivity {
     private RecyclerView requestList;
     private String saveCurrentDate;
     private ImageButton btnClose;
-    private  String name;
+    private String name;
     LinearLayoutManager linearLayoutManager;
 
     @Override
@@ -144,25 +135,25 @@ public class FriendRequestActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(FriendRequestActivity.this,PersonProfileActivity.class);
-                        String id= getRef(position).getKey().toString();
+                        Intent intent = new Intent(FriendRequestActivity.this, PersonProfileActivity.class);
+                        String id = getRef(position).getKey().toString();
                         //Toast.makeText(FriendRequestActivity.this,id,Toast.LENGTH_SHORT).show();
-                        intent.putExtra("USER_ID",id);
+                        intent.putExtra("USER_ID", id);
                         intent.putExtra("VIEW_FRIEND", 0);
 
                         UserRef.child(id).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists())
-                                {
+                                if (snapshot.exists()) {
                                     intent.putExtra("FRIEND_AVATAR", snapshot.child("avatar").getValue().toString());
                                     intent.putExtra("FRIEND_NICKNAME", snapshot.child("nickname").getValue().toString());
                                     intent.putExtra("FRIEND_DOB", snapshot.child("dob").getValue().toString());
-                                    intent.putExtra("FRIEND_CUP_OF_TEA",Integer.parseInt(snapshot.child("tea").getValue().toString()));
+                                    intent.putExtra("FRIEND_CUP_OF_TEA", Integer.parseInt(snapshot.child("tea").getValue().toString()));
                                     intent.putExtra("FRIEND_GENDER", snapshot.child("gender").getValue().toString());
                                     startActivity(intent);
                                 }
                             }
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -209,7 +200,7 @@ public class FriendRequestActivity extends AppCompatActivity {
         }
 
     }
-    
+
 
     private void DeclineFriendRequest(String other_user_id) {
 //        Toast.makeText(FriendRequestActivity.this, "decline "+other_user_id, Toast.LENGTH_LONG).show();
