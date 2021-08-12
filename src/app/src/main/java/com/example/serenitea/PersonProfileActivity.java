@@ -300,6 +300,7 @@ public class PersonProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
+                    sendQuoteIntent.putExtra("OTHER_UID",other_user_id);
                     startActivity(sendQuoteIntent);
                 }
             });
