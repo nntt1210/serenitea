@@ -39,7 +39,7 @@ public class SendQuoteActivity extends AppCompatActivity {
     private DatabaseReference RootRef, FavoriteQuoteRef, QuoteRef;
     String currentUserId;
     private RecyclerView sendQuoteList;
-    private String receiverID = "dOY7tj1STpXCJ0DJ6ArwTNoI0052", quoteID;
+    private String receiverID, quoteID;
     private String saveCurrentDate, saveCurrentTime;
 
 
@@ -50,7 +50,7 @@ public class SendQuoteActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
-
+        receiverID = getIntent().getStringExtra("OTHER_UID");
         RootRef = FirebaseDatabase.getInstance().getReference();
         FavoriteQuoteRef = RootRef.child("favorite").child(currentUserId);
         QuoteRef = RootRef.child("quotes");
