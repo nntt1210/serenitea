@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -13,7 +14,7 @@
             android:layout_height="100dp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/avatar_1" />
+            tools:srcCompat="@drawable/avatar_1" />
 
         <TextView
             android:id="@+id/friend_nickname"
@@ -22,7 +23,7 @@
             android:layout_below="@+id/friend_avatar"
             android:layout_centerInParent="true"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Ziem"
+            tools:text="Ziem"
             android:textColor="@color/text_friend"
             android:textSize="28sp" />
     </RelativeLayout>

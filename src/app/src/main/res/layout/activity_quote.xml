@@ -30,7 +30,7 @@
                     android:fontFamily="@font/open_sans_semibold"
                     android:gravity="center"
                     android:scrollbars="vertical"
-                    android:text=" "
+                    tools:text="Time you enjoy wasting is not wasted time."
                     android:textAllCaps="true"
                     android:textColor="@color/textColor"
                     android:textSize="36sp"

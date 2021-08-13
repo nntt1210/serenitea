@@ -42,7 +42,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/avatar_4" />
+                    tools:srcCompat="@drawable/avatar_4" />
 
                 <TextView
                     android:id="@+id/txt_info"
@@ -51,7 +51,7 @@
                     android:drawableLeft="@drawable/ic_women"
                     android:drawableTint="@color/theme"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Khuyen"
+                    tools:text="Khuyen"
                     android:textColor="@color/textColor"
                     android:textSize="32sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
                     android:drawableTint="@color/theme"
                     android:drawablePadding="5dp"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="24/01/2001"
+                    tools:text="24/01/2001"
                     android:textColor="@color/textColor"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -86,16 +86,13 @@
                     android:drawablePadding="5dp"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="23"
+                    tools:text="23"
                     android:textColor="@color/textColor"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_dob" />
-
-
-
 
                 <Button
                     android:id="@+id/btn_add"
