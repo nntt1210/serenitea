@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +73,10 @@ public class FriendRequestActivity extends AppCompatActivity {
         requestList.setLayoutManager(linearLayoutManager);
 
         DisplayAllRequest();
-
+        String temp;
+        if (checkNewFriendRequest()) temp = "true";
+        else temp = "false";
+        Toast.makeText(FriendRequestActivity.this, temp, Toast.LENGTH_LONG).show();
     }
 
     private void DisplayAllRequest() {
@@ -262,4 +266,23 @@ public class FriendRequestActivity extends AppCompatActivity {
 
     }
 
+    public boolean checkNewFriendRequest() {
+        final boolean[] flag = new boolean[1];
+        ReceiveRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    flag[0] = true;
+                    return;
+                }
+                flag[0] = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return flag[0];
+    }
 }

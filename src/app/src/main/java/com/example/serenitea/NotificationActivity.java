@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public class NotificationActivity extends AppCompatActivity {
     private final List<Notification> notificationList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private NotificationAdapter notificationAdapter;
+    private boolean hasNewNotification = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +59,16 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         FetchNotification();
         DisplayAllNotification();
-    }
 
-    //    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        DisplayAllNotification();
-//
-//        FetchNotification();
-//    }
+        //check new notification
+        String temp;
+        if (checkNewNotification()) temp = "true";
+        else temp = "false";
+        Toast.makeText(NotificationActivity.this, temp, Toast.LENGTH_LONG).show();
+    }
 
     private void FetchNotification() {
         notificationList.clear();
@@ -107,7 +108,6 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void DisplayAllNotification() {
-
         notificationAdapter = new NotificationAdapter(notificationList, getApplicationContext());
         notiList = (RecyclerView) findViewById(R.id.list_notification);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -124,5 +124,14 @@ public class NotificationActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //hàm check có noti mới hay không
+    public boolean checkNewNotification() {
+        for (Notification item : notificationList) {
+            if (item.getStatus().equals("sent"))
+                return true;
+        }
+        return false;
     }
 }

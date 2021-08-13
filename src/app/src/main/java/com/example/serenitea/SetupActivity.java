@@ -143,45 +143,45 @@ public class SetupActivity extends AppCompatActivity {
         } catch (java.text.ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            String email = mAuth.getCurrentUser().getEmail().toString();
-            if (TextUtils.isEmpty(nickname)) {
-                Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-            }
-            if (TextUtils.isEmpty(nickname)) {
-                Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-            } else if (gender.equals("Gender")) {
-                Toast.makeText(this, "Please choose your gender", Toast.LENGTH_SHORT).show();
-            } else if (TextUtils.isEmpty(dob)) {
-                Toast.makeText(this, "Please enter Date of birth", Toast.LENGTH_SHORT).show();
-            } else if (!isValidateDate) {
-                Toast.makeText(this, "Your DoB is not valid", Toast.LENGTH_SHORT).show();
-            } else {
-                loadingBar.setTitle("Saving Information");
-                loadingBar.setMessage("Please wait a moment...");
-                loadingBar.show();
-                loadingBar.setCanceledOnTouchOutside(true);
+        }
+        String email = mAuth.getCurrentUser().getEmail().toString();
+        if (TextUtils.isEmpty(nickname)) {
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+        }
+        if (TextUtils.isEmpty(nickname)) {
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+        } else if (gender.equals("Gender")) {
+            Toast.makeText(this, "Please choose your gender", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(dob)) {
+            Toast.makeText(this, "Please enter Date of birth", Toast.LENGTH_SHORT).show();
+        } else if (!isValidateDate) {
+            Toast.makeText(this, "Your DoB is not valid", Toast.LENGTH_SHORT).show();
+        } else {
+            loadingBar.setTitle("Saving Information");
+            loadingBar.setMessage("Please wait a moment...");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
 
-                HashMap userMap = new HashMap();
-                userMap.put("avatar", avatar_id);
-                userMap.put("nickname", nickname);
-                userMap.put("gender", gender);
-                userMap.put("dob", dob);
-                userMap.put("email", email);
-                userMap.put("tea", 0);
-                UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
-                            SendUserToEmotionActivity();
-                            Toast.makeText(SetupActivity.this, "Your information is saved successfully", Toast.LENGTH_LONG).show();
-                        } else {
-                            String message = task.getException().getMessage();
-                            Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_LONG).show();
-                        }
-                        loadingBar.dismiss();
+            HashMap userMap = new HashMap();
+            userMap.put("avatar", avatar_id);
+            userMap.put("nickname", nickname);
+            userMap.put("gender", gender);
+            userMap.put("dob", dob);
+            userMap.put("email", email);
+            userMap.put("tea", 0);
+            UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        SendUserToEmotionActivity();
+                        Toast.makeText(SetupActivity.this, "Your information is saved successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        String message = task.getException().getMessage();
+                        Toast.makeText(SetupActivity.this, "Error: " + message, Toast.LENGTH_LONG).show();
                     }
-                });
-            }
+                    loadingBar.dismiss();
+                }
+            });
         }
     }
 

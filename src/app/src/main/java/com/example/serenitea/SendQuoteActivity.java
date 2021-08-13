@@ -116,7 +116,6 @@ public class SendQuoteActivity extends AppCompatActivity {
             }
 
             @NonNull
-
             @Override
             public SendQuoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.send_quote_view, parent, false);
@@ -124,7 +123,6 @@ public class SendQuoteActivity extends AppCompatActivity {
                 return sendHolder;
             }
         };
-        //Toast.makeText(SendQuoteActivity.this, "hello", Toast.LENGTH_LONG).show();
         sendQuoteList.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
     }
@@ -170,14 +168,8 @@ public class SendQuoteActivity extends AppCompatActivity {
         SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
-        //get time
-//        Calendar time = Calendar.getInstance();
-//        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm aa");
-//        saveCurrentTime = currentTime.format(time.getTime());
-
         Map sendMap = new HashMap();
         sendMap.put("date", saveCurrentDate);
-//        sendMap.put("time", saveCurrentTime);
         sendMap.put("quote", quoteID);
         sendMap.put("from", currentUserId);
         sendMap.put("status", "sent");
@@ -197,5 +189,4 @@ public class SendQuoteActivity extends AppCompatActivity {
             }
         });
     }
-
 }
