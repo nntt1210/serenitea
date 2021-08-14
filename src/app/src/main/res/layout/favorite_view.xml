@@ -21,6 +21,17 @@
         android:textSize="13sp" />
 
     <ImageButton
+        android:id="@+id/favorite_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/favorite_delete"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_favorite_share" />
+
+    <ImageButton
+        android:id="@+id/favorite_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -28,7 +39,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_favorite_share" />
+        android:src="@drawable/ic_delete" />
 
     <TextView
         android:id="@+id/favorite_content"

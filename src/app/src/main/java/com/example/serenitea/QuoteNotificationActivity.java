@@ -26,6 +26,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
     private String Quote;
     private ImageButton btnFavorite;
     private Boolean btnFavoriteClicked;
+    private String background, color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +78,16 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         mQuote.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                Quote = datasnapshot.child("content").getValue().toString();
-                QuoteView.setText(Quote);
+                if (datasnapshot.exists())
+                {
+                    Quote = datasnapshot.child("content").getValue().toString();
+                    background = datasnapshot.child("background").getValue().toString();
+                    color = datasnapshot.child("color").getValue().toString();
+                    QuoteView.setText(Quote);
+                    QuoteView.setTextColor(Color.parseColor(color));
+                    int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
+                    QuoteView.setBackgroundResource(resourceId);
+                }
             }
 
             @Override
