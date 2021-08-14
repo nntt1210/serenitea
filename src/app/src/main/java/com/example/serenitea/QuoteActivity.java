@@ -38,6 +38,7 @@ public class QuoteActivity extends AppCompatActivity {
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
+    private String background, color;
     private ImageButton btnFavorite;
     private Boolean btnFavoriteClicked;
     private String curUser= FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
@@ -124,14 +125,23 @@ public class QuoteActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void GenerateQuote ()
     {
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
-        mQuote.addValueEventListener(new ValueEventListener() {
+        mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                Quote = datasnapshot.child("content").getValue().toString();
-                QuoteView.setText(Quote);
+                if (datasnapshot.exists())
+                {
+                    Quote = datasnapshot.child("content").getValue().toString();
+                    background = datasnapshot.child("background").getValue().toString();
+                    color = datasnapshot.child("color").getValue().toString();
+                    QuoteView.setText(Quote);
+                    QuoteView.setTextColor(Color.parseColor(color));
+                    int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
+                    QuoteView.setBackgroundResource(resourceId);
+                }
             }
 
             @Override

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -25,19 +25,22 @@
 
                 <TextView
                     android:id="@+id/text_quote"
-                    android:layout_width="336dp"
+                    android:layout_width="match_parent"
                     android:layout_height="500dp"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/delius_swash_caps"
                     android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:scrollbars="vertical"
-                    tools:text="Time you enjoy wasting is not wasted time."
-                    android:textAllCaps="true"
-                    android:textColor="@color/textColor"
                     android:textSize="36sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@drawable/sad_1"
+                    tools:text="Time you enjoy wasting is not wasted time."
+                    tools:textColor="#f0f9fe" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
