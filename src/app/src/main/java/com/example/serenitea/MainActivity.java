@@ -93,14 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //event click Logout Button
-//        LogoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAuth.signOut();
-//                SendUserToLogoutActivity();
-//            }
-//        });
     }
 
     protected void setProfile()
@@ -186,6 +178,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new EmotionActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_create_quote:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CreateQuoteActivity()).commit();
                 drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_friends:
