@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_marginBottom="10dp">
     <ImageView
@@ -9,7 +10,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/avatar_15" />
+        tools:srcCompat="@drawable/avatar_15" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Sophie"
+            tools:text="Sophie"
             android:textColor="@color/text_friend_request"
             android:textSize="28sp" />
 

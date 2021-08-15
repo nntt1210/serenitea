@@ -31,7 +31,7 @@
                     android:layout_height="150dp"
                     android:background="@android:color/transparent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/avatar_2"
+                    tools:srcCompat="@drawable/avatar_2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/setup_nickname"
+                        android:textCursorDrawable="@drawable/color_cursor"
                         android:inputType="text"
                         android:layout_width="302dp"
                         android:layout_height="56dp" />

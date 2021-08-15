@@ -22,7 +22,7 @@
         android:id="@+id/image_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/avatar_2"
+        tools:src="@drawable/avatar_2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="76dp"/>
 
@@ -42,7 +42,7 @@
             android:drawablePadding="4dp"
             android:drawableTint="@color/white"
             android:fontFamily="@font/open_sans_bold"
-            android:text="Seonna"
+            tools:text="Seonna"
             android:textColor="@color/white"
             android:textSize="32sp" />
 
@@ -55,7 +55,7 @@
             android:drawableLeft="@drawable/ic_dob"
             android:drawablePadding="5dp"
             android:fontFamily="@font/open_sans_bold"
-            android:text="15/08/2000"
+            tools:text="15/08/2000"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -69,7 +69,7 @@
             android:drawableLeft="@drawable/ic_cup_of_tea"
             android:drawablePadding="5dp"
             android:fontFamily="@font/open_sans_bold"
-            android:text="15"
+            tools:text="15"
             android:textColor="@color/white"
             android:textSize="24sp" />
     </RelativeLayout>
