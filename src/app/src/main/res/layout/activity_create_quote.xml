@@ -9,13 +9,14 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp">
 
-<!--    <Button-->
-<!--        android:text="open Color Picker Dialog"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_centerVertical="true"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:id="@+id/button" />-->
+    <EditText
+        android:id="@+id/create_quote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/open_sans_semibold"
+        android:hint="Tap here to write your quote." />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
