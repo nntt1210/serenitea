@@ -92,7 +92,7 @@ public class PersonProfileActivity extends AppCompatActivity {
                     }
                     if (CURRENT_STATE.equals("friends")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(PersonProfileActivity.this);
-                        builder.setMessage("Are you sure you want to remove FRIEND NAME as your friend?").setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                        builder.setMessage("Are you sure you want to remove "+ nickname+" as your friend?").setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UnfriendAnExistingFriend();
@@ -317,6 +317,7 @@ public class PersonProfileActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
                     sendQuoteIntent.putExtra("OTHER_UID", other_user_id);
+                    sendQuoteIntent.putExtra("NICKNAME",nickname);
                     startActivity(sendQuoteIntent);
                 }
             });

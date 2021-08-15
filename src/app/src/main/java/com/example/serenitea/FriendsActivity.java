@@ -73,6 +73,8 @@ public class FriendsActivity extends Fragment {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    listFriend.clear();
+                    listFriend = new ArrayList<>();
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         String each_user_id = postSnapshot.getKey().toString();
                         userRef = FirebaseDatabase.getInstance().getReference().child("users").child(each_user_id);
@@ -157,16 +159,19 @@ public class FriendsActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //
                 if (snapshot.exists()) {
+                    boolean flag= false;
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         String each_user_email = postSnapshot.child("email").getValue().toString();
                         if (each_user_email.equals(email)) {
+                            flag=true;
                             id = postSnapshot.getKey();
                             Intent intent = new Intent(getActivity(), PersonProfileActivity.class);
                             intent.putExtra("USER_ID", id);
                             sendData(id, intent);
                         }
                     }
-                    //Toast.makeText(getActivity(),"hello", Toast.LENGTH_LONG).show();
+                    if (flag==false)
+                        Toast.makeText(getActivity(), "This user does not exist", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "not exist", Toast.LENGTH_LONG).show();
                 }
