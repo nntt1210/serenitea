@@ -140,12 +140,18 @@ public class FriendsActivity extends Fragment {
             public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String key = snapshot.getKey();
+                    int index = -1;
                     for (Friend friend : listFriend) {
                         if (friend.getID().equals(key)) {
-                            listFriend.remove(friend);
-                            friendAdapter.notifyDataSetChanged();
+                            index = listFriend.indexOf(friend);
+                            break;
                         }
                     }
+                    if (index != -1) {
+                        listFriend.remove(index);
+                        friendAdapter.notifyDataSetChanged();
+                    }
+
                 }
             }
 
