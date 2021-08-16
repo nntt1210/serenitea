@@ -12,9 +12,11 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,11 +27,16 @@ import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public DrawerLayout drawer;
@@ -39,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String curUser;
     private String name,dob,cot,gender, avatar_id;
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef, userRef;
-
+    private DatabaseReference UsersRef, userRef, RootRef, NotiRef, ReceiveRef;
+    private boolean hasNewNotification = false;
+    private final List<Notification> notificationList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -103,15 +111,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //event click Logout Button
-//        LogoutButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mAuth.signOut();
-//                SendUserToLogoutActivity();
-//            }
-//        });
+        RootRef = FirebaseDatabase.getInstance().getReference();
+        NotiRef = RootRef.child("notification").child(mAuth.getCurrentUser().getUid());
+
+        ReceiveRef = RootRef.child("receiveFriendRequests").child(mAuth.getCurrentUser().getUid());
+
+        FetchNotification();
+
+
     }
+
+    public void checkNewFriendRequest() {
+        ReceiveRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    friendRequestBtn.setImageResource(R.drawable.ic_group_add_active);
+                    return;
+                }
+                friendRequestBtn.setImageResource(R.drawable.ic_group_add);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkNewFriendRequest();
+        FetchNotification();
+    }
+
 
     protected void setProfile()
     {
@@ -226,6 +260,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private void FetchNotification() {
+        hasNewNotification = false;
+        NotiRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.exists()) {
+                    String key = snapshot.getKey();
+                    Notification notification = snapshot.getValue(Notification.class);
+                    notification.setKey(key);
+                    notificationList.add(notification);
+                    if (notification.getStatus().equals("sent")) {
+                        notiBtn.setImageResource(R.drawable.ic_noti_active);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.exists()) {
+                    for (Notification item : notificationList) {
+                        if (item.getStatus().equals("sent")) {
+                            hasNewNotification = true;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if (!hasNewNotification) {
+            notiBtn.setImageResource(R.drawable.ic_notification);
+        }
+    }
+
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -235,17 +319,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
-    }
-
-    //    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        //nếu user==null-->gọi SendUserToLoginActivity()
-//        SendUserToLogoutActivity();
-//    }
-
-    private void UserMenuSelector (MenuItem item){
-        //chuyển hướng trang khi chọn trên menu (vd: Đăng kí, đăng nhập, profile...)
     }
 
     private void SendUserToEmotionActivity(){
