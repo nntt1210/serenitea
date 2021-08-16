@@ -1,25 +1,22 @@
 package com.example.serenitea;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.Math;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.CallbackManager;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,22 +24,29 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class QuoteActivity extends AppCompatActivity {
-/* Trang in quote ra màn hình
-* Một số hàm:
-* - Dựa vào id trả về trong EmotionActivity, vào database generate quote đó ra màn hình
-* - Tạo phần like bài viết, khi like thì lưu quote vào database --> setLikeButtonQuote()
-* - Các hàm SendUserTo...Activity()
-* */
+    /* Trang in quote ra màn hình
+     * Một số hàm:
+     * - Dựa vào id trả về trong EmotionActivity, vào database generate quote đó ra màn hình
+     * - Tạo phần like bài viết, khi like thì lưu quote vào database --> setLikeButtonQuote()
+     * - Các hàm SendUserTo...Activity()
+     * */
     private DatabaseReference mQuote;
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
     private String background, color;
-    private ImageButton btnFavorite;
+    private ImageButton btnFavorite, btnShare;
     private Boolean btnFavoriteClicked;
-    private String curUser= FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+    private String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
     private DatabaseReference Ref;
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,7 @@ public class QuoteActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        QuoteView = (TextView)findViewById(R.id.text_quote);
+        QuoteView = (TextView) findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GetEmotion();
         GenerateQuote();
@@ -66,23 +70,36 @@ public class QuoteActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (QuoteID.isEmpty()==false)
-                {if (((Boolean)btnFavorite.getTag()) == false)
-                {
-                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
-                    btnFavorite.setTag(new Boolean(true));
-                    saveToFavQuote(QuoteID);
+                if (QuoteID.isEmpty() == false) {
+                    if (((Boolean) btnFavorite.getTag()) == false) {
+                        btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                        btnFavorite.setTag(new Boolean(true));
+                        saveToFavQuote(QuoteID);
 
+                    } else {
+                        btnFavorite.setImageResource(R.drawable.ic_favorite);
+                        btnFavorite.setTag(new Boolean(false));
+                        removeFromFav(QuoteID);
+                    }
                 }
-                else
-                {
-                    btnFavorite.setImageResource(R.drawable.ic_favorite);
-                    btnFavorite.setTag(new Boolean(false));
-                    removeFromFav(QuoteID);
-                }}
+            }
+        });
+
+
+        btnShare = (ImageButton) findViewById(R.id.btn_share);
+        //init FB
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareQuoteOnFacebook();
             }
         });
     }
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -94,46 +111,42 @@ public class QuoteActivity extends AppCompatActivity {
     }
     //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
 
-    private void GetEmotion ()
-    {
+    private void GetEmotion() {
         int emo = getIntent().getIntExtra("emotion", 0);
         int qid;
-        switch (emo)
-        {
+        switch (emo) {
             case 1: // dissatisfied - sad
-                qid = (int)(Math.random() * ((30 - 21) + 1)) + 21;
+                qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
                 QuoteID = "00" + String.valueOf(qid);
                 break;
             case 2: // happy
-                qid = (int)(Math.random() * ((10 - 1) + 1)) + 1;
+                qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
                 if (qid == 10)
                     QuoteID = "00" + String.valueOf(qid);
                 else
                     QuoteID = "000" + String.valueOf(qid);
                 break;
             case 3: // neutral
-                qid = (int)(Math.random() * ((90 - 81) + 1)) + 81;
+                qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
                 QuoteID = "00" + String.valueOf(qid);
                 break;
             case 4: // angry
-                qid = (int)(Math.random() * ((71 - 61) + 1)) + 61;
+                qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
                 QuoteID = "00" + String.valueOf(qid);
                 break;
             case 5: // nervous
-                qid = (int)(Math.random() * ((60 - 41) + 1)) + 41;
+                qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
                 QuoteID = "00" + String.valueOf(qid);
                 break;
         }
     }
 
-    private void GenerateQuote ()
-    {
+    private void GenerateQuote() {
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                if (datasnapshot.exists())
-                {
+                if (datasnapshot.exists()) {
                     Quote = datasnapshot.child("content").getValue().toString();
                     background = datasnapshot.child("background").getValue().toString();
                     color = datasnapshot.child("color").getValue().toString();
@@ -149,34 +162,52 @@ public class QuoteActivity extends AppCompatActivity {
             }
         });
     }
-    public void setLikeButtonQuote(){
-        
+
+    public void setLikeButtonQuote() {
+
     }
-    public void saveToFavQuote(String QuoteID){
-        Date d= Calendar.getInstance().getTime();
+
+    public void saveToFavQuote(String QuoteID) {
+        Date d = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = df.format(d);
-        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+        Ref = FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
         Ref.child(QuoteID).child("date").setValue(formattedDate);
     }
-    public void removeFromFav(String QuoteID){
-        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+
+    public void removeFromFav(String QuoteID) {
+        Ref = FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
         Ref.child(QuoteID).removeValue();
     }
-    public void isFav(String QuoteID)
-    {
-        Ref=FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
+
+    public void isFav(String QuoteID) {
+        Ref = FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
         Ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(QuoteID))
-                {
+                if (snapshot.hasChild(QuoteID)) {
                     btnFavorite.setImageResource(R.drawable.ic_favorite_added);
                     btnFavorite.setTag(new Boolean(true));
                 }
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
+
+    private void ShareQuoteOnFacebook() {
+        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                .setQuote(Quote)
+                .setContentUrl(Uri.parse(""))
+                .build();
+
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            shareDialog.show(linkContent);
+        }
+
+
+    }
+
 }

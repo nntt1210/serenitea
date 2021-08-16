@@ -12,11 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
+
+        <meta-data
+            android:name="com.facebook.sdk.AppicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity android:name=".SendQuoteActivity" />
-        <activity android:name=".NotificationActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
-        <activity android:name=".FriendRequestActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+        <activity
+            android:name=".NotificationActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
+            android:name=".FriendRequestActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity android:name=".AvatarActivity" />
         <activity
             android:name=".SettingsActivity"
@@ -68,6 +75,12 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider175558051288954"
+            android:exported="true" />
+
     </application>
 
 </manifest>
