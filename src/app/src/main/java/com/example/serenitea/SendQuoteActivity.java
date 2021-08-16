@@ -39,7 +39,7 @@ public class SendQuoteActivity extends AppCompatActivity {
     private DatabaseReference RootRef, FavoriteQuoteRef, QuoteRef;
     String currentUserId;
     private RecyclerView sendQuoteList;
-    private String receiverID = "dOY7tj1STpXCJ0DJ6ArwTNoI0052", quoteID;
+    private String receiverID, quoteID,recv_name;
     private String saveCurrentDate, saveCurrentTime;
 
 
@@ -50,7 +50,8 @@ public class SendQuoteActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
-
+        receiverID = getIntent().getStringExtra("OTHER_UID");
+        recv_name=getIntent().getStringExtra("NICKNAME");
         RootRef = FirebaseDatabase.getInstance().getReference();
         FavoriteQuoteRef = RootRef.child("favorite").child(currentUserId);
         QuoteRef = RootRef.child("quotes");
@@ -102,7 +103,7 @@ public class SendQuoteActivity extends AppCompatActivity {
 //                        Toast.makeText(SendQuoteActivity.this, each_quote_id, Toast.LENGTH_LONG).show();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(SendQuoteActivity.this);
-                        builder.setMessage("Send this quote to FRIEND_NAME?").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        builder.setMessage("Send this quote to "+ recv_name +"?").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 SaveSentQuoteToDatabase(each_quote_id);
@@ -189,7 +190,7 @@ public class SendQuoteActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to FRIEND_NAME", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SendQuoteActivity.this, "This quote has been sent to "+ recv_name, Toast.LENGTH_LONG).show();
                 } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(SendQuoteActivity.this, "Error" + message, Toast.LENGTH_LONG).show();

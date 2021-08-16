@@ -45,10 +45,8 @@ public class PersonProfileActivity extends AppCompatActivity {
     private TextView txtNickname, txtDob, txtCup;
     private Button btn_send_quote, btn_add_friend, btn_decline;
 
-    //private String other_user_id = "9tQSyAT9ylNvZVtLFXTpCxGJALw2";//a@ny.com
-    //private String other_user_id = "ITmoQN4biTWXrhJekAhzPv2WCto1";//d@ny.com
-    //private String other_user_id = "dOY7tj1STpXCJ0DJ6ArwTNoI0052";//b@ny.com
-    private String other_user_id ;//a@gmail.com
+
+    private String other_user_id;
 
     private FirebaseAuth mAuth;
     private String currentUserId, CURRENT_STATE;
@@ -68,6 +66,7 @@ public class PersonProfileActivity extends AppCompatActivity {
         ReceiveRef = RootRef.child("receiveFriendRequests");
         UserRef = RootRef.child("users");
         FriendsRef = RootRef.child("friends");
+        other_user_id = getIntent().getStringExtra("USER_ID");
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
@@ -93,7 +92,7 @@ public class PersonProfileActivity extends AppCompatActivity {
                     }
                     if (CURRENT_STATE.equals("friends")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(PersonProfileActivity.this);
-                        builder.setMessage("Are you sure you want to remove FRIEND NAME as your friend?").setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                        builder.setMessage("Are you sure you want to remove "+ nickname+" as your friend?").setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 UnfriendAnExistingFriend();
@@ -317,6 +316,8 @@ public class PersonProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
+                    sendQuoteIntent.putExtra("OTHER_UID", other_user_id);
+                    sendQuoteIntent.putExtra("NICKNAME",nickname);
                     startActivity(sendQuoteIntent);
                 }
             });
