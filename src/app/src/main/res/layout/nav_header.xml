@@ -13,7 +13,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_close" />
@@ -22,15 +22,15 @@
         android:id="@+id/image_avatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        tools:src="@drawable/avatar_2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="76dp"/>
+        android:layout_marginTop="60dp"
+        tools:src="@drawable/avatar_2" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="170dp">
+        android:layout_marginTop="154dp">
 
         <TextView
             android:id="@+id/nav_txt_info"
@@ -42,9 +42,9 @@
             android:drawablePadding="4dp"
             android:drawableTint="@color/white"
             android:fontFamily="@font/open_sans_bold"
-            tools:text="Seonna"
             android:textColor="@color/white"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            tools:text="Seonna" />
 
         <TextView
             android:id="@+id/nav_txt_dob"
@@ -55,9 +55,9 @@
             android:drawableLeft="@drawable/ic_dob"
             android:drawablePadding="5dp"
             android:fontFamily="@font/open_sans_bold"
-            tools:text="15/08/2000"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:text="15/08/2000" />
 
         <TextView
             android:id="@+id/nav_txt_cup_of_tea"
@@ -69,9 +69,9 @@
             android:drawableLeft="@drawable/ic_cup_of_tea"
             android:drawablePadding="5dp"
             android:fontFamily="@font/open_sans_bold"
-            tools:text="15"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:text="15" />
     </RelativeLayout>
 
 
