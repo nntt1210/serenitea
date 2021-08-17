@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -219,6 +220,9 @@ public class QuoteActivity extends AppCompatActivity {
                     .build();
 
             shareDialog.show(content);
+        } else {
+            Toast.makeText(QuoteActivity.this, "Login with your FB account in order to share", Toast.LENGTH_LONG).show();
+
         }
 
 
@@ -249,4 +253,9 @@ public class QuoteActivity extends AppCompatActivity {
         bitmap = Screenshot.takeScreenShotOfRootView(quoteShare);
     }
 
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 }
