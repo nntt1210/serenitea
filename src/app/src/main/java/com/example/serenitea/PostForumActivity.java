@@ -1,20 +1,25 @@
 package com.example.serenitea;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PostForumActivity extends Fragment {
@@ -31,13 +36,52 @@ public class PostForumActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_post_forum, container, false);
         postRecyclerView = (RecyclerView)view.findViewById(R.id.list_post);
-        postList.add(new Post("vGInau6zh9cIkW4KLeO4GGl2DWg1", "Tam Nguyen", "avatar_1", "17/08/2021"
-        , "Time you enjoy wasting is not wasted time", R.color.text_friend, R.drawable.neutral_1, R.font.open_sans_semibold));
-        postList.add(new Post("vGInau6zh9cIkW4KLeO4GGl2DWg1", "Tam Nguyen", "avatar_1", "17/08/2021"
-                , "Time you enjoy wasting is not wasted time", R.color.text_friend, R.drawable.neutral_1, R.font.open_sans_semibold));
+//        postList.add(new Post("vGInau6zh9cIkW4KLeO4GGl2DWg1", "Tam Nguyen", "avatar_1", "17/08/2021"
+//        , "Time you enjoy wasting is not wasted time", R.color.text_friend, R.drawable.neutral_1, R.font.open_sans_semibold));
+//        postList.add(new Post("vGInau6zh9cIkW4KLeO4GGl2DWg1", "Tam Nguyen", "avatar_1", "17/08/2021"
+//                , "Time you enjoy wasting is not wasted time", R.color.text_friend, R.drawable.neutral_1, R.font.open_sans_semibold));
+        PostRef = FirebaseDatabase.getInstance().getReference().child("forum");
 
+        FetchAllPost();
         DisplayAllPost();
         return view;
+    }
+
+    private void FetchAllPost() {
+        postList.clear();
+        PostRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (snapshot.exists()) {
+                    String key = snapshot.getKey();
+                    Post p = snapshot.getValue(Post.class);
+                    p.postId = key;
+                    postList.add(p);
+                    postAdapter.notifyDataSetChanged();
+                }
+                Collections.sort(postList);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void DisplayAllPost() {

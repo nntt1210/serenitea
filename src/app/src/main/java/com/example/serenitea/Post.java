@@ -1,30 +1,28 @@
 package com.example.serenitea;
 
-public class Post {
-    private String user_id, name, avatar, date, content;
-    private int color, background, font;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-    public Post(String user_id, String name, String avatar, String date, String content, int color, int background, int font) {
-        this.user_id = user_id;
-        this.name = name;
-        this.avatar = avatar;
+public class Post  implements Comparable<Post> {
+    private String userId, date, content;
+    String postId;
+    private int color, background, font, size;
+
+    public Post() {
+    }
+
+    public Post(String userId, String date, String content, int color, int background, int font, int size) {
+        this.userId = userId;
         this.date = date;
         this.content = content;
         this.color = color;
         this.background = background;
         this.font = font;
+        this.size = size;
     }
 
     public String getUserId() {
-        return user_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAvatar() {
-        return avatar;
+        return userId;
     }
 
     public String getDate() {
@@ -46,4 +44,22 @@ public class Post {
     public int getFont() {
         return font;
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        try {
+            return format.parse(o.getDate()).compareTo(format.parse(this.getDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 }
