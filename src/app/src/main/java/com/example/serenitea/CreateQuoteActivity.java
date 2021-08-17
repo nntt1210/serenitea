@@ -1,7 +1,9 @@
 package com.example.serenitea;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,13 +32,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 public class CreateQuoteActivity extends Fragment {
 
-    EditText quote;
-    RelativeLayout relativeLayout;
-    int DefaultColor ;
-    BottomNavigationView createNavBar;
-    AlertDialog backgroundDialog, textDialog, gradientDialog, fontDialog;
+    private EditText quote;
+    private RelativeLayout relativeLayout;
+    private int DefaultColor ;
+    private BottomNavigationView createNavBar;
+    private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
+    private SeekBar seekbar;
 
     @Nullable
     @Override
@@ -92,6 +99,11 @@ public class CreateQuoteActivity extends Fragment {
                 new Item("Lato", R.font.lato_thin),
                 new Item("Merriweather", R.font.merriweather_light),
                 new Item("Roboto", R.font.roboto),
+        };
+
+        final Item[] share_items = {
+                new Item("Serenitea", R.drawable.logo_dialog),
+                new Item("Facebook", R.drawable.ic_facebook)
         };
 
         ListAdapter background_adapter = new ArrayAdapter(
@@ -167,6 +179,27 @@ public class CreateQuoteActivity extends Fragment {
             }
         };
 
+        ListAdapter share_adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.select_dialog_item,
+                android.R.id.text1,
+                share_items){
+            public View getView(int position, View convertView, ViewGroup parent) {
+                //Use super class to create the View
+                View v = super.getView(position, convertView, parent);
+                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+
+                //Put the image on the TextView
+                tv.setCompoundDrawablesWithIntrinsicBounds(share_items[position].icon, 0, 0, 0);
+
+                //Add margin between image and text (support various screen densities)
+                int dp5 = (int) (5 * getResources().getDisplayMetrics().density + 0.5f);
+                tv.setCompoundDrawablePadding(dp5);
+
+                return v;
+            }
+        };
+
 
         AlertDialog.Builder background_builder = new AlertDialog.Builder(getActivity());
         background_builder.setTitle("Background");
@@ -199,6 +232,7 @@ public class CreateQuoteActivity extends Fragment {
                         OpenColorPickerDialog(false, 1);
                         break;
                     case 2:
+                        OpenSizePickerDialog();
                         break;
                     default:
                         break;
@@ -223,12 +257,83 @@ public class CreateQuoteActivity extends Fragment {
             }
         });
 
+        AlertDialog.Builder share_builder = new AlertDialog.Builder(getActivity());
+        share_builder.setTitle("Share");
+        share_builder.setAdapter(share_adapter, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                switch (item) {
+                    case 0:
+                        Toast.makeText(getActivity(), "Share your quote successfully", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Toast.makeText(getActivity(), "Share your quote successfully", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
 
 // create and show the alert dialog
         backgroundDialog = background_builder.create();
         textDialog = text_builder.create();
         gradientDialog = gradient_builder.create();
         fontDialog = font_builder.create();
+        shareDialog = share_builder.create();
+
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+        alert.setTitle("Size");
+
+        LinearLayout linear=new LinearLayout(getActivity());
+
+        linear.setOrientation(LinearLayout.VERTICAL);
+
+        SeekBar seekbar=new SeekBar(getActivity());
+
+        SeekBar.OnSeekBarChangeListener yourSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                //add code here
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //add code here
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                quote.setTextSize(progress);
+            }
+        };
+
+        seekbar.setOnSeekBarChangeListener(yourSeekBarListener);
+
+        linear.addView(seekbar);
+        alert.setView(linear);
+        sizeDialog = alert.create();
+
+
+        alert.setPositiveButton("Ok",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                Toast.makeText(getActivity().getApplicationContext(), "OK Pressed",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                Toast.makeText(getActivity().getApplicationContext(), "Cancel Pressed",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
 
         createNavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -244,6 +349,7 @@ public class CreateQuoteActivity extends Fragment {
                         return true;
 
                     case R.id.nav_share:
+                        shareDialog.show();
                         return true;
 
 
@@ -292,5 +398,6 @@ public class CreateQuoteActivity extends Fragment {
     private void OpenFontPickerDialog() {
         fontDialog.show();
     }
+    private void OpenSizePickerDialog() {sizeDialog.show();}
 
 }
