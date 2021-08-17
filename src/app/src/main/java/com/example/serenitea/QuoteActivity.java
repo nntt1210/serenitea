@@ -1,21 +1,26 @@
 package com.example.serenitea;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.CallbackManager;
-import com.facebook.share.model.ShareLinkContent;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +51,8 @@ public class QuoteActivity extends AppCompatActivity {
     private DatabaseReference Ref;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+    private View quoteShare;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,16 +205,48 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     private void ShareQuoteOnFacebook() {
-        ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                .setQuote(Quote)
-                .setContentUrl(Uri.parse(""))
+        //take screen shot
+        takeScreenShot();
+
+        //share image
+        SharePhoto sharePhoto = new SharePhoto.Builder()
+                .setBitmap(bitmap)
                 .build();
 
-        if (ShareDialog.canShow(ShareLinkContent.class)) {
-            shareDialog.show(linkContent);
+        if (ShareDialog.canShow(SharePhotoContent.class)) {
+            SharePhotoContent content = new SharePhotoContent.Builder()
+                    .addPhoto(sharePhoto)
+                    .build();
+
+            shareDialog.show(content);
         }
 
 
+        //Create callback
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Toast.makeText(QuoteActivity.this, "Share successul!", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(QuoteActivity.this, "Share cancel!", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(QuoteActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void takeScreenShot() {
+        quoteShare = findViewById(R.id.text_quote);
+        bitmap = Screenshot.takeScreenShotOfRootView(quoteShare);
     }
 
 }
