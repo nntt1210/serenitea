@@ -221,7 +221,7 @@ public class QuoteActivity extends AppCompatActivity {
 
             shareDialog.show(content);
         } else {
-            Toast.makeText(QuoteActivity.this, "Login with your FB account in order to share", Toast.LENGTH_LONG).show();
+            Toast.makeText(QuoteActivity.this, "Please log in with your Facebook account first!", Toast.LENGTH_LONG).show();
 
         }
 
