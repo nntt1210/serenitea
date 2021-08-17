@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Serenitea">
+        <activity android:name=".PostForumActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.AppicationId"
@@ -80,7 +81,6 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider175558051288954"
             android:exported="true" />
-
     </application>
 
 </manifest>
