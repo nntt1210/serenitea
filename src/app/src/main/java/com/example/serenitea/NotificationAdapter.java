@@ -51,8 +51,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             imageViewAvatar.setImageResource(resource);
         }
 
-        public void setContent(String content) {
-            textViewNotification.setText(content + " sent you a quote.");
+        public void setContent(String content, int type) {
+            if (type == 1){
+                textViewNotification.setText(content + " sent you a quote.");
+            }
+            else if (type == 2){
+                textViewNotification.setText(content + " liked your post.");
+            }
+
         }
 
         public void setBackgroundLayout() {
@@ -76,10 +82,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         Notification notification = notiList.get(position);
 
         String fromUserID = notification.getFrom();
-        String fromDate = notification.getDate();
         String fromKey = notification.getKey();
         String fromQuote = notification.getQuote();
         String fromStatus = notification.getStatus();
+        int type = notification.getType();
 
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("notification").child(currentUserID);
@@ -87,7 +93,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    holder.setContent(snapshot.child(fromUserID).child("nickname").getValue().toString());
+                    holder.setContent(snapshot.child(fromUserID).child("nickname").getValue().toString(), type);
                     holder.setAvatar(snapshot.child(fromUserID).child("avatar").getValue().toString());
                     if (fromStatus.equals("sent")) holder.setBackgroundLayout();
                 }
@@ -105,10 +111,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onClick(View v) {
                 databaseReference.child(fromKey).child("status").setValue("received");
-                Intent intent = new Intent(context, QuoteNotificationActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Quote", fromQuote);
-                context.startActivity(intent);
+                if (type == 1){
+                    Intent intent = new Intent(context, QuoteNotificationActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Quote", fromQuote);
+                    context.startActivity(intent);
+                }
+                else if (type == 2){
+
+                }
+
             }
         });
     }
