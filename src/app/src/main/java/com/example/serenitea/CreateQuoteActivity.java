@@ -48,8 +48,7 @@ public class CreateQuoteActivity extends Fragment {
     private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
     private SeekBar seekbar;
     private String content, date;
-    private Integer background, color, font;
-    private Float size;
+    private Integer background = 0, color = 0, font = 0, size = 0;
     private String saveCurrentDate;
     private FirebaseAuth mAuth;
     private DatabaseReference PostRef;
@@ -277,10 +276,8 @@ public class CreateQuoteActivity extends Fragment {
                 switch (item) {
                     case 0:
                         getData();
-                        Toast.makeText(getActivity(), "Share your quote successfully", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        Toast.makeText(getActivity(), "Share your quote successfully", Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         break;
@@ -320,6 +317,7 @@ public class CreateQuoteActivity extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBark, int progress, boolean fromUser) {
+                size = progress;
                 quote.setTextSize(progress);
             }
         };
@@ -375,12 +373,11 @@ public class CreateQuoteActivity extends Fragment {
     private void getData() {
         content = quote.getText().toString();
         color = quote.getCurrentTextColor();
-        size = quote.getTextSize();
 
         SaveInDatabase(content, color, background, font, size);
     }
 
-    private void SaveInDatabase(String content, Integer color, Integer background, Integer font, Float size) {
+    private void SaveInDatabase(String content, Integer color, Integer background, Integer font, Integer size) {
         mAuth = FirebaseAuth.getInstance();
         PostRef = FirebaseDatabase.getInstance().getReference().child("forum");
         DatabaseReference postKey = PostRef.push();

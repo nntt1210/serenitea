@@ -83,21 +83,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             quote.setTypeface(tf);
         }
 
-        //----------------set cố định background, font, color--------------
-//        public void setBackground(Integer background) {
-//            quote.setBackgroundResource(R.drawable.neutral_1);
-//        }
-//
-//        @SuppressLint("ResourceAsColor")
-//        public void setColor(Integer color) {
-//            quote.setTextColor(R.color.text_friend);
-//        }
-//
-//        public void setFont(Integer font) {
-//            Typeface tf = ResourcesCompat.getFont(context, R.font.open_sans_semibold);
-//            quote.setTypeface(tf);
-//        }
-//---------------------------------------------------------------------
+        public void setSize(Integer size) {
+            quote.setTextSize(size);
+        }
     }
 
     @NonNull
@@ -120,11 +108,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Integer color = post.getColor();
         Integer background = post.getBackground();
         Integer font = post.getFont();
+        Integer size =  post.getSize();
 
         holder.setContent(content);
-        holder.setColor(color);
-        holder.setBackground(background);
-        holder.setFont(font);
+        if (color != 0) {
+            holder.setColor(color);
+        }
+        if (background != 0) {
+            holder.setBackground(background);
+        }
+        if (font != 0) {
+            holder.setFont(font);
+        }
+        if (size != 0) {
+            holder.setSize(size);
+        }
         UserRef = FirebaseDatabase.getInstance().getReference().child("users").child(user_id);
         LikeRef = FirebaseDatabase.getInstance().getReference().child("likes").child(postId);
 
