@@ -66,7 +66,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
         public void setBackground(Integer background) {
-            quote.setBackgroundResource(background);
+            if (background < 0) {
+                quote.setBackgroundColor(background);
+            }
+            else {
+                quote.setBackgroundResource(background);
+            }
         }
 
         public void setColor(Integer color) {
