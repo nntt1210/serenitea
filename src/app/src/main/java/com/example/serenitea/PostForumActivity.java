@@ -25,25 +25,24 @@ import java.util.List;
 public class PostForumActivity extends Fragment {
 
     private FirebaseAuth mAuth;
-    private DatabaseReference RootRef, PostRef, UserRef;
+    private DatabaseReference RootRef, PostRef;
     String currentUserId;
     private RecyclerView postRecyclerView;
     private final List<Post> postList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private PostAdapter postAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_post_forum, container, false);
-        postRecyclerView = (RecyclerView)view.findViewById(R.id.list_post);
-//        postList.add(new Post("vGInau6zh9cIkW4KLeO4GGl2DWg1", "Tam Nguyen", "avatar_1", "17/08/2021"
-//        , "Time you enjoy wasting is not wasted time", R.color.text_friend, R.drawable.neutral_1, R.font.open_sans_semibold));
-//        postList.add(new Post("vGInau6zh9cIkW4KLeO4GGl2DWg1", "Tam Nguyen", "avatar_1", "17/08/2021"
-//                , "Time you enjoy wasting is not wasted time", R.color.text_friend, R.drawable.neutral_1, R.font.open_sans_semibold));
+        postRecyclerView = (RecyclerView) view.findViewById(R.id.list_post);
+
         PostRef = FirebaseDatabase.getInstance().getReference().child("forum");
 
         FetchAllPost();
         DisplayAllPost();
+
         return view;
     }
 
