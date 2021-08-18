@@ -26,6 +26,7 @@
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        app:menu="@menu/create_menu" />
+        app:menu="@menu/create_menu"
+        app:itemIconTint="@drawable/bottom_navigation_selector"/>
 
 </RelativeLayout>

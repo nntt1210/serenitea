@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -46,8 +47,8 @@ public class CreateQuoteActivity extends Fragment {
     private BottomNavigationView createNavBar;
     private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
     private SeekBar seekbar;
-    private String content, date, font;
-    private Integer background, color;
+    private String content, date;
+    private Integer background, color, font;
     private Float size;
     private String saveCurrentDate;
     private FirebaseAuth mAuth;
@@ -255,6 +256,7 @@ public class CreateQuoteActivity extends Fragment {
         gradient_builder.setAdapter(gradient_adapter, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 relativeLayout.setBackgroundResource(gradient_items[item].icon);
+                background = gradient_items[item].icon;
             }
         });
 
@@ -263,6 +265,7 @@ public class CreateQuoteActivity extends Fragment {
         font_builder.setAdapter(font_adapter, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 Typeface typeface = ResourcesCompat.getFont(getActivity(), font_items[item].icon);
+                font = font_items[item].icon;
                 quote.setTypeface(typeface);
             }
         });
@@ -353,21 +356,31 @@ public class CreateQuoteActivity extends Fragment {
             }
         });
 
+//        setData();
+
         return view;
     }
+
+//    private void setData() {
+//        background = -15604247;
+//        color = -1502876;
+//        font = R.font.hammersmith_one;
+//        quote.setTextColor(color);
+//        quote.setBackgroundColor(background);
+//        quote.setTextSize(63);
+//        Typeface tf = ResourcesCompat.getFont(getActivity(), font);
+//        quote.setTypeface(tf);
+//    }
 
     private void getData() {
         content = quote.getText().toString();
         color = quote.getCurrentTextColor();
-        ColorDrawable quoteBackground = (ColorDrawable) quote.getBackground();
-        background = quoteBackground.getColor();
-        font = quote.getTypeface().toString();
         size = quote.getTextSize();
 
         SaveInDatabase(content, color, background, font, size);
     }
 
-    private void SaveInDatabase(String content, Integer color, Integer background, String font, Float size) {
+    private void SaveInDatabase(String content, Integer color, Integer background, Integer font, Float size) {
         mAuth = FirebaseAuth.getInstance();
         PostRef = FirebaseDatabase.getInstance().getReference().child("forum");
         DatabaseReference postKey = PostRef.push();
@@ -412,6 +425,7 @@ public class CreateQuoteActivity extends Fragment {
 
                 DefaultColor = color;
                 if (item == 0) {
+                    background = color;
                     relativeLayout.setBackgroundColor(color);
                 } else if (item == 1) {
                     quote.setHintTextColor(color);
