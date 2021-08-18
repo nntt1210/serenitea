@@ -4,15 +4,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -24,35 +21,44 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class CreateQuoteActivity extends Fragment {
 
     private EditText quote;
     private RelativeLayout relativeLayout;
-    private int DefaultColor ;
+    private int DefaultColor;
     private BottomNavigationView createNavBar;
     private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
     private SeekBar seekbar;
     private String content, date, font;
     private Integer background, color;
     private Float size;
+    private String saveCurrentDate;
+    private FirebaseAuth mAuth;
+    private DatabaseReference PostRef;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_create_quote, container, false);
-        relativeLayout = (RelativeLayout)view.findViewById(R.id.activity_create_quote);
-        quote = (EditText)view.findViewById(R.id.create_quote);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.activity_create_quote);
+        quote = (EditText) view.findViewById(R.id.create_quote);
 
         createNavBar = view.findViewById(R.id.create_nav_bar);
         createNavBar.getMenu().getItem(0).setCheckable(false);
@@ -114,11 +120,11 @@ public class CreateQuoteActivity extends Fragment {
                 getActivity(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
-                background_items){
+                background_items) {
             public View getView(int position, View convertView, ViewGroup parent) {
                 //Use super class to create the View
                 View v = super.getView(position, convertView, parent);
-                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
 
                 //Put the image on the TextView
                 tv.setCompoundDrawablesWithIntrinsicBounds(background_items[position].icon, 0, 0, 0);
@@ -134,11 +140,11 @@ public class CreateQuoteActivity extends Fragment {
                 getActivity(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
-                text_items){
+                text_items) {
             public View getView(int position, View convertView, ViewGroup parent) {
                 //Use super class to create the View
                 View v = super.getView(position, convertView, parent);
-                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
 
                 //Put the image on the TextView
                 tv.setCompoundDrawablesWithIntrinsicBounds(text_items[position].icon, 0, 0, 0);
@@ -155,11 +161,11 @@ public class CreateQuoteActivity extends Fragment {
                 getActivity(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
-                gradient_items){
+                gradient_items) {
             public View getView(int position, View convertView, ViewGroup parent) {
                 //Use super class to create the View
                 View v = super.getView(position, convertView, parent);
-                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
                 tv.setText("");
                 v.setBackgroundResource(gradient_items[position].icon);
 
@@ -171,12 +177,12 @@ public class CreateQuoteActivity extends Fragment {
                 getActivity(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
-                font_items){
+                font_items) {
             public View getView(int position, View convertView, ViewGroup parent) {
                 //Use super class to create the View
                 View v = super.getView(position, convertView, parent);
-                TextView tv = (TextView)v.findViewById(android.R.id.text1);
-                Typeface typeface = ResourcesCompat.getFont(getActivity(),font_items[position].icon);
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
+                Typeface typeface = ResourcesCompat.getFont(getActivity(), font_items[position].icon);
                 tv.setTypeface(typeface);
 
                 return v;
@@ -187,11 +193,11 @@ public class CreateQuoteActivity extends Fragment {
                 getActivity(),
                 android.R.layout.select_dialog_item,
                 android.R.id.text1,
-                share_items){
+                share_items) {
             public View getView(int position, View convertView, ViewGroup parent) {
                 //Use super class to create the View
                 View v = super.getView(position, convertView, parent);
-                TextView tv = (TextView)v.findViewById(android.R.id.text1);
+                TextView tv = (TextView) v.findViewById(android.R.id.text1);
 
                 //Put the image on the TextView
                 tv.setCompoundDrawablesWithIntrinsicBounds(share_items[position].icon, 0, 0, 0);
@@ -256,7 +262,7 @@ public class CreateQuoteActivity extends Fragment {
         font_builder.setTitle("Font");
         font_builder.setAdapter(font_adapter, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                Typeface typeface = ResourcesCompat.getFont(getActivity(),font_items[item].icon);
+                Typeface typeface = ResourcesCompat.getFont(getActivity(), font_items[item].icon);
                 quote.setTypeface(typeface);
             }
         });
@@ -292,11 +298,11 @@ public class CreateQuoteActivity extends Fragment {
 
         alert.setTitle("Size");
 
-        LinearLayout linear=new LinearLayout(getActivity());
+        LinearLayout linear = new LinearLayout(getActivity());
 
         linear.setOrientation(LinearLayout.VERTICAL);
 
-        SeekBar seekbar=new SeekBar(getActivity());
+        SeekBar seekbar = new SeekBar(getActivity());
 
         SeekBar.OnSeekBarChangeListener yourSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -353,10 +359,49 @@ public class CreateQuoteActivity extends Fragment {
     private void getData() {
         content = quote.getText().toString();
         color = quote.getCurrentTextColor();
-        ColorDrawable quoteBackground = (ColorDrawable)quote.getBackground();
+        ColorDrawable quoteBackground = (ColorDrawable) quote.getBackground();
         background = quoteBackground.getColor();
         font = quote.getTypeface().toString();
         size = quote.getTextSize();
+
+        SaveInDatabase(content, color, background, font, size);
+    }
+
+    private void SaveInDatabase(String content, Integer color, Integer background, String font, Float size) {
+        mAuth = FirebaseAuth.getInstance();
+        PostRef = FirebaseDatabase.getInstance().getReference().child("forum");
+        DatabaseReference postKey = PostRef.push();
+        String post_push_id = postKey.getKey();
+
+        //get date time
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        saveCurrentDate = currentDate.format(calendar.getTime());
+
+        Map postMap = new HashMap();
+        postMap.put("date", saveCurrentDate);
+//        sendMap.put("time", saveCurrentTime);
+        postMap.put("content", content);
+        postMap.put("color", color);
+        postMap.put("background", background);
+        postMap.put("font", font);
+        postMap.put("size", size);
+        postMap.put("userId", mAuth.getUid());
+
+        Map detailSendMap = new HashMap();
+        detailSendMap.put(post_push_id, postMap);
+
+        PostRef.updateChildren(detailSendMap).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Create quote successful!", Toast.LENGTH_LONG).show();
+                } else {
+                    String message = task.getException().getMessage();
+                    Toast.makeText(getActivity(), "Error" + message, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void OpenColorPickerDialog(boolean AlphaSupport, int item) {
@@ -366,12 +411,9 @@ public class CreateQuoteActivity extends Fragment {
             public void onOk(AmbilWarnaDialog ambilWarnaDialog, int color) {
 
                 DefaultColor = color;
-                if (item == 0)
-                {
+                if (item == 0) {
                     relativeLayout.setBackgroundColor(color);
-                }
-                else if (item == 1)
-                {
+                } else if (item == 1) {
                     quote.setHintTextColor(color);
                     quote.setTextColor(color);
                 }
@@ -390,9 +432,13 @@ public class CreateQuoteActivity extends Fragment {
     private void OpenGradientPickerDialog() {
         gradientDialog.show();
     }
+
     private void OpenFontPickerDialog() {
         fontDialog.show();
     }
-    private void OpenSizePickerDialog() {sizeDialog.show();}
+
+    private void OpenSizePickerDialog() {
+        sizeDialog.show();
+    }
 
 }
