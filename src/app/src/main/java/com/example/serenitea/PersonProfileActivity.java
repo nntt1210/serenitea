@@ -38,7 +38,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     - Đồng ý/ Từ chối (nếu người đó gửi lời mời)
     - Gửi cup of tea (nếu là bạn bè)
     * */
-    private Integer view_friend;
+    private Integer view_friend, view_author;
     private String nickname, avatar, dob, gender;
     private Integer cup_of_tea;
     private ImageView image_avatar;
@@ -66,7 +66,7 @@ public class PersonProfileActivity extends AppCompatActivity {
         ReceiveRef = RootRef.child("receiveFriendRequests");
         UserRef = RootRef.child("users");
         FriendsRef = RootRef.child("friends");
-        other_user_id = getIntent().getStringExtra("USER_ID");
+//        other_user_id = getIntent().getStringExtra("USER_ID");
 
         //event click Back
         ActionBar actionBar = getSupportActionBar();
@@ -290,7 +290,9 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     private void UpdateInfo() {
 
-        view_friend = (Integer) getIntent().getIntExtra("VIEW_FRIEND", 0);
+        view_friend = (Integer)getIntent().getIntExtra("VIEW_FRIEND", 0);
+        view_author = (Integer)getIntent().getIntExtra("VIEW_AUTHOR", 0);
+
         if (view_friend == 0) {
             nickname = getIntent().getStringExtra("FRIEND_NICKNAME");
             avatar = getIntent().getStringExtra("FRIEND_AVATAR");
@@ -298,38 +300,45 @@ public class PersonProfileActivity extends AppCompatActivity {
             gender = getIntent().getStringExtra("FRIEND_GENDER");
             cup_of_tea = (Integer) getIntent().getIntExtra("FRIEND_CUP_OF_TEA", 0);
 
-            Resources resources = getApplicationContext().getResources();
-            final int resourceId = resources.getIdentifier(avatar, "drawable", getApplicationContext().getPackageName());
-            image_avatar.setImageResource(resourceId);
-            txtNickname.setText(nickname);
-            txtDob.setText(dob);
-            txtCup.setText(cup_of_tea.toString());
-            switch (gender) {
-                case "Male":
-                    txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_men, 0, 0, 0);
-                    break;
-                case "Female":
-                    txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_women, 0, 0, 0);
-                    break;
-            }
-            btn_send_quote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
-                    sendQuoteIntent.putExtra("OTHER_UID", other_user_id);
-                    sendQuoteIntent.putExtra("NICKNAME",nickname);
-                    startActivity(sendQuoteIntent);
-                }
-            });
-
-            btn_decline.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DeclineFriendRequest();
-                }
-            });
-
         }
+        if (view_author == 0) {
+            nickname = getIntent().getStringExtra("AUTHOR_NICKNAME");
+            avatar = getIntent().getStringExtra("AUTHOR_AVATAR");
+            dob = getIntent().getStringExtra("AUTHOR_DOB");
+            gender = getIntent().getStringExtra("AUTHOR_GENDER");
+            cup_of_tea = (Integer) getIntent().getIntExtra("AUTHOR_CUP_OF_TEA", 0);
+        }
+
+        Resources resources = getApplicationContext().getResources();
+        final int resourceId = resources.getIdentifier(avatar, "drawable", getApplicationContext().getPackageName());
+        image_avatar.setImageResource(resourceId);
+        txtNickname.setText(nickname);
+        txtDob.setText(dob);
+        txtCup.setText(cup_of_tea.toString());
+        switch (gender) {
+            case "Male":
+                txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_men, 0, 0, 0);
+                break;
+            case "Female":
+                txtNickname.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_women, 0, 0, 0);
+                break;
+        }
+        btn_send_quote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendQuoteIntent = new Intent(PersonProfileActivity.this, SendQuoteActivity.class);
+                sendQuoteIntent.putExtra("OTHER_UID", other_user_id);
+                sendQuoteIntent.putExtra("NICKNAME",nickname);
+                startActivity(sendQuoteIntent);
+            }
+        });
+
+        btn_decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DeclineFriendRequest();
+            }
+        });
 
         btn_send_quote.setVisibility(View.INVISIBLE);
         btn_send_quote.setEnabled(false);
