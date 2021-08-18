@@ -103,7 +103,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                             countLikes = (int) snapshot.child(PostKey).getChildrenCount();
                             likeNum.setText(Integer.toString(countLikes));
 //                        set filled Like button
-                            likeBtn.setImageResource(R.drawable.ic_favorite_added);
+                            likeBtn.setImageResource(R.drawable.ic_like_added);
                         } else {
                             countLikes = (int) snapshot.child(PostKey).getChildrenCount();
                             likeNum.setText(Integer.toString(countLikes));
