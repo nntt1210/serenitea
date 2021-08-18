@@ -118,7 +118,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     context.startActivity(intent);
                 }
                 else if (type == 2){
-
+                    //chuyển sang bài Post
                 }
 
             }
