@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         FetchNotification();
 
-
     }
 
     public void checkNewFriendRequest() {
@@ -235,6 +234,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_forum:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new PostForumActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_create_quote:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CreateQuoteActivity()).commit();
                 drawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_friends:
