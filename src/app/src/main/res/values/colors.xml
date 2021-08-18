@@ -32,4 +32,5 @@
     <color name="emotion_angry">#ffadb5</color>
     <color name="emotion_neutral">#b5d7ef</color>
     <color name="emotion_happy">#ffe8ad</color>
+    <color name="post_background">#cdcdcd</color>
 </resources>

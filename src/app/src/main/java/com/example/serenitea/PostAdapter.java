@@ -65,33 +65,33 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeNum.setText(like);
         }
 
-//        public void setBackground(Integer background) {
-//            quote.setBackgroundResource(background);
-//        }
-//
-//        public void setColor(Integer color) {
-//            quote.setTextColor(color);
-//        }
-//
-//        public void setFont(Integer font) {
-//            Typeface tf = ResourcesCompat.getFont(context, font);
-//            quote.setTypeface(tf);
-//        }
-
-        //----------------set cố định background, font, color--------------
         public void setBackground(Integer background) {
-            quote.setBackgroundResource(R.drawable.neutral_1);
+            quote.setBackgroundResource(background);
         }
 
-        @SuppressLint("ResourceAsColor")
         public void setColor(Integer color) {
-            quote.setTextColor(R.color.text_friend);
+            quote.setTextColor(color);
         }
 
         public void setFont(Integer font) {
-            Typeface tf = ResourcesCompat.getFont(context, R.font.open_sans_semibold);
+            Typeface tf = ResourcesCompat.getFont(context, font);
             quote.setTypeface(tf);
         }
+
+        //----------------set cố định background, font, color--------------
+//        public void setBackground(Integer background) {
+//            quote.setBackgroundResource(R.drawable.neutral_1);
+//        }
+//
+//        @SuppressLint("ResourceAsColor")
+//        public void setColor(Integer color) {
+//            quote.setTextColor(R.color.text_friend);
+//        }
+//
+//        public void setFont(Integer font) {
+//            Typeface tf = ResourcesCompat.getFont(context, R.font.open_sans_semibold);
+//            quote.setTypeface(tf);
+//        }
 //---------------------------------------------------------------------
     }
 

@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/background_post"
-    android:padding="10dp">
+    android:layout_marginStart="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="20dp"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/post_header"
@@ -46,7 +49,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/post_body"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,8 +63,6 @@
             android:layout_height="500dp"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:scrollbars="vertical"
             android:textAlignment="center"
             android:textSize="36sp"
