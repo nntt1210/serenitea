@@ -3,6 +3,7 @@ package com.example.serenitea;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +43,9 @@ public class CreateQuoteActivity extends Fragment {
     private BottomNavigationView createNavBar;
     private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
     private SeekBar seekbar;
+    private String content, date, font;
+    private Integer background, color;
+    private Float size;
 
     @Nullable
     @Override
@@ -263,6 +267,7 @@ public class CreateQuoteActivity extends Fragment {
             public void onClick(DialogInterface dialog, int item) {
                 switch (item) {
                     case 0:
+                        getData();
                         Toast.makeText(getActivity(), "Share your quote successfully", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
@@ -316,25 +321,6 @@ public class CreateQuoteActivity extends Fragment {
         alert.setView(linear);
         sizeDialog = alert.create();
 
-
-        alert.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog,int id)
-            {
-                Toast.makeText(getActivity().getApplicationContext(), "OK Pressed",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        alert.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog,int id)
-            {
-                Toast.makeText(getActivity().getApplicationContext(), "Cancel Pressed",Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
         createNavBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -362,6 +348,15 @@ public class CreateQuoteActivity extends Fragment {
         });
 
         return view;
+    }
+
+    private void getData() {
+        content = quote.getText().toString();
+        color = quote.getCurrentTextColor();
+        ColorDrawable quoteBackground = (ColorDrawable)quote.getBackground();
+        background = quoteBackground.getColor();
+        font = quote.getTypeface().toString();
+        size = quote.getTextSize();
     }
 
     private void OpenColorPickerDialog(boolean AlphaSupport, int item) {
