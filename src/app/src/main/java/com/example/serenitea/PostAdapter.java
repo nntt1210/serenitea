@@ -187,7 +187,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 likeChecker = false;
                             } else {//still not like
                                 LikeRef.child(postId).child(currentUserId).setValue(true);
-                                likeChecker = true;
+                                likeChecker = false;
                             }
                         }
                     }
