@@ -85,6 +85,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         String fromKey = notification.getKey();
         String fromQuote = notification.getQuote();
         String fromStatus = notification.getStatus();
+        String postID = notification.getPostId();
         int type = notification.getType();
 
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
@@ -119,6 +120,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 }
                 else if (type == 2){
                     //chuyển sang bài Post
+                    Intent intent = new Intent(context, PostNotiActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Post", postID);
+                    intent.putExtra("Author", currentUserID);
+                    context.startActivity(intent);
                 }
 
             }
