@@ -1,16 +1,15 @@
 package com.example.serenitea;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -38,6 +37,8 @@ public class MyPostActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_my_post, container, false);
         postRecyclerView = (RecyclerView) view.findViewById(R.id.my_post);
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getCurrentUser().getUid();
 
         PostRef = FirebaseDatabase.getInstance().getReference().child("forum");
 
@@ -55,9 +56,11 @@ public class MyPostActivity extends Fragment {
                 if (snapshot.exists()) {
                     String key = snapshot.getKey();
                     Post p = snapshot.getValue(Post.class);
+                    if (p.getUserId().equals(currentUserId)){
                     p.postId = key;
                     postList.add(p);
                     postAdapter.notifyDataSetChanged();
+                }
                 }
                 Collections.sort(postList);
             }
