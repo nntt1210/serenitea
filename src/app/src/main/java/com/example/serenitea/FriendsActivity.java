@@ -79,7 +79,7 @@ public class FriendsActivity extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), PersonProfileActivity.class);
                 intent.putExtra("USER_ID", listFriend.get(position).id);
-                intent.putExtra("VIEW_FRIEND", 0);
+                intent.putExtra("VIEW_FRIEND", 1);
                 intent.putExtra("FRIEND_AVATAR", listFriend.get(position).avatar_id);
                 intent.putExtra("FRIEND_NICKNAME", listFriend.get(position).nickname);
                 intent.putExtra("FRIEND_DOB", listFriend.get(position).dob);
@@ -220,7 +220,7 @@ public class FriendsActivity extends Fragment {
                     ugender = snapshot.child("gender").getValue().toString();
                     ucot = Integer.parseInt(snapshot.child("tea").getValue().toString());
 
-                    i.putExtra("VIEW_FRIEND", 0);
+                    i.putExtra("VIEW_FRIEND", 1);
                     i.putExtra("FRIEND_AVATAR", uava);
                     i.putExtra("FRIEND_NICKNAME", uname);
                     i.putExtra("FRIEND_DOB", udob);

@@ -85,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 ugender = snapshot.child("gender").getValue().toString();
                                 ucot = Integer.parseInt(snapshot.child("tea").getValue().toString());
 
-                                intent.putExtra("VIEW_AUTHOR", 0);
+                                intent.putExtra("VIEW_AUTHOR", 1);
                                 intent.putExtra("AUTHOR_AVATAR", uava);
                                 intent.putExtra("AUTHOR_NICKNAME", uname);
                                 intent.putExtra("AUTHOR_DOB", udob);

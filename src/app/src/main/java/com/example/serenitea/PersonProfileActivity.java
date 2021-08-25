@@ -293,7 +293,7 @@ public class PersonProfileActivity extends AppCompatActivity {
         view_friend = (Integer)getIntent().getIntExtra("VIEW_FRIEND", 0);
         view_author = (Integer)getIntent().getIntExtra("VIEW_AUTHOR", 0);
 
-        if (view_friend == 0) {
+        if (view_friend == 1) {
             nickname = getIntent().getStringExtra("FRIEND_NICKNAME");
             avatar = getIntent().getStringExtra("FRIEND_AVATAR");
             dob = getIntent().getStringExtra("FRIEND_DOB");
@@ -301,7 +301,7 @@ public class PersonProfileActivity extends AppCompatActivity {
             cup_of_tea = (Integer) getIntent().getIntExtra("FRIEND_CUP_OF_TEA", 0);
 
         }
-        if (view_author == 0) {
+        else if (view_author == 1) {
             nickname = getIntent().getStringExtra("AUTHOR_NICKNAME");
             avatar = getIntent().getStringExtra("AUTHOR_AVATAR");
             dob = getIntent().getStringExtra("AUTHOR_DOB");
