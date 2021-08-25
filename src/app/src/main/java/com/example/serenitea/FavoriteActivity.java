@@ -1,14 +1,16 @@
 package com.example.serenitea;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +36,7 @@ public class FavoriteActivity extends Fragment {
     private RecyclerView favoriteList;
     private String receiverID = "FRIEND_ID", quoteID;
     private String saveCurrentDate;
+
 
     @Nullable
     @Override
@@ -103,10 +106,20 @@ public class FavoriteActivity extends Fragment {
 
 
                 //click event on each quote
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), each_quote_id, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity(), each_quote_id, Toast.LENGTH_LONG).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Want to delete this quote?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteFavoriteQuote(each_quote_id, currentUserId);
+                            }
+                        }).setNegativeButton("Cancel", null);
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
                     }
                 });
             }
@@ -128,15 +141,16 @@ public class FavoriteActivity extends Fragment {
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         TextView textViewContentQuote;
         TextView textViewFavoriteDate;
+        ImageButton deleteBtn;
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewContentQuote = itemView.findViewById(R.id.favorite_content);
             textViewFavoriteDate = itemView.findViewById(R.id.favorite_date);
+            deleteBtn = itemView.findViewById(R.id.favorite_delete);
         }
 
-        public void setQuoteID(int id) {
-        }
 
         public void setContent(String content) {
             textViewContentQuote.setText(content);
@@ -147,4 +161,8 @@ public class FavoriteActivity extends Fragment {
         }
     }
 
+    public void deleteFavoriteQuote(String idQuote, String currentUserId) {
+        DatabaseReference QuoteRemove = FirebaseDatabase.getInstance().getReference().child("favorite").child(currentUserId).child(idQuote);
+        QuoteRemove.removeValue();
+    }
 }
