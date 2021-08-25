@@ -230,7 +230,7 @@ public class QuoteActivity extends AppCompatActivity {
         shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
-                Toast.makeText(QuoteActivity.this, "Share successful!", Toast.LENGTH_LONG).show();
+                Toast.makeText(QuoteActivity.this, "Share successfully!", Toast.LENGTH_LONG).show();
 
             }
 

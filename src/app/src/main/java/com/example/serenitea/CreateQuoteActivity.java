@@ -2,6 +2,7 @@ package com.example.serenitea;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,6 +25,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,12 +54,15 @@ public class CreateQuoteActivity extends Fragment {
     private int DefaultColor;
     private BottomNavigationView createNavBar;
     private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
-    private SeekBar seekbar;
+    ShareDialog share_dialog;
     private String content, date;
     private Integer background = 0, color = 0, font = 0, size = 0;
     private String saveCurrentDate;
     private FirebaseAuth mAuth;
     private DatabaseReference PostRef;
+    private Bitmap bitmap;
+    CallbackManager callbackManager;
+    private View quoteShare;
 
     @Nullable
     @Override
@@ -66,7 +77,6 @@ public class CreateQuoteActivity extends Fragment {
         createNavBar.getMenu().getItem(2).setCheckable(false);
 
         final Item[] background_items = {
-                new Item("Library", R.drawable.ic_image),
                 new Item("Color", R.drawable.ic_color),
                 new Item("Gradient", R.drawable.ic_gradient)
         };
@@ -217,11 +227,9 @@ public class CreateQuoteActivity extends Fragment {
             public void onClick(DialogInterface dialog, int item) {
                 switch (item) {
                     case 0:
-                        break;
-                    case 1:
                         OpenColorPickerDialog(false, 0);
                         break;
-                    case 2:
+                    case 1:
                         OpenGradientPickerDialog();
                         break;
                     default:
@@ -278,6 +286,7 @@ public class CreateQuoteActivity extends Fragment {
                         getData();
                         break;
                     case 1:
+
                         break;
                     default:
                         break;
@@ -286,7 +295,6 @@ public class CreateQuoteActivity extends Fragment {
         });
 
 
-// create and show the alert dialog
         backgroundDialog = background_builder.create();
         textDialog = text_builder.create();
         gradientDialog = gradient_builder.create();
@@ -359,16 +367,6 @@ public class CreateQuoteActivity extends Fragment {
         return view;
     }
 
-//    private void setData() {
-//        background = -15604247;
-//        color = -1502876;
-//        font = R.font.hammersmith_one;
-//        quote.setTextColor(color);
-//        quote.setBackgroundColor(background);
-//        quote.setTextSize(63);
-//        Typeface tf = ResourcesCompat.getFont(getActivity(), font);
-//        quote.setTypeface(tf);
-//    }
 
     private void getData() {
         content = quote.getText().toString();
@@ -405,7 +403,7 @@ public class CreateQuoteActivity extends Fragment {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Create quote successful!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Create quote successfully!", Toast.LENGTH_LONG).show();
                 } else {
                     String message = task.getException().getMessage();
                     Toast.makeText(getActivity(), "Error" + message, Toast.LENGTH_LONG).show();
@@ -433,7 +431,6 @@ public class CreateQuoteActivity extends Fragment {
             @Override
             public void onCancel(AmbilWarnaDialog ambilWarnaDialog) {
 
-                Toast.makeText(requireActivity(), "Color Picker Closed", Toast.LENGTH_SHORT).show();
             }
         });
         ambilWarnaDialog.show();
@@ -451,5 +448,58 @@ public class CreateQuoteActivity extends Fragment {
     private void OpenSizePickerDialog() {
         sizeDialog.show();
     }
+
+    private void ShareQuoteOnFacebook() {
+        //take screen shot
+//        takeScreenShot();
+
+        //share image
+        SharePhoto sharePhoto = new SharePhoto.Builder()
+                .setBitmap(bitmap)
+                .build();
+
+        if (ShareDialog.canShow(SharePhotoContent.class)) {
+            SharePhotoContent content = new SharePhotoContent.Builder()
+                    .addPhoto(sharePhoto)
+                    .build();
+
+            share_dialog.show(content);
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Please log in with your Facebook account first!", Toast.LENGTH_LONG).show();
+
+        }
+
+
+        //Create callback
+        share_dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Toast.makeText(getActivity().getApplicationContext(), "Share successfully!", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getActivity().getApplicationContext(), "Share cancel!", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getActivity().getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+//    private View createQuoteView() {
+//        TextView share_quote;
+//        share_quote.setText(quote.getText());
+//    }
+//
+//    private void takeScreenShot() {
+//        quoteShare = findViewById(R.id.text_quote);
+//        bitmap = Screenshot.takeScreenShotOfRootView(quoteShare);
+//    }
 
 }
