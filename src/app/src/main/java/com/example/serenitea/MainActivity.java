@@ -236,6 +236,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new PostForumActivity()).commit();
                 drawer.closeDrawer(GravityCompat.START);
                 break;
+            case R.id.nav_my_post:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MyPostActivity()).commit();
+                drawer.closeDrawer(GravityCompat.START);
+                break;
             case R.id.nav_create_quote:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new CreateQuoteActivity()).commit();
