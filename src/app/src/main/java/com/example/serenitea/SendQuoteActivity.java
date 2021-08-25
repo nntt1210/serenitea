@@ -174,6 +174,8 @@ public class SendQuoteActivity extends AppCompatActivity {
         sendMap.put("quote", quoteID);
         sendMap.put("from", currentUserId);
         sendMap.put("status", "sent");
+        sendMap.put("type", 1);
+        sendMap.put("postId", "0");
 
         Map detailSendMap = new HashMap();
         detailSendMap.put(data_ref + "/" + noti_push_id, sendMap);

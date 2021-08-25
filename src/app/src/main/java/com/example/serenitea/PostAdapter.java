@@ -22,14 +22,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> postList;
     private FirebaseAuth mAuth;
     private String currentUserId;
-    private DatabaseReference databaseReference, LikeRef, UserRef;
+    private DatabaseReference RootRef, LikeRef, UserRef;
     private Context context;
     Boolean likeChecker = false;
     private String saveCurrentDate;
@@ -37,6 +41,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostAdapter(List<Post> postList, Context context) {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
+        RootRef = FirebaseDatabase.getInstance().getReference();
         LikeRef = FirebaseDatabase.getInstance().getReference().child("likes");
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
         this.postList = postList;
@@ -175,31 +180,64 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeChecker = true;
+                LikeAPost(postId, user_id);
 
-                LikeRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (likeChecker.equals(true)) {
-                            //user already liked
-                            if (snapshot.child(postId).hasChild(currentUserId)) {
-                                LikeRef.child(postId).child(currentUserId).removeValue();
-                                likeChecker = false;
-                            } else {//still not like
-                                LikeRef.child(postId).child(currentUserId).setValue(true);
-                                likeChecker = false;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
             }
         });
 
+    }
+
+    private void NotificateToPostOwner(String postOwner, String postId) {
+        if (!postOwner.equals(currentUserId)) {
+            String data_ref = "notification/" + postOwner;
+            DatabaseReference notiKey = RootRef.child("notification").child(postOwner).push();
+            String noti_push_id = notiKey.getKey();
+
+            //get date
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            saveCurrentDate = currentDate.format(calendar.getTime());
+
+            Map notiMap = new HashMap();
+            notiMap.put("date", saveCurrentDate);
+            notiMap.put("quote", "0");
+            notiMap.put("from", currentUserId);
+            notiMap.put("status", "sent");
+            notiMap.put("type", 2);
+            notiMap.put("postId", postId);
+
+            Map detailNotiMap = new HashMap();
+            detailNotiMap.put(data_ref + "/" + noti_push_id, notiMap);
+
+            RootRef.updateChildren(detailNotiMap);
+        }
+    }
+
+    private void LikeAPost(String postId, String userId) {
+        likeChecker = true;
+
+        LikeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (likeChecker.equals(true)) {
+                    //user already liked
+                    if (snapshot.child(postId).hasChild(currentUserId)) {
+                        LikeRef.child(postId).child(currentUserId).removeValue();
+                        likeChecker = false;
+                    } else {//still not like
+                        LikeRef.child(postId).child(currentUserId).setValue(true);
+                        likeChecker = false;
+
+                        NotificateToPostOwner(userId, postId);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
