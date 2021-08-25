@@ -1,6 +1,7 @@
 package com.example.serenitea;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,46 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             txtName = itemView.findViewById(R.id.post_nickname);
             likeNum = itemView.findViewById(R.id.like_number);
             likeBtn = itemView.findViewById(R.id.btn_post_like);
+
+        }
+
+        public void sendData(String id) {
+            imageViewAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PersonProfileActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("USER_ID", id);
+                    DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("users").child(id);
+                    UserRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                String uname, udob, uava, ugender;
+                                int ucot;
+                                uname = snapshot.child("nickname").getValue().toString();
+                                udob = snapshot.child("dob").getValue().toString();
+                                uava = snapshot.child("avatar").getValue().toString();
+                                ugender = snapshot.child("gender").getValue().toString();
+                                ucot = Integer.parseInt(snapshot.child("tea").getValue().toString());
+
+                                intent.putExtra("VIEW_AUTHOR", 0);
+                                intent.putExtra("AUTHOR_AVATAR", uava);
+                                intent.putExtra("AUTHOR_NICKNAME", uname);
+                                intent.putExtra("AUTHOR_DOB", udob);
+                                intent.putExtra("AUTHOR_CUP_OF_TEA", ucot);
+                                intent.putExtra("AUTHOR_GENDER", ugender);
+                                context.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            });
 
         }
 
@@ -144,6 +185,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Integer background = post.getBackground();
         Integer font = post.getFont();
         Integer size = post.getSize();
+
+//        holder.setAuthor(user_id);
+        holder.sendData(user_id);
 
         holder.setLikeButtonStatus(postId);
 
