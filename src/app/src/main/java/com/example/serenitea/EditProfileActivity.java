@@ -192,7 +192,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
         } catch (java.text.ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return isValid;
@@ -229,12 +228,5 @@ public class EditProfileActivity extends AppCompatActivity {
             return true;
         } else
             return false;
-    }
-
-    private void SendUserToSettingActivity() {
-        Intent intent = new Intent(EditProfileActivity.this, SettingsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 }

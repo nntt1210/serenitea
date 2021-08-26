@@ -26,10 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:fontFamily="@font/open_sans_semibold"
-            tools:text="Sophie sent you a quote."
             android:text=""
             android:textColor="@color/text_noti"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            tools:text="Sophie sent you a quote." />
 
     </RelativeLayout>
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".PersonProfileActivity">
     <ScrollView
         android:layout_width="match_parent"
@@ -51,13 +51,13 @@
                     android:drawableLeft="@drawable/ic_women"
                     android:drawableTint="@color/theme"
                     android:fontFamily="@font/open_sans_semibold"
-                    tools:text="Khuyen"
                     android:textColor="@color/textColor"
                     android:textSize="32sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/image_avatar" />
+                    app:layout_constraintTop_toBottomOf="@+id/image_avatar"
+                    tools:text="Khuyen" />
 
                 <TextView
                     android:id="@+id/txt_dob"
@@ -65,34 +65,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/ic_dob"
-                    android:drawableTint="@color/theme"
                     android:drawablePadding="5dp"
+                    android:drawableTint="@color/theme"
                     android:fontFamily="@font/open_sans_semibold"
-                    tools:text="24/01/2001"
                     android:textColor="@color/textColor"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_info" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_info"
+                    tools:text="24/01/2001" />
 
                 <TextView
                     android:id="@+id/txt_cup_of_tea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/ic_cup_of_tea"
-                    android:drawableTint="@color/theme"
                     android:drawablePadding="5dp"
-                    android:layout_gravity="center_vertical"
+                    android:drawableTint="@color/theme"
                     android:fontFamily="@font/open_sans_semibold"
-                    tools:text="23"
                     android:textColor="@color/textColor"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_dob" />
+                    app:layout_constraintTop_toBottomOf="@+id/txt_dob"
+                    tools:text="23" />
 
                 <Button
                     android:id="@+id/btn_add"

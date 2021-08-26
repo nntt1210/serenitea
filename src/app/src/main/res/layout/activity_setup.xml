@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".SetupActivity">
     <ScrollView
         android:layout_width="match_parent"
@@ -31,11 +31,11 @@
                     android:layout_height="150dp"
                     android:background="@android:color/transparent"
                     android:scaleType="fitXY"
-                    tools:srcCompat="@drawable/avatar_2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/avatar_2" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/outlinedTextField"
@@ -50,10 +50,10 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/setup_nickname"
-                        android:textCursorDrawable="@drawable/color_cursor"
-                        android:inputType="text"
                         android:layout_width="302dp"
-                        android:layout_height="56dp" />
+                        android:layout_height="56dp"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/color_cursor" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,13 +82,13 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/setup_dob"
-                        android:drawableRight="@drawable/ic_calendar"
+                        android:layout_width="302dp"
+                        android:layout_height="56dp"
                         android:clickable="false"
                         android:cursorVisible="false"
+                        android:drawableRight="@drawable/ic_calendar"
                         android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:layout_width="302dp"
-                        android:layout_height="56dp" />
+                        android:focusableInTouchMode="false" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

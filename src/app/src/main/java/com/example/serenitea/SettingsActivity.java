@@ -1,16 +1,9 @@
 package com.example.serenitea;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,7 +16,6 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 //    private DrawerLayout drawer;
     private TextView txtInfo, txtDob, txtCot;
     private ImageView avatar;
-    private ImageButton closeBtn, backBtn;
+    private ImageButton backBtn;
     private String curUser;
     private String name,dob,cot,gender, avatar_id;
     private FirebaseAuth mAuth;
@@ -60,12 +52,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         mAuth = FirebaseAuth.getInstance();
         navigationView.setNavigationItemSelectedListener(this);
 
-        if (savedInstanceState == null) {
-//            drawer.openDrawer(GravityCompat.START);
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_settings_container,
-//                    new EditProfileActivity()).commit();
-//            navigationView.setCheckedItem(R.id.nav_edit);
-        }
 
         backBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.back_button);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,13 +60,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                 finish();
             }
         });
-//        closeBtn = (ImageButton)navigationView.getHeaderView(0).findViewById(R.id.btn_settings_close);
-//        closeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+
 
     }
 

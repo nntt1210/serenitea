@@ -34,11 +34,8 @@ public class ExpandableHeightGridView extends GridView
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        // HACK! TAKE THAT ANDROID!
         if (isExpanded())
         {
-            // Calculate entire height by providing a very large height hint.
-            // View.MEASURED_SIZE_MASK represents the largest height possible.
             int expandSpec = MeasureSpec.makeMeasureSpec(MEASURED_SIZE_MASK,
                     MeasureSpec.AT_MOST);
             super.onMeasure(widthMeasureSpec, expandSpec);
@@ -52,8 +49,4 @@ public class ExpandableHeightGridView extends GridView
         }
     }
 
-//    public void setExpanded(boolean expanded)
-//    {
-//        this.expanded = expanded;
-//    }
 }

@@ -114,6 +114,7 @@ public class CreateQuoteActivity extends Fragment {
         };
 
         final Item[] font_items = {
+                new Item("Open Sans (default)", R.font.open_sans_semibold),
                 new Item("AbrilFatface", R.font.abril_fatface),
                 new Item("Economica", R.font.economica),
                 new Item("FredokaOne", R.font.fredoka_one),
@@ -363,6 +364,7 @@ public class CreateQuoteActivity extends Fragment {
         linear.setOrientation(LinearLayout.VERTICAL);
 
         SeekBar seekbar = new SeekBar(getActivity());
+        seekbar.setProgress(14);
 
         SeekBar.OnSeekBarChangeListener yourSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -402,9 +404,13 @@ public class CreateQuoteActivity extends Fragment {
                         return true;
 
                     case R.id.nav_share:
-                        shareDialog.show();
+                        if (quote.getText().toString().equals("")) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Please input your quote before sharing!", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            shareDialog.show();
+                        }
                         return true;
-
 
                 }
 

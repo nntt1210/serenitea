@@ -4,9 +4,9 @@
     android:id="@+id/favorite_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:background="@color/background_favorite"
-    android:orientation="vertical"
-    android:layout_marginBottom="10dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/send_quote_content"
@@ -18,8 +18,8 @@
         android:layout_marginBottom="30dp"
         android:alpha=".54"
         android:fontFamily="@font/open_sans_semibold"
-        tools:text="When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is."
         android:textColor="@color/text_favorite"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is." />
 
 </RelativeLayout>
