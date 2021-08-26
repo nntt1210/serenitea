@@ -19,6 +19,14 @@
             android:title="Daily posts" />
     </group>
     <group
+        android:id="@+id/group_item_9"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_post"
+            android:icon="@drawable/ic_forum"
+            android:title="My posts" />
+    </group>
+    <group
         android:id="@+id/group_item_8"
         android:checkableBehavior="single">
         <item
