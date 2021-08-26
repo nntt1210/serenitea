@@ -2,6 +2,7 @@ package com.example.serenitea;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -39,6 +41,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,7 +57,7 @@ public class CreateQuoteActivity extends Fragment {
     private RelativeLayout relativeLayout;
     private int DefaultColor;
     private BottomNavigationView createNavBar;
-    private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog;
+    private Dialog backgroundDialog, textDialog, gradientDialog, fontDialog, sizeDialog, shareDialog, quoteDialog;
     ShareDialog share_dialog;
     private String content, date;
     private Integer background = 0, color = 0, font = 0, size = 0;
@@ -62,7 +66,7 @@ public class CreateQuoteActivity extends Fragment {
     private DatabaseReference PostRef;
     private Bitmap bitmap;
     CallbackManager callbackManager;
-    private View quoteShare;
+    private TextView quoteShare;
 
     @Nullable
     @Override
@@ -70,6 +74,7 @@ public class CreateQuoteActivity extends Fragment {
         View view = inflater.inflate(R.layout.activity_create_quote, container, false);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.activity_create_quote);
         quote = (EditText) view.findViewById(R.id.create_quote);
+
 
         createNavBar = view.findViewById(R.id.create_nav_bar);
         createNavBar.getMenu().getItem(0).setCheckable(false);
@@ -277,6 +282,18 @@ public class CreateQuoteActivity extends Fragment {
             }
         });
 
+        AlertDialog.Builder quote_builder = new AlertDialog.Builder(getActivity());
+        quote_builder.setTitle("Share your quote");
+        View share_view = inflater.inflate(R.layout.share_quote_view, null);
+        quote_builder.setView(share_view);
+        quoteShare = (TextView)share_view.findViewById(R.id.text_share_quote);
+        quote_builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                ShareQuoteOnFacebook();
+            }
+        });
+
+
         AlertDialog.Builder share_builder = new AlertDialog.Builder(getActivity());
         share_builder.setTitle("Share");
         share_builder.setAdapter(share_adapter, new DialogInterface.OnClickListener() {
@@ -286,7 +303,40 @@ public class CreateQuoteActivity extends Fragment {
                         getData();
                         break;
                     case 1:
-
+                        quoteShare.setText(quote.getText().toString());
+                        if (color == 0) {
+                            quoteShare.setTextColor(getResources().getColor(R.color.textColor));
+                        }
+                        else {
+                            quoteShare.setTextColor(color);
+                        }
+                        if (background < 0) {
+                            quoteShare.setBackgroundColor(background);
+                        } else {
+                            quoteShare.setBackgroundResource(background);
+                        }
+                        if (size == 0) {
+                            quoteShare.setTextSize(16);
+                        }
+                        else {
+                            quoteShare.setTextSize(size);
+                        }
+                        if (font == 0) {
+                            Typeface tf = ResourcesCompat.getFont(getActivity(), R.font.open_sans_semibold);
+                            quoteShare.setTypeface(tf);
+                        }
+                        else {
+                            Typeface tf = ResourcesCompat.getFont(getActivity(), font);
+                            quoteShare.setTypeface(tf);
+                        }
+                        if(share_view.getParent() != null) {
+                            ((ViewGroup)share_view.getParent()).removeView(share_view);
+                        }
+                        quote_builder.setView(share_view);
+                        quoteDialog = quote_builder.create();
+                        quoteDialog.show();
+                        Window window = quoteDialog.getWindow();
+                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         break;
                     default:
                         break;
@@ -300,7 +350,9 @@ public class CreateQuoteActivity extends Fragment {
         gradientDialog = gradient_builder.create();
         fontDialog = font_builder.create();
         shareDialog = share_builder.create();
+        share_dialog = new ShareDialog(getActivity());
 
+        callbackManager = CallbackManager.Factory.create();
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
@@ -361,8 +413,6 @@ public class CreateQuoteActivity extends Fragment {
                 return false;
             }
         });
-
-//        setData();
 
         return view;
     }
@@ -450,10 +500,10 @@ public class CreateQuoteActivity extends Fragment {
     }
 
     private void ShareQuoteOnFacebook() {
-        //take screen shot
-//        takeScreenShot();
 
-        //share image
+        //take screen shot
+        takeScreenShot();
+
         SharePhoto sharePhoto = new SharePhoto.Builder()
                 .setBitmap(bitmap)
                 .build();
@@ -465,7 +515,7 @@ public class CreateQuoteActivity extends Fragment {
 
             share_dialog.show(content);
         } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Please log in with your Facebook account first!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please log in with your Facebook account first!", Toast.LENGTH_LONG).show();
 
         }
 
@@ -474,32 +524,33 @@ public class CreateQuoteActivity extends Fragment {
         share_dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
-                Toast.makeText(getActivity().getApplicationContext(), "Share successfully!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Share successfully!", Toast.LENGTH_LONG).show();
 
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(getActivity().getApplicationContext(), "Share cancel!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Share cancel!", Toast.LENGTH_LONG).show();
 
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getActivity().getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
+
     }
 
-//    private View createQuoteView() {
-//        TextView share_quote;
-//        share_quote.setText(quote.getText());
-//    }
-//
-//    private void takeScreenShot() {
-//        quoteShare = findViewById(R.id.text_quote);
-//        bitmap = Screenshot.takeScreenShotOfRootView(quoteShare);
-//    }
 
+    private void takeScreenShot() {
+        bitmap = Screenshot.takeScreenShotOfRootView(quoteShare);
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 }

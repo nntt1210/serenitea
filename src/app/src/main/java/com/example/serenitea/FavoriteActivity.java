@@ -1,10 +1,13 @@
 package com.example.serenitea;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -36,11 +39,15 @@ public class FavoriteActivity extends Fragment {
     private RecyclerView favoriteList;
     private String receiverID = "FRIEND_ID", quoteID;
     private String saveCurrentDate;
-
+    private LayoutInflater inflater;
+    private TextView quoteView;
+    private Dialog quoteDialog;
+    private View share_view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        share_view = inflater.inflate(R.layout.share_quote_view, null);
         return inflater.inflate(R.layout.activity_favorite, container, false);
     }
 
@@ -95,7 +102,11 @@ public class FavoriteActivity extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             final String content_each_quote = snapshot.child(each_quote_id).child("content").getValue().toString();
+                            final String background = snapshot.child(each_quote_id).child("background").getValue().toString();
+                            final String color = snapshot.child(each_quote_id).child("color").getValue().toString();
                             holder.setContent(content_each_quote);
+                            holder.setBackground(background);
+                            holder.setColor(color);
                         }
                     }
 
@@ -105,13 +116,34 @@ public class FavoriteActivity extends Fragment {
                 });
 
 
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder quote_builder = new AlertDialog.Builder(getActivity());
+                        if(share_view.getParent() != null) {
+                            ((ViewGroup)share_view.getParent()).removeView(share_view);
+                        }
+                        quote_builder.setView(share_view);
+                        quoteView = (TextView)share_view.findViewById(R.id.text_share_quote);
+                        quoteView.setText(holder.getContent());
+                        final String color = holder.getColor();
+                        final String background = holder.getBackground();
+                        quoteView.setTextColor(Color.parseColor(color));
+                        int resourceId = getResources().getIdentifier(background, "drawable", getActivity().getApplicationContext().getPackageName());
+                        quoteView.setBackgroundResource(resourceId);
+                        quoteDialog = quote_builder.create();
+                        quoteDialog.show();
+                        Window window = quoteDialog.getWindow();
+                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    }
+                });
                 //click event on each quote
                 holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 //                        Toast.makeText(getActivity(), each_quote_id, Toast.LENGTH_LONG).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Want to delete this quote?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        builder.setMessage("Are you sure you want to delete this quote?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteFavoriteQuote(each_quote_id, currentUserId);
@@ -143,6 +175,7 @@ public class FavoriteActivity extends Fragment {
         TextView textViewFavoriteDate;
         ImageButton deleteBtn;
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String background, color, content;
 
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -151,14 +184,35 @@ public class FavoriteActivity extends Fragment {
             deleteBtn = itemView.findViewById(R.id.favorite_delete);
         }
 
-
         public void setContent(String content) {
+            this.content = content;
             textViewContentQuote.setText(content);
         }
 
         public void setDate(String date) {
             textViewFavoriteDate.setText(date);
         }
+
+        public void setBackground(String background) {
+            this.background = background;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+        public String getContent() {
+            return this.content;
+        }
+
+        public String getColor() {
+            return this.color;
+        }
+
+        public String getBackground() {
+            return this.background;
+        }
+
     }
 
     public void deleteFavoriteQuote(String idQuote, String currentUserId) {
