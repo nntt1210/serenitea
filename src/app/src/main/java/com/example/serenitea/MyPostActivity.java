@@ -88,7 +88,7 @@ public class MyPostActivity extends Fragment {
     }
 
     private void DisplayAllPost() {
-        postAdapter = new PostAdapter(postList, getActivity().getApplicationContext());
+        postAdapter = new PostAdapter(postList, getActivity().getApplicationContext(), getActivity());
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         postRecyclerView.setHasFixedSize(true);
