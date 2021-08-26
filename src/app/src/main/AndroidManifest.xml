@@ -32,9 +32,7 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".FindFriendActivity" />
         <activity android:name=".PersonProfileActivity" />
-        <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".QuoteActivity" />
         <activity android:name=".QuoteNotificationActivity" />
         <activity android:name=".LogoutActivity">

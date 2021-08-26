@@ -287,7 +287,7 @@ public class CreateQuoteActivity extends Fragment {
         View share_view = inflater.inflate(R.layout.share_quote_view, null);
         quote_builder.setView(share_view);
         quoteShare = (TextView)share_view.findViewById(R.id.text_share_quote);
-        quote_builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        quote_builder.setPositiveButton("Share", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 ShareQuoteOnFacebook();
             }

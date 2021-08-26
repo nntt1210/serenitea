@@ -1,7 +1,10 @@
 package com.example.serenitea;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +12,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,8 +49,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private Context context;
     Boolean likeChecker = false;
     private String saveCurrentDate;
+    private Bitmap bitmap;
+    CallbackManager callbackManager;
+    private TextView quoteShare;
+    private ShareDialog share_dialog;
 
-    public PostAdapter(List<Post> postList, Context context) {
+    public PostAdapter(List<Post> postList, Context context, Activity activity) {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -47,12 +62,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         UserRef = FirebaseDatabase.getInstance().getReference().child("users");
         this.postList = postList;
         this.context = context;
+
+        share_dialog = new ShareDialog(activity);
+
+        callbackManager = CallbackManager.Factory.create();
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewAvatar;
         TextView quote, txtName, likeNum;
-        ImageButton likeBtn;
+        ImageButton likeBtn, shareBtn;
         int countLikes = 0;
 
         public PostViewHolder(View itemView) {
@@ -62,7 +81,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             txtName = itemView.findViewById(R.id.post_nickname);
             likeNum = itemView.findViewById(R.id.like_number);
             likeBtn = itemView.findViewById(R.id.btn_post_like);
-
+            shareBtn = itemView.findViewById(R.id.btn_post_share);
         }
 
         public void sendData(String id) {
@@ -103,6 +122,55 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 }
             });
 
+        }
+
+        public void ShareQuoteOnFacebook() {
+
+            //take screen shot
+            takeScreenShot();
+
+            SharePhoto sharePhoto = new SharePhoto.Builder()
+                    .setBitmap(bitmap)
+                    .build();
+
+            if (ShareDialog.canShow(SharePhotoContent.class)) {
+                SharePhotoContent content = new SharePhotoContent.Builder()
+                        .addPhoto(sharePhoto)
+                        .build();
+
+                share_dialog.show(content);
+            } else {
+//                Toast.makeText(activity, "Please log in with your Facebook account first!", Toast.LENGTH_LONG).show();
+
+            }
+
+
+            //Create callback
+            share_dialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                @Override
+                public void onSuccess(Sharer.Result result) {
+//                    Toast.makeText(getActivity(context), "Share successfully!", Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void onCancel() {
+//                    Toast.makeText(getActivity(context), "Share cancel!", Toast.LENGTH_LONG).show();
+
+                }
+
+                @Override
+                public void onError(FacebookException error) {
+//                    Toast.makeText(getActivity(context), "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+            });
+
+        }
+
+
+        public void takeScreenShot() {
+            bitmap = Screenshot.takeScreenShotOfRootView(quote);
         }
 
         public void setAvatar(String id) {
@@ -229,7 +297,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
+        holder.shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.ShareQuoteOnFacebook();
+            }
+        });
+
     }
+
+
+
+//    @Override
+//    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
+//    }
 
     private void NotificateToPostOwner(String postOwner, String postId) {
         if (!postOwner.equals(currentUserId)) {
