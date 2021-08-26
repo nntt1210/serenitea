@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostForumActivity"
-    android:background="@color/post_background">
+    android:background="@color/post_background"
+    tools:context=".PostForumActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_post"

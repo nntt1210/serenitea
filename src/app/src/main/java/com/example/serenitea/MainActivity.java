@@ -12,8 +12,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.Nullable;
@@ -35,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -335,12 +332,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void SendUserToEmotionActivity(){
-        Intent emotionIntent = new Intent(MainActivity.this, EmotionActivity.class);
-        emotionIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(emotionIntent);
-        finish();
-    }
     private void SendUserToSettingsActivity() {
         Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(settingsIntent);
@@ -350,15 +341,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent logoutIntent =  new Intent(MainActivity.this, LogoutActivity.class);
         logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(logoutIntent);
-        finish();
-    }
-
-
-    private void SendUserToSetupActivity(){
-        //chuyển sang trang Logout (trang ban đầu khi vô app)
-        Intent intent =  new Intent(MainActivity.this, SetupActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
         finish();
     }
 

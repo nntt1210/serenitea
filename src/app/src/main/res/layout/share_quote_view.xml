@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_share_quote"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@drawable/sad_1"
+        android:fontFamily="@font/open_sans_semibold"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:scrollbars="vertical"
+        android:text="Time you enjoy wasting is not wasted time."
+        android:textAlignment="center"
+        android:textColor="#f0f9fe"
+        android:textSize="36sp" />
+</LinearLayout>

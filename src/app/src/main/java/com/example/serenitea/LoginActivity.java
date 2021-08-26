@@ -204,13 +204,6 @@ public class LoginActivity extends AppCompatActivity {
 //        finish();
     }
 
-    private void SendUserToSetupActivity() {
-        Intent intent = new Intent(LoginActivity.this, SetupActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
     private void signInUsingGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);

@@ -1,33 +1,18 @@
 package com.example.serenitea;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -46,7 +31,6 @@ public class FriendsActivity extends Fragment {
     ArrayList<Friend> listFriend;
     private EditText searchBar;
     private ImageButton btSearch;
-    private String inSearch;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference userRef, fr_listRef;
     private String curId = mAuth.getCurrentUser().getUid();
@@ -66,7 +50,6 @@ public class FriendsActivity extends Fragment {
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //            searchBtn();
                 getData(searchBar.getText().toString());
             }
         });
