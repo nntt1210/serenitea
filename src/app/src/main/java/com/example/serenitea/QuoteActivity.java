@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -181,6 +182,7 @@ public class QuoteActivity extends AppCompatActivity {
         String formattedDate = df.format(d);
         Ref = FirebaseDatabase.getInstance().getReference().child("favorite").child(curUser);
         Ref.child(QuoteID).child("date").setValue(formattedDate);
+        Ref.child(QuoteID).child("dateSystem").setValue(ServerValue.TIMESTAMP);
     }
 
     public void removeFromFav(String QuoteID) {

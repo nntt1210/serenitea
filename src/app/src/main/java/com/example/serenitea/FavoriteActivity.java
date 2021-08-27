@@ -35,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class FavoriteActivity extends Fragment {
@@ -49,12 +50,15 @@ public class FavoriteActivity extends Fragment {
     CallbackManager callbackManager;
     private TextView quoteShare;
     private ShareDialog share_dialog;
+    LinearLayoutManager linearLayoutManager;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         share_view = inflater.inflate(R.layout.share_quote_view, null);
         quoteShare = (TextView)share_view.findViewById(R.id.text_share_quote);
+
+
         return inflater.inflate(R.layout.activity_favorite, container, false);
     }
 
@@ -68,8 +72,13 @@ public class FavoriteActivity extends Fragment {
         QuoteRef = RootRef.child("quotes");
 
 
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+
+
         favoriteList = (RecyclerView) getView().findViewById(R.id.list_favorite);
-        favoriteList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        favoriteList.setLayoutManager(linearLayoutManager);
 
         DisplayAllFavoriteQuote();
 
@@ -78,16 +87,17 @@ public class FavoriteActivity extends Fragment {
     }
 
     private void DisplayAllFavoriteQuote() {
+        Query SortedQuote = FavoriteQuoteRef.orderByChild("dateSystem");
 
-        FirebaseRecyclerOptions<Quote> options =
-                new FirebaseRecyclerOptions.Builder<Quote>()
-                        .setQuery(FavoriteQuoteRef, Quote.class)
+        FirebaseRecyclerOptions<FavoriteQuote> options =
+                new FirebaseRecyclerOptions.Builder<FavoriteQuote>()
+                        .setQuery(SortedQuote, FavoriteQuote.class)
                         .build();
 
-        FirebaseRecyclerAdapter<Quote, FavoriteActivity.FavoriteViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Quote, FavoriteViewHolder>(options) {
+        FirebaseRecyclerAdapter<FavoriteQuote, FavoriteActivity.FavoriteViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<FavoriteQuote, FavoriteViewHolder>(options) {
 
             @Override
-            protected void onBindViewHolder(@NonNull FavoriteActivity.FavoriteViewHolder holder, int position, Quote model) {
+            protected void onBindViewHolder(@NonNull FavoriteActivity.FavoriteViewHolder holder, int position, FavoriteQuote model) {
                 String each_quote_id = getRef(position).getKey();
 
                 FavoriteQuoteRef.addListenerForSingleValueEvent(new ValueEventListener() {
