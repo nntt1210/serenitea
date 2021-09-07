@@ -40,4 +40,8 @@
     <string name="emote_question">How are you feeling?</string>
     <string name="noti">Notifications</string>
     <string name="emote_chart">Your emotional chart</string>
+    <string name="friend_req">Friend Requests</string>
+    <string name="search_friend_txt">Search for a friend</string>
+    <string name="accept">Accept</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -32,7 +32,7 @@
             android:layout_below="@+id/friend_request_nickname"
             android:backgroundTint="@color/background_pink"
             android:fontFamily="@font/open_sans_extrabold"
-            android:text="Accept"
+            android:text="@string/accept"
             android:textSize="14sp" />
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_toRightOf="@+id/btn_accept_friend_request"
             android:backgroundTint="@color/background_delete"
             android:fontFamily="@font/open_sans_extrabold"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="@color/text_delete"
             android:textSize="14sp" />
 
