@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@drawable/sad_1"
-            tools:text="Time you enjoy wasting is not wasted time."
+            tools:text="@string/sample_quote_send"
             tools:textColor="#f0f9fe" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
