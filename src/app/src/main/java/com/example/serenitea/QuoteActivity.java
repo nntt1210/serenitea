@@ -70,7 +70,7 @@ public class QuoteActivity extends AppCompatActivity {
 
         QuoteView = (TextView) findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
-        GetEmotion();
+        GenerateQuoteID(GetEmotion());
         GenerateQuote();
 
         btnFavoriteClicked = new Boolean(false);
@@ -121,13 +121,18 @@ public class QuoteActivity extends AppCompatActivity {
     }
     //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
 
-    private void GetEmotion() {
+    private int GetEmotion() {
         int emo = getIntent().getIntExtra("emotion", 0);
+        return emo;
+    }
+
+    private void GenerateQuoteID (int emo)
+    {
         int qid;
         switch (emo) {
             case 1: // dissatisfied - sad
                 qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
             case 2: // happy
                 qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
@@ -152,54 +157,27 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     private void GenerateQuote() {
-        if (tempQuote != null)
-        {
-            mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
-            mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                    if (datasnapshot.exists()) {
-                        Quote = tempQuote;
-                        //tempQuote = Quote;
-                        background = datasnapshot.child("background").getValue().toString();
-                        color = datasnapshot.child("color").getValue().toString();
-                        QuoteView.setText(Quote);
-                        QuoteView.setTextColor(Color.parseColor(color));
-                        int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
-                        QuoteView.setBackgroundResource(resourceId);
-                    }
+        mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
+        mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                if (datasnapshot.exists()) {
+                    Quote = datasnapshot.child("content").getValue().toString();
+                    //tempQuote = Quote;
+                    background = datasnapshot.child("background").getValue().toString();
+                    color = datasnapshot.child("color").getValue().toString();
+                    QuoteView.setText(Quote);
+                    QuoteView.setTextColor(Color.parseColor(color));
+                    int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
+                    QuoteView.setBackgroundResource(resourceId);
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        }
-        else
-        {
-            mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
-            mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                    if (datasnapshot.exists()) {
-                        Quote = datasnapshot.child("content").getValue().toString();
-                        //tempQuote = Quote;
-                        background = datasnapshot.child("background").getValue().toString();
-                        color = datasnapshot.child("color").getValue().toString();
-                        QuoteView.setText(Quote);
-                        QuoteView.setTextColor(Color.parseColor(color));
-                        int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
-                        QuoteView.setBackgroundResource(resourceId);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
-
     public void setLikeButtonQuote() {
 
     }
