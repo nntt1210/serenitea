@@ -29,14 +29,8 @@ public class EmotionActivity extends Fragment {
 * */
 
     private int emotion = 0;
-    private ImageButton btnSad;
-    private ImageButton btnWorried;
-    private ImageButton btnAngry;
-    private ImageButton btnNeutral;
-    private ImageButton btnHappy;
     private DatabaseReference diaryRef;
     private String QuoteID;
-    private FirebaseAuth mAuth;
     private String curUser;
     private String curEmo;
     private int update = 1;
@@ -52,6 +46,11 @@ public class EmotionActivity extends Fragment {
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
+        ImageButton btnSad;
+        ImageButton btnWorried;
+        ImageButton btnAngry;
+        ImageButton btnNeutral;
+        ImageButton btnHappy;
         btnSad = getView().findViewById(R.id.emotion_sad);
         btnWorried = getView().findViewById(R.id.emotion_worried);
         btnAngry = getView().findViewById(R.id.emotion_angry);
@@ -135,6 +134,7 @@ public class EmotionActivity extends Fragment {
     }
     private void updateEmo ()
     {
+        FirebaseAuth mAuth;
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
