@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
@@ -285,7 +286,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             }
         });
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),postId,Toast.LENGTH_SHORT).show();
+            }
+        });
         //click Like
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
