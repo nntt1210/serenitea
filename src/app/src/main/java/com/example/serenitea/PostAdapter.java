@@ -24,6 +24,8 @@ import com.facebook.share.Sharer;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -289,7 +291,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),postId,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(),postId,Toast.LENGTH_SHORT).show();
+                DeletePost(postId);
             }
         });
         //click Like
@@ -367,6 +370,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+    }
+    private void DeletePost(String PostId)
+    {
+        DatabaseReference PostRef= RootRef.child("forum");
+        PostRef.child(PostId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                Toast.makeText(context,"Post Deleted",Toast.LENGTH_SHORT).show();
             }
         });
     }
