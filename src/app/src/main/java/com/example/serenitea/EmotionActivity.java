@@ -63,6 +63,7 @@ public class EmotionActivity extends Fragment {
         btnNeutral.setOnClickListener(v -> changebtnNeutral());
         btnAngry.setOnClickListener(v -> changebtnAngry());
         btnHappy.setOnClickListener(v -> changebtnHappy());
+        GenerateQuoteID();
     }
 
     private void changebtnSad ()
@@ -195,7 +196,7 @@ public class EmotionActivity extends Fragment {
     private void SendUserToQuoteActivity (){
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
 //        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        quoteIntent.putExtra("emotion", QuoteID);
+        quoteIntent.putExtra("quoteID", QuoteID);
         startActivity(quoteIntent);
  //       finish();
     }
