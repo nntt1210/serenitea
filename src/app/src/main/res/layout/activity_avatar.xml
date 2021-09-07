@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Select your avatar"
+        android:text="@string/select_avt"
         android:textAllCaps="true"
         android:textColor="@color/textColor"
         android:textSize="32sp"
