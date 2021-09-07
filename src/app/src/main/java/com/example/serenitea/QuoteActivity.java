@@ -152,26 +152,52 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     private void GenerateQuote() {
-        mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
-        mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                if (datasnapshot.exists()) {
-                    Quote = datasnapshot.child("content").getValue().toString();
-                    tempQuote = Quote;
-                    background = datasnapshot.child("background").getValue().toString();
-                    color = datasnapshot.child("color").getValue().toString();
-                    QuoteView.setText(Quote);
-                    QuoteView.setTextColor(Color.parseColor(color));
-                    int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
-                    QuoteView.setBackgroundResource(resourceId);
+        if (tempQuote != null)
+        {
+            mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
+            mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                    if (datasnapshot.exists()) {
+                        Quote = tempQuote;
+                        //tempQuote = Quote;
+                        background = datasnapshot.child("background").getValue().toString();
+                        color = datasnapshot.child("color").getValue().toString();
+                        QuoteView.setText(Quote);
+                        QuoteView.setTextColor(Color.parseColor(color));
+                        int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
+                        QuoteView.setBackgroundResource(resourceId);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+        else
+        {
+            mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
+            mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                    if (datasnapshot.exists()) {
+                        Quote = datasnapshot.child("content").getValue().toString();
+                        //tempQuote = Quote;
+                        background = datasnapshot.child("background").getValue().toString();
+                        color = datasnapshot.child("color").getValue().toString();
+                        QuoteView.setText(Quote);
+                        QuoteView.setTextColor(Color.parseColor(color));
+                        int resourceId = getResources().getIdentifier(background, "drawable", getApplicationContext().getPackageName());
+                        QuoteView.setBackgroundResource(resourceId);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
     }
 
     public void setLikeButtonQuote() {
