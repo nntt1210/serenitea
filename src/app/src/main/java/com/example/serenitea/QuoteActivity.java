@@ -132,21 +132,21 @@ public class QuoteActivity extends AppCompatActivity {
             case 2: // happy
                 qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
                 if (qid == 10)
-                    QuoteID = "00" + String.valueOf(qid);
+                    QuoteID = "00" + qid;
                 else
-                    QuoteID = "000" + String.valueOf(qid);
+                    QuoteID = "000" + qid;
                 break;
             case 3: // neutral
                 qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
             case 4: // angry
                 qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
             case 5: // nervous
                 qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
         }
     }
