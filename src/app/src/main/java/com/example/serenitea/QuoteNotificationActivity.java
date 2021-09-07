@@ -46,19 +46,16 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (((Boolean)btnFavorite.getTag()) == false)
-                {
-                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
-                    btnFavorite.setTag(new Boolean(true));
-                }
-                else
-                {
-                    btnFavorite.setImageResource(R.drawable.ic_favorite);
-                    btnFavorite.setTag(new Boolean(false));
-                }
+        btnFavorite.setOnClickListener(v -> {
+            if (((Boolean)btnFavorite.getTag()) == false)
+            {
+                btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                btnFavorite.setTag(new Boolean(true));
+            }
+            else
+            {
+                btnFavorite.setImageResource(R.drawable.ic_favorite);
+                btnFavorite.setTag(new Boolean(false));
             }
         });
     }
