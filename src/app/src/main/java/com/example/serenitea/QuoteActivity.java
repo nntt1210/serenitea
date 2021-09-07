@@ -46,6 +46,7 @@ public class QuoteActivity extends AppCompatActivity {
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
+    private String tempQuote;
     private String background, color;
     private ImageButton btnFavorite, btnShare;
     private Boolean btnFavoriteClicked;
@@ -157,6 +158,7 @@ public class QuoteActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 if (datasnapshot.exists()) {
                     Quote = datasnapshot.child("content").getValue().toString();
+                    tempQuote = Quote;
                     background = datasnapshot.child("background").getValue().toString();
                     color = datasnapshot.child("color").getValue().toString();
                     QuoteView.setText(Quote);
