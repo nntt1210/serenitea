@@ -46,7 +46,6 @@ public class QuoteActivity extends AppCompatActivity {
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
-    private String tempQuote;
     private String background, color;
     private ImageButton btnFavorite, btnShare;
     private Boolean btnFavoriteClicked;
@@ -70,7 +69,6 @@ public class QuoteActivity extends AppCompatActivity {
 
         QuoteView = (TextView) findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
-        //GetEmotion();
         GenerateQuote();
 
         btnFavoriteClicked = new Boolean(false);
@@ -119,37 +117,6 @@ public class QuoteActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
-
-//    private void GetEmotion() {
-//        int emo = getIntent().getIntExtra("emotion", 0);
-//        int qid;
-//        switch (emo) {
-//            case 1: // dissatisfied - sad
-//                qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
-//                QuoteID = "00" + qid;
-//                break;
-//            case 2: // happy
-//                qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
-//                if (qid == 10)
-//                    QuoteID = "00" + qid;
-//                else
-//                    QuoteID = "000" + qid;
-//                break;
-//            case 3: // neutral
-//                qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
-//                QuoteID = "00" + qid;
-//                break;
-//            case 4: // angry
-//                qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
-//                QuoteID = "00" + qid;
-//                break;
-//            case 5: // nervous
-//                qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
-//                QuoteID = "00" + qid;
-//                break;
-//        }
-//    }
 
     private void GenerateQuote() {
         QuoteID = getIntent().getStringExtra("quoteID");
@@ -159,7 +126,6 @@ public class QuoteActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 if (datasnapshot.exists()) {
                     Quote = datasnapshot.child("content").getValue().toString();
-                    //tempQuote = Quote;
                     background = datasnapshot.child("background").getValue().toString();
                     color = datasnapshot.child("color").getValue().toString();
                     QuoteView.setText(Quote);
