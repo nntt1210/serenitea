@@ -128,31 +128,34 @@ public class QuoteActivity extends AppCompatActivity {
 
     private void GenerateQuoteID (int emo)
     {
-        int qid;
-        switch (emo) {
-            case 1: // dissatisfied - sad
-                qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
-                QuoteID = "00" + qid;
-                break;
-            case 2: // happy
-                qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
-                if (qid == 10)
+        if (QuoteID == null)
+        {
+            int qid;
+            switch (emo) {
+                case 1: // dissatisfied - sad
+                    qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
                     QuoteID = "00" + qid;
-                else
-                    QuoteID = "000" + qid;
-                break;
-            case 3: // neutral
-                qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
-                QuoteID = "00" + qid;
-                break;
-            case 4: // angry
-                qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
-                QuoteID = "00" + qid;
-                break;
-            case 5: // nervous
-                qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
-                QuoteID = "00" + qid;
-                break;
+                    break;
+                case 2: // happy
+                    qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
+                    if (qid == 10)
+                        QuoteID = "00" + qid;
+                    else
+                        QuoteID = "000" + qid;
+                    break;
+                case 3: // neutral
+                    qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
+                    QuoteID = "00" + qid;
+                    break;
+                case 4: // angry
+                    qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
+                    QuoteID = "00" + qid;
+                    break;
+                case 5: // nervous
+                    qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
+                    QuoteID = "00" + qid;
+                    break;
+            }
         }
     }
 
