@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 
 public class EmotionActivity extends Fragment {
@@ -33,6 +35,7 @@ public class EmotionActivity extends Fragment {
     private ImageButton btnNeutral;
     private ImageButton btnHappy;
     private DatabaseReference diaryRef;
+    private String QuoteID;
     private FirebaseAuth mAuth;
     private String curUser;
     private String curEmo;
@@ -48,7 +51,7 @@ public class EmotionActivity extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         btnSad = getView().findViewById(R.id.emotion_sad);
         btnWorried = getView().findViewById(R.id.emotion_worried);
         btnAngry = getView().findViewById(R.id.emotion_angry);
@@ -154,6 +157,36 @@ public class EmotionActivity extends Fragment {
         });
 
     }
+    private void GenerateQuoteID ()
+    {
+        //int emo = getIntent().getIntExtra("emotion", 0);
+        int qid;
+        switch (emotion) {
+            case 1: // dissatisfied - sad
+                qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
+                QuoteID = "00" + qid;
+                break;
+            case 2: // happy
+                qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
+                if (qid == 10)
+                    QuoteID = "00" + qid;
+                else
+                    QuoteID = "000" + qid;
+                break;
+            case 3: // neutral
+                qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
+                QuoteID = "00" + qid;
+                break;
+            case 4: // angry
+                qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
+                QuoteID = "00" + qid;
+                break;
+            case 5: // nervous
+                qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
+                QuoteID = "00" + qid;
+                break;
+        }
+    }
 
 //    @Override
 //    protected void onStart() {
@@ -162,7 +195,7 @@ public class EmotionActivity extends Fragment {
     private void SendUserToQuoteActivity (){
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
 //        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        quoteIntent.putExtra("emotion", emotion);
+        quoteIntent.putExtra("emotion", QuoteID);
         startActivity(quoteIntent);
  //       finish();
     }

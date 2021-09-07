@@ -121,9 +121,8 @@ public class QuoteActivity extends AppCompatActivity {
     }
     //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
 
-    private int GetEmotion() {
+    private void GetEmotion() {
         int emo = getIntent().getIntExtra("emotion", 0);
-        return emo;
         int qid;
         switch (emo) {
             case 1: // dissatisfied - sad
