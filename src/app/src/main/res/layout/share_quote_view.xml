@@ -15,7 +15,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:scrollbars="vertical"
-        android:text="Time you enjoy wasting is not wasted time."
+        android:text="@string/sample_quote_share"
         android:textAlignment="center"
         android:textColor="#f0f9fe"
         android:textSize="36sp" />

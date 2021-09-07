@@ -18,6 +18,13 @@
     <string name="signup">Sign up</string>
     <string name="pwd">Password</string>
     <string name="confirm_pwd">Confirm password</string>
+    <string name="change_pwd">Change Password</string>
+    <string name="change_pwd_extended">Change your Serenitea password.</string>
+    <string name="new_pwd">New password</string>
+    <string name="update">Update</string>
     <string name="email">Email address</string>
     <string name="caps_app_name">SERENITEA</string>
+    <string name="create_quote_txt">Tap here to write your quote.</string>
+    <string name="sample_quote_send">When you can\'t control what\'s happening, challenge yourself to control the way you respond. That's where your power is.</string>
+    <string name="sample_quote_share">Time you enjoy wasting is not wasted time.</string>
 </resources>
