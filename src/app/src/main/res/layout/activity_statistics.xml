@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Your emotional chart"
+        android:text="@string/emote_chart"
         android:textColor="@color/text_statistics"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"

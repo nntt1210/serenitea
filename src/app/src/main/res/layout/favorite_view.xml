@@ -43,16 +43,14 @@
 
     <TextView
         android:id="@+id/favorite_content"
-        android:layout_width="wrap_content"
+        android:layout_width="371dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
         android:alpha=".54"
         android:fontFamily="@font/open_sans_semibold"
         android:textColor="@color/text_favorite"
         android:textSize="14sp"
-        tools:text="Time you enjoy wasting is not wasted time."/>
+        tools:text="@string/sample_quote_send" />
 </RelativeLayout>
