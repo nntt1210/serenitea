@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:hint="Email address"
+                    android:hint="@string/email"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
 
                     android:layout_marginTop="16dp"
-                    android:hint="Password"
+                    android:hint="@string/pwd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
 
                     android:layout_marginTop="17dp"
-                    android:hint="Confirm Password"
+                    android:hint="@string/confirm_pwd"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/outlinedTextField1">
@@ -102,7 +102,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/open_sans_extrabold"
-                    android:text="Sign up"
+                    android:text="@string/signup"
                     android:textSize="14sp"
                     app:backgroundTint="@color/background_pink"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/open_sans_extrabold"
-                    android:text="OR"
+                    android:text="@string/or"
                     android:textColor="@color/text_other"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
