@@ -39,9 +39,8 @@
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_women"
             android:drawablePadding="4dp"
-            android:drawableTint="@color/white"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/text_color"
             android:textSize="32sp"
             tools:text="Seonna" />
 
@@ -53,8 +52,8 @@
             android:layout_marginTop="50dp"
             android:drawableLeft="@drawable/ic_dob"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/text_color"
             android:textSize="24sp"
             tools:text="15/08/2000" />
 
@@ -67,8 +66,8 @@
             android:layout_marginTop="80dp"
             android:drawableLeft="@drawable/ic_cup_of_tea"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/text_color"
             android:textSize="24sp"
             tools:text="15" />
     </RelativeLayout>
