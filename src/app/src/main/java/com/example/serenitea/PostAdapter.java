@@ -296,6 +296,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         if (currentUserId.equals(user_id))
         {
             holder.delete_btn.setEnabled(true);
+            holder.delete_btn.setVisibility(View.VISIBLE);
+
         }
         //click delete
         holder.delete_btn.setOnClickListener(new View.OnClickListener() {
