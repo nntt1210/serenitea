@@ -84,7 +84,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeBtn = itemView.findViewById(R.id.btn_post_like);
             shareBtn = itemView.findViewById(R.id.btn_post_share);
             delete_btn=itemView.findViewById(R.id.btn_post_delete);
-
+            delete_btn.setEnabled(false);
+            
         }
 
         public void sendData(String id) {
