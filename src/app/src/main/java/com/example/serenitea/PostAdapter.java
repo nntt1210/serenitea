@@ -85,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             shareBtn = itemView.findViewById(R.id.btn_post_share);
             delete_btn=itemView.findViewById(R.id.btn_post_delete);
             delete_btn.setEnabled(false);
-            
+
         }
 
         public void sendData(String id) {
@@ -291,6 +291,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             }
         });
+
+        if (currentUserId.equals(user_id))
+        {
+            holder.delete_btn.setEnabled(true);
+        }
         //click delete
         holder.delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
