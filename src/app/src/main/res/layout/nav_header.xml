@@ -4,9 +4,8 @@
     android:id="@+id/fragment_profile"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#F68182"
+    android:background="@color/background_post_layout"
     android:orientation="horizontal">
-
 
     <ImageButton
         android:id="@+id/btn_close"
@@ -38,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_men"
+            android:drawableLeft="@drawable/ic_women"
             android:drawablePadding="4dp"
             android:drawableTint="@color/white"
             android:fontFamily="@font/open_sans_bold"

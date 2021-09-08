@@ -9,23 +9,19 @@
     <color name="outline_blue">#1782CD</color>
     <color name="background_blue">#0B2B42</color>
     <color name="background_pink">#FF5C5F</color>
-    <color name="background_menu">#F68182</color>
+    <color name="background_menu">#FEE9EA</color>
     <color name="background_favorite">#FEE9EA</color>
     <color name="background_delete">#D8D5D5</color>
+    <color name="background_post_layout">#FAFAFA</color>
     <color name="text_label_blue">#3492D3</color>
     <color name="text_label_pink">#FF5C5F</color>
     <color name="text_delete">#535353</color>
     <color name="text_blue">#1782CD</color>
     <color name="text_other">#041724</color>
-    <color name="text_favorite">#5F4322</color>
-    <color name="text_friend">#5F4322</color>
-    <color name="text_friend_request">#5F4322</color>
-    <color name="text_noti">#5F4322</color>
-    <color name="text_statistics">#5F4322</color>
     <color name="emotion_sad">#adadad</color>
     <color name="emotion_worried">#addbba</color>
     <color name="emotion_angry">#ffadb5</color>
     <color name="emotion_neutral">#b5d7ef</color>
     <color name="emotion_happy">#ffe8ad</color>
-    <color name="post_background">#cdcdcd</color>
+    <color name="post_background">#4A4646</color>
 </resources>
