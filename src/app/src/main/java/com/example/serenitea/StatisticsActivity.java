@@ -1,6 +1,6 @@
 package com.example.serenitea;
 
-import android.graphics.Bitmap;
+//import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,7 +54,7 @@ public class StatisticsActivity extends Fragment {
         String neutral;
         String angry;
 
-        public Diary(){ }
+        //public Diary(){ }
         public Diary(String s, String h, String neu, String a, String ner)
         {
             sad = s;
