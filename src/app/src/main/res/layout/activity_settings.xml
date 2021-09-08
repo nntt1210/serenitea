@@ -40,10 +40,10 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_settings_header"
         app:itemHorizontalPadding="60dp"
-        app:itemIconTint="@color/white"
+        app:itemIconTint="@color/text_color"
         app:itemTextAppearance="@style/navigation_style"
 
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/text_color"
         app:menu="@menu/settings_menu">
 
         <LinearLayout

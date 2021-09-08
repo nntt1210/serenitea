@@ -30,13 +30,12 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/text_color" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_notification"
-        android:layout_width="787dp"
-        android:layout_height="318dp"
+        android:layout_width="819dp"
+        android:layout_height="314dp"
         android:layout_marginTop="12dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"
