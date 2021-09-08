@@ -32,7 +32,7 @@
         <item
             android:id="@+id/nav_create_quote"
             android:icon="@drawable/ic_create"
-            android:title="Customize" />/>
+            android:title="Customize" />
     </group>
     <group
         android:id="@+id/group_item_5"

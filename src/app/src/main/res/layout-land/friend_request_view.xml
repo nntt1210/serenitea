@@ -12,12 +12,14 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:src="@drawable/avatar_15" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp">
 
         <TextView
             android:id="@+id/friend_request_nickname"
@@ -44,7 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/friend_request_nickname"
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_toRightOf="@+id/btn_accept_friend_request"
+            android:layout_toEndOf="@+id/btn_accept_friend_request"
             android:backgroundTint="@color/background_delete"
             android:fontFamily="@font/open_sans_extrabold"
             android:text="@string/delete"

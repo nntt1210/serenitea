@@ -37,7 +37,7 @@
         android:id="@+id/list_friend_request"
         android:layout_width="401dp"
         android:layout_height="735dp"
-        android:layout_marginTop="12dpdp"
+        android:layout_marginTop="12dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
