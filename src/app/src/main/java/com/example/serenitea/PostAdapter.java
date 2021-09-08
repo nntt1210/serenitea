@@ -54,7 +54,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     CallbackManager callbackManager;
     private TextView quoteShare;
     private ShareDialog share_dialog;
-    private ImageButton delete_btn;
 
     public PostAdapter(List<Post> postList, Context context, Activity activity) {
         mAuth = FirebaseAuth.getInstance();
@@ -73,7 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewAvatar;
         TextView quote, txtName, likeNum;
-        ImageButton likeBtn, shareBtn;
+        ImageButton likeBtn, shareBtn, delete_btn;
         int countLikes = 0;
 
         public PostViewHolder(View itemView) {
@@ -291,7 +290,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        //click delete
+        holder.delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(),postId,Toast.LENGTH_SHORT).show();
