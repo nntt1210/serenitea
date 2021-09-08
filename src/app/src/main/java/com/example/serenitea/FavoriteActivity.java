@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -145,14 +146,15 @@ public class FavoriteActivity extends Fragment {
                         }
                         quote_builder.setView(share_view);
                         quoteView = (TextView)share_view.findViewById(R.id.text_share_quote);
+                        quoteView.setScroller(new Scroller(getActivity()));
+                        quoteView.setMovementMethod(new ScrollingMovementMethod());
+                        quoteView.setVerticalScrollBarEnabled(true);
                         quoteView.setText(holder.getContent());
                         final String color = holder.getColor();
                         final String background = holder.getBackground();
                         quoteView.setTextColor(Color.parseColor(color));
                         int resourceId = getResources().getIdentifier(background, "drawable", getActivity().getApplicationContext().getPackageName());
                         quoteView.setBackgroundResource(resourceId);
-                        quoteView.setMovementMethod(new ScrollingMovementMethod());
-                        quoteView.setVerticalScrollBarEnabled(true);
                         quoteDialog = quote_builder.create();
                         quoteDialog.show();
                         Window window = quoteDialog.getWindow();
