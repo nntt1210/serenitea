@@ -150,6 +150,7 @@ public class FavoriteActivity extends Fragment {
                         quoteView.setTextColor(Color.parseColor(color));
                         int resourceId = getResources().getIdentifier(background, "drawable", getActivity().getApplicationContext().getPackageName());
                         quoteView.setBackgroundResource(resourceId);
+                        quoteView.setVerticalScrollBarEnabled(true);
                         quoteDialog = quote_builder.create();
                         quoteDialog.show();
                         Window window = quoteDialog.getWindow();
