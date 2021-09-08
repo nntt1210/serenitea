@@ -23,7 +23,7 @@
             android:layout_below="@+id/friend_avatar"
             android:layout_centerInParent="true"
             android:fontFamily="@font/open_sans_semibold"
-            android:textColor="@color/text_friend"
+            android:textColor="@color/text_color"
             android:textSize="28sp"
             tools:text="Ziem" />
     </RelativeLayout>

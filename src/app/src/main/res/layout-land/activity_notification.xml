@@ -16,7 +16,7 @@
         android:fontFamily="@font/open_sans_semibold"
         android:text="@string/noti"
         android:textAllCaps="true"
-        android:textColor="@color/text_noti"
+        android:textColor="@color/text_color"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,12 +31,12 @@
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/text_noti" />
+        app:tint="@color/text_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_notification"
-        android:layout_width="688dp"
-        android:layout_height="320dp"
+        android:layout_width="787dp"
+        android:layout_height="318dp"
         android:layout_marginTop="12dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"

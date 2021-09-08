@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Sophie"
-            android:textColor="@color/text_friend_request"
+            android:textColor="@color/text_color"
             android:textSize="28sp" />
 
         <Button

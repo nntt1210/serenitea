@@ -13,7 +13,7 @@
         android:layout_marginTop="80dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="@string/emote_chart"
-        android:textColor="@color/text_statistics"
+        android:textColor="@color/text_color"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

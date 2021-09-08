@@ -50,7 +50,7 @@
         android:layout_marginBottom="30dp"
         android:alpha=".54"
         android:fontFamily="@font/open_sans_semibold"
-        android:textColor="@color/text_favorite"
+        android:textColor="@color/text_color"
         android:textSize="14sp"
         tools:text="@string/sample_quote_send" />
 </RelativeLayout>

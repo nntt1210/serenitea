@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:textColor="@color/text_friend_request"
+            android:textColor="@color/text_color"
             android:textSize="28sp"
             tools:text="Sophie" />
 

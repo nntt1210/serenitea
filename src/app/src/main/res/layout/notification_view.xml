@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/open_sans_semibold"
             android:text=""
-            android:textColor="@color/text_noti"
+            android:textColor="@color/text_color"
             android:textSize="28sp"
             tools:text="Sophie sent you a quote." />
 

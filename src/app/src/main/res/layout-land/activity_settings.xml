@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#F68182"
+        android:background="@color/background_menu"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_settings_header"
         app:itemHorizontalPadding="60dp"

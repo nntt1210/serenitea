@@ -23,7 +23,7 @@
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/emote_question"
             android:textAllCaps="true"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
