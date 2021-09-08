@@ -133,6 +133,7 @@ public class QuoteActivity extends AppCompatActivity {
             }
         });
     }
+
     public void setLikeButtonQuote() {
 
     }
