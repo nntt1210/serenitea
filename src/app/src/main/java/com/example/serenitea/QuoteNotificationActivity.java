@@ -46,18 +46,16 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
         btnFavorite.setOnClickListener(v -> {
-            if (!((Boolean) btnFavorite.getTag()))
-            {
+            if (!((Boolean) btnFavorite.getTag())) {
                 btnFavorite.setImageResource(R.drawable.ic_favorite_added);
                 btnFavorite.setTag(new Boolean(true));
-            }
-            else
-            {
+            } else {
                 btnFavorite.setImageResource(R.drawable.ic_favorite);
                 btnFavorite.setTag(new Boolean(false));
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -67,8 +65,8 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void GenerateQuote ()
-    {
+
+    private void GenerateQuote() {
         DatabaseReference mQuote;
         String QuoteID;
         QuoteID = getIntent().getStringExtra("Quote");
@@ -76,8 +74,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         mQuote.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                if (datasnapshot.exists())
-                {
+                if (datasnapshot.exists()) {
                     Quote = datasnapshot.child("content").getValue().toString();
                     background = datasnapshot.child("background").getValue().toString();
                     color = datasnapshot.child("color").getValue().toString();
@@ -93,7 +90,8 @@ public class QuoteNotificationActivity extends AppCompatActivity {
             }
         });
     }
-    public void setLikeButtonQuote(){
+
+    public void setLikeButtonQuote() {
 
     }
 }
