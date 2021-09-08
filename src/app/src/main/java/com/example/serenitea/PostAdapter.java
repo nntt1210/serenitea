@@ -54,6 +54,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     CallbackManager callbackManager;
     private TextView quoteShare;
     private ShareDialog share_dialog;
+    private ImageButton delete_btn;
 
     public PostAdapter(List<Post> postList, Context context, Activity activity) {
         mAuth = FirebaseAuth.getInstance();
@@ -83,6 +84,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeNum = itemView.findViewById(R.id.like_number);
             likeBtn = itemView.findViewById(R.id.btn_post_like);
             shareBtn = itemView.findViewById(R.id.btn_post_share);
+            delete_btn=itemView.findViewById(R.id.btn_post_delete);
+
         }
 
         public void sendData(String id) {
