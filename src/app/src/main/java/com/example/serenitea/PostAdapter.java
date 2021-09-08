@@ -305,7 +305,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(v.getContext(),postId,Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -314,7 +313,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     }
                 });
                 builder.setNegativeButton("No",null);
-                //AlertDialog alert = builder.create();
                 builder.show();
             }
         });
@@ -323,7 +321,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 LikeAPost(postId, user_id);
-
             }
         });
 
