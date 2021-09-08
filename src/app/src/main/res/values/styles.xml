@@ -11,7 +11,7 @@
         <item name="hintTextColor">@color/text_label_blue</item>
     </style>
     <style name="navigation_style">
-        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="android:textSize">24sp</item>
     </style>
 </resources>
