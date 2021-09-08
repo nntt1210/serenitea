@@ -91,7 +91,7 @@
             android:fontFamily="@font/open_sans_extrabold"
             android:text="@string/edit"
             android:textSize="14sp"
-            app:backgroundTint="#FF5C5F"
+            app:backgroundTint="@color/background_pink"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
