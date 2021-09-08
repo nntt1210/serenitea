@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,6 +151,7 @@ public class FavoriteActivity extends Fragment {
                         quoteView.setTextColor(Color.parseColor(color));
                         int resourceId = getResources().getIdentifier(background, "drawable", getActivity().getApplicationContext().getPackageName());
                         quoteView.setBackgroundResource(resourceId);
+                        quoteView.setMovementMethod(new ScrollingMovementMethod());
                         quoteView.setVerticalScrollBarEnabled(true);
                         quoteDialog = quote_builder.create();
                         quoteDialog.show();
