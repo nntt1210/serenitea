@@ -85,6 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             shareBtn = itemView.findViewById(R.id.btn_post_share);
             delete_btn=itemView.findViewById(R.id.btn_post_delete);
             delete_btn.setEnabled(false);
+            delete_btn.setVisibility(itemView.INVISIBLE);
 
         }
 
