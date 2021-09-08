@@ -1,6 +1,6 @@
 package com.example.serenitea;
 
-//import android.graphics.Bitmap;
+import android.graphics.Bitmap;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,15 +32,14 @@ import java.util.Calendar;
 import java.util.List;
 
 public class StatisticsActivity extends Fragment {
-    int[] days = {0, 0, 0, 0, 0};
+    int [] days = {0,0,0,0,0};
     ArrayList<Diary> diaryList = new ArrayList<>();
     DatabaseReference emoRef;
     BarChart chart;
-    //ArrayList<Bitmap> imageList = new ArrayList<>();
+    ArrayList<Bitmap> imageList = new ArrayList<>();
     int val[] = {3, 2, 7, 3, 4, 8};
     ArrayList<String> labels = new ArrayList<>();
     List<BarEntry> entries = new ArrayList<>();
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -48,15 +47,17 @@ public class StatisticsActivity extends Fragment {
         return inflater.inflate(R.layout.activity_statistics, container, false);
     }
 
-    public class Diary {
+    public class Diary
+    {
         String happy;
         String sad;
         String nervous;
         String neutral;
         String angry;
 
-        //public Diary(){ }
-        public Diary(String s, String h, String neu, String a, String ner) {
+        public Diary(){ }
+        public Diary(String s, String h, String neu, String a, String ner)
+        {
             sad = s;
             happy = h;
             neutral = neu;
@@ -85,26 +86,29 @@ public class StatisticsActivity extends Fragment {
         }
     }
 
-    public int maximum(int[] a) {
+    public int maximum (int[] a)
+    {
         int index = 0;
         int max = a[0];
-        for (int i = 0; i < 5; i++) {
-            if (a[i] > max) {
+        for (int i = 0; i < 5;i++)
+        {
+            if (a[i] > max)
+            {
                 max = a[i];
                 index = i;
             }
         }
         return index;
     }
-
-    public Boolean checkAllEqual(int[] a) {
-        for (int i = 0; i < 4; i++) {
-            if (a[i] != a[i + 1])
+    public Boolean checkAllEqual (int[] a)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (a[i] != a[i+1])
                 return Boolean.FALSE;
         }
         return Boolean.TRUE;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         takeStatistics(view);
@@ -116,7 +120,10 @@ public class StatisticsActivity extends Fragment {
         labels.add("Angry");
         labels.add("Neutral");
         labels.add("Happy");
+//        Bitmap starBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_sad);
+//        chart.setRenderer(new ImageBarChartRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), starBitmap));
 
+//        chart.getXAxis().setEnabled(false);
         chart.getAxisLeft().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
         chart.getDescription().setEnabled(false);
@@ -127,6 +134,8 @@ public class StatisticsActivity extends Fragment {
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisLeft().setAxisMinimum(0f);
         chart.getAxisRight().setAxisMinimum(0f);
+//        chart.getXAxis().setCenterAxisLabels(false);
+//        chart.getXAxis().setGranularity(1f);
 
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
@@ -155,25 +164,54 @@ public class StatisticsActivity extends Fragment {
         //takeStatistics(view);
     }
 
-
-    private void takeStatistics(View view) {
+    /*public interface CallBack
+{
+    void onCallBack(ArrayList<Diary> diaryList);
+}
+    public void readStatistics (CallBack cb)
+    {
+        emoRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ss : snapshot.getChildren())
+                {
+                    String s = ss.child("1").getValue().toString();
+                    String h = ss.child("2").getValue().toString();
+                    String neu = ss.child("3").getValue().toString();
+                    String a = ss.child("4").getValue().toString();
+                    String ner = ss.child("5").getValue().toString();
+                    Diary temp = new Diary(s,h,neu,a,ner);
+                    diaryList.add(temp);
+                    Log.i("array value", String.valueOf(diaryList.size()));
+                }
+                cb.onCallBack(diaryList);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }*/
+    private void takeStatistics (View view)
+    {
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH) + 1;
         String m = String.valueOf(month);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String curUser = mAuth.getCurrentUser().getUid();
-        emoRef = FirebaseDatabase.getInstance().getReference("diary/" + curUser);
+        emoRef = FirebaseDatabase.getInstance().getReference("diary/"+curUser);
         emoRef.child(m).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DataSnapshot ss : task.getResult().getChildren()) {
+                if (task.isSuccessful())
+                {
+                    for (DataSnapshot ss : task.getResult().getChildren())
+                    {
                         String s = ss.child("1").getValue().toString();
                         String h = ss.child("2").getValue().toString();
                         String neu = ss.child("3").getValue().toString();
                         String a = ss.child("4").getValue().toString();
                         String ner = ss.child("5").getValue().toString();
-                        Diary temp = new Diary(s, h, neu, a, ner);
+                        Diary temp = new Diary(s,h,neu,a,ner);
                         diaryList.add(temp);
                         Log.i("real run", String.valueOf(diaryList.size()));
                     }
@@ -191,8 +229,24 @@ public class StatisticsActivity extends Fragment {
                             days[emo] += 1;
                         }
                     }
-                    if (!(checkAllEqual(days) && (days[0] == 0))) {
+                    if (!(checkAllEqual(days) && (days[0]==0)))
+                    {
                         chart = view.findViewById(R.id.barchart);
+                        /*labels.add("Sad");
+                        labels.add("Worried");
+                        labels.add("Angry");
+                        labels.add("Neutral");
+                        labels.add("Happy");*/
+
+                        /*chart.getAxisLeft().setEnabled(false);
+                        chart.getAxisRight().setEnabled(false);
+                        chart.getDescription().setEnabled(false);
+                        chart.getLegend().setEnabled(false);
+
+                        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+                        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+                        chart.getXAxis().setDrawGridLines(false);*/
+
 
                         List<BarEntry> entries = new ArrayList<>();
                         entries.add(new BarEntry(0f, days[0], "Sad"));
@@ -218,9 +272,9 @@ public class StatisticsActivity extends Fragment {
                             @Override
                             public String getFormattedValue(float value) {
 
-                                if (value > 0) {
+                                if (value > 0){
                                     return super.getFormattedValue(value);
-                                } else {
+                                }else{
                                     return "";
                                 }
                             }
@@ -234,5 +288,25 @@ public class StatisticsActivity extends Fragment {
                 }
             }
         });
+
+        /*readStatistics(new CallBack() {
+            @Override
+            public void onCallBack(ArrayList<Diary> diaryList) {
+                for (int i = 0; i < diaryList.size(); i++) {
+                    int[] temp = new int[5];
+                    temp[0] = Integer.parseInt(diaryList.get(i).getSad());
+                    temp[1] = Integer.parseInt(diaryList.get(i).getHappy());
+                    temp[2] = Integer.parseInt(diaryList.get(i).getNeutral());
+                    temp[3] = Integer.parseInt(diaryList.get(i).getAngry());
+                    temp[4] = Integer.parseInt(diaryList.get(i).getNervous());
+                    if (checkAllEqual(temp))
+                        days[2] += 1;
+                    else {
+                        int emo = maximum(temp);
+                        days[emo] += 1;
+                    }
+                }
+            }
+        });*/
     }
 }
