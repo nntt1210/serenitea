@@ -5,7 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
-import android.view.View;
+//import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,7 +23,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
     private TextView QuoteView;
     private String Quote;
     private ImageButton btnFavorite;
-    private Boolean btnFavoriteClicked;
+    //private Boolean btnFavoriteClicked;
     private String background, color;
 
     @Override
@@ -41,11 +41,12 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GenerateQuote();
 
+        Boolean btnFavoriteClicked;
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
         btnFavorite.setOnClickListener(v -> {
-            if (((Boolean)btnFavorite.getTag()) == false)
+            if (!((Boolean) btnFavorite.getTag()))
             {
                 btnFavorite.setImageResource(R.drawable.ic_favorite_added);
                 btnFavorite.setTag(new Boolean(true));
