@@ -79,7 +79,7 @@ public class EmotionActivity extends Fragment {
         emotion = 2;
         int qid;
         qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
-        if (qid == 10)
+        if (qid >= 10)
             QuoteID = "00" + qid;
         else
             QuoteID = "000" + qid;
