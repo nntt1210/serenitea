@@ -1,7 +1,9 @@
 package com.example.serenitea;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -304,7 +306,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(),postId,Toast.LENGTH_SHORT).show();
-                DeletePost(postId);
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeletePost(postId);
+                    }
+                });
+                builder.setNegativeButton("No",null);
+                //AlertDialog alert = builder.create();
+                builder.show();
             }
         });
         //click Like
