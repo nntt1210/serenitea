@@ -42,14 +42,14 @@ public class QuoteActivity extends AppCompatActivity {
      * - Tạo phần like bài viết, khi like thì lưu quote vào database --> setLikeButtonQuote()
      * - Các hàm SendUserTo...Activity()
      * */
-    private DatabaseReference mQuote;
+
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
     private String background, color;
     private ImageButton btnFavorite, btnShare;
     private Boolean btnFavoriteClicked;
-    private String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+    private String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private DatabaseReference Ref;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
@@ -67,7 +67,7 @@ public class QuoteActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        QuoteView = (TextView) findViewById(R.id.text_quote);
+        QuoteView = findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GenerateQuote();
 
@@ -75,36 +75,28 @@ public class QuoteActivity extends AppCompatActivity {
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
         isFav(QuoteID);
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (QuoteID.isEmpty() == false) {
-                    if (((Boolean) btnFavorite.getTag()) == false) {
-                        btnFavorite.setImageResource(R.drawable.ic_favorite_added);
-                        btnFavorite.setTag(new Boolean(true));
-                        saveToFavQuote(QuoteID);
+        btnFavorite.setOnClickListener(v -> {
+            if (!QuoteID.isEmpty()) {
+                if (((Boolean) btnFavorite.getTag()) == false) {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                    btnFavorite.setTag(new Boolean(true));
+                    saveToFavQuote(QuoteID);
 
-                    } else {
-                        btnFavorite.setImageResource(R.drawable.ic_favorite);
-                        btnFavorite.setTag(new Boolean(false));
-                        removeFromFav(QuoteID);
-                    }
+                } else {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite);
+                    btnFavorite.setTag(new Boolean(false));
+                    removeFromFav(QuoteID);
                 }
             }
         });
 
 
-        btnShare = (ImageButton) findViewById(R.id.btn_share);
+        btnShare = findViewById(R.id.btn_share);
         //init FB
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareQuoteOnFacebook();
-            }
-        });
+        btnShare.setOnClickListener(v -> ShareQuoteOnFacebook());
     }
 
 
@@ -119,6 +111,7 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     private void GenerateQuote() {
+        DatabaseReference mQuote;
         QuoteID = getIntent().getStringExtra("quoteID");
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
