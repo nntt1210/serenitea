@@ -386,6 +386,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 Toast.makeText(context,"Post Deleted",Toast.LENGTH_SHORT).show();
             }
         });
+        LikeRef.child(PostId).removeValue();
     }
 
     @Override
