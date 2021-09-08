@@ -5,7 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
-//import android.view.View;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,10 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class QuoteNotificationActivity extends AppCompatActivity {
+    private DatabaseReference mQuote;
     private TextView QuoteView;
+    private String QuoteID;
     private String Quote;
     private ImageButton btnFavorite;
-    //private Boolean btnFavoriteClicked;
+    private Boolean btnFavoriteClicked;
     private String background, color;
 
     @Override
@@ -37,25 +39,29 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        QuoteView = findViewById(R.id.text_quote);
+        QuoteView = (TextView)findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GenerateQuote();
 
-        Boolean btnFavoriteClicked;
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
-        btnFavorite.setOnClickListener(v -> {
-            if (!((Boolean) btnFavorite.getTag())) {
-                btnFavorite.setImageResource(R.drawable.ic_favorite_added);
-                btnFavorite.setTag(new Boolean(true));
-            } else {
-                btnFavorite.setImageResource(R.drawable.ic_favorite);
-                btnFavorite.setTag(new Boolean(false));
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((Boolean)btnFavorite.getTag()) == false)
+                {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                    btnFavorite.setTag(new Boolean(true));
+                }
+                else
+                {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite);
+                    btnFavorite.setTag(new Boolean(false));
+                }
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -65,16 +71,15 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void GenerateQuote() {
-        DatabaseReference mQuote;
-        String QuoteID;
+    private void GenerateQuote ()
+    {
         QuoteID = getIntent().getStringExtra("Quote");
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                if (datasnapshot.exists()) {
+                if (datasnapshot.exists())
+                {
                     Quote = datasnapshot.child("content").getValue().toString();
                     background = datasnapshot.child("background").getValue().toString();
                     color = datasnapshot.child("color").getValue().toString();
@@ -90,8 +95,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void setLikeButtonQuote() {
+    public void setLikeButtonQuote(){
 
     }
 }
