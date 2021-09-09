@@ -31,7 +31,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public NotificationAdapter(List<Notification> notiList, Context context) {
         this.notiList = notiList;
         this.context = context;
-//        Collections.sort(this.notiList );
     }
 
     public class NotiViewHolder extends RecyclerView.ViewHolder {

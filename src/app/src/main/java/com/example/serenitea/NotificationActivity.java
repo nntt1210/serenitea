@@ -34,7 +34,6 @@ public class NotificationActivity extends AppCompatActivity {
     private final List<Notification> notificationList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private NotificationAdapter notificationAdapter;
-//    private boolean hasNewNotification = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +67,6 @@ public class NotificationActivity extends AppCompatActivity {
 
         FetchNotification();
         DisplayAllNotification();
-
-        //check new notification
-//        String temp;
-//        if (checkNewNotification()) temp = "true";
-//        else temp = "false";
-//        Toast.makeText(NotificationActivity.this, temp, Toast.LENGTH_LONG).show();
     }
 
     private void FetchNotification() {
@@ -131,13 +124,4 @@ public class NotificationActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    //hàm check có noti mới hay không
-//    public boolean checkNewNotification() {
-//        for (Notification item : notificationList) {
-//            if (item.getStatus().equals("sent"))
-//                return true;
-//        }
-//        return false;
-//    }
 }
