@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Calendar;
 
 public class EmotionActivity extends Fragment {
@@ -27,13 +29,7 @@ public class EmotionActivity extends Fragment {
 * */
 
     private int emotion = 0;
-    private ImageButton btnSad;
-    private ImageButton btnWorried;
-    private ImageButton btnAngry;
-    private ImageButton btnNeutral;
-    private ImageButton btnHappy;
     private DatabaseReference diaryRef;
-    private FirebaseAuth mAuth;
     private String curUser;
     private String curEmo;
     private String QuoteID;
@@ -49,7 +45,13 @@ public class EmotionActivity extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
+
+        ImageButton btnSad;
+        ImageButton btnWorried;
+        ImageButton btnAngry;
+        ImageButton btnNeutral;
+        ImageButton btnHappy;
         btnSad = getView().findViewById(R.id.emotion_sad);
         btnWorried = getView().findViewById(R.id.emotion_worried);
         btnAngry = getView().findViewById(R.id.emotion_angry);
@@ -132,6 +134,7 @@ public class EmotionActivity extends Fragment {
     }
     private void updateEmo ()
     {
+        FirebaseAuth mAuth;
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH) + 1;
         int day = c.get(Calendar.DAY_OF_MONTH);
