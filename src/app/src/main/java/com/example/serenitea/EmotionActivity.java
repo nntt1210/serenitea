@@ -64,7 +64,7 @@ public class EmotionActivity extends Fragment {
         btnAngry.setOnClickListener(v -> changebtnAngry());
         btnHappy.setOnClickListener(v -> changebtnHappy());
     }
-
+    //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
     private void changebtnSad ()
     {
         emotion = 1;
@@ -177,15 +177,9 @@ public class EmotionActivity extends Fragment {
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//    }
     private void SendUserToQuoteActivity (){
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
-//        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         quoteIntent.putExtra("QuoteID", QuoteID);
         startActivity(quoteIntent);
- //       finish();
     }
 }
