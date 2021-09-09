@@ -132,24 +132,16 @@ public class EditProfileActivity extends AppCompatActivity {
                     } else if (gender.equals("Male")) {
                         spGender.setSelection(1);
                     }
-                    DoB.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //final Calendar cldr = Calendar.getInstance();
-                            int day = db_day;
-                            int month = db_month;
-                            int year = db_year;
-                            month -= 1;
-                            // date picker dialog
-                            picker = new DatePickerDialog(EditProfileActivity.this,
-                                    new DatePickerDialog.OnDateSetListener() {
-                                        @Override
-                                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                            DoB.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                        }
-                                    }, year, month, day);
-                            picker.show();
-                        }
+                    DoB.setOnClickListener(v -> {
+                        //final Calendar cldr = Calendar.getInstance();
+                        int day = db_day;
+                        int month = db_month;
+                        int year = db_year;
+                        month -= 1;
+                        // date picker dialog
+                        picker = new DatePickerDialog(EditProfileActivity.this,
+                                (view, year1, monthOfYear, dayOfMonth) -> DoB.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1), year, month, day);
+                        picker.show();
                     });
                 }
             }
