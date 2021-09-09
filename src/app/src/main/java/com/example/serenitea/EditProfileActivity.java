@@ -88,6 +88,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                 });
                 builder.setNeutralButton("No",null);
+                builder.show();
             }
         });
     }
