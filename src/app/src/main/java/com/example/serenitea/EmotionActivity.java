@@ -36,6 +36,7 @@ public class EmotionActivity extends Fragment {
     private FirebaseAuth mAuth;
     private String curUser;
     private String curEmo;
+    private String QuoteID;
     private int update = 1;
     private String curCup;
     private int cup;
@@ -65,12 +66,21 @@ public class EmotionActivity extends Fragment {
     private void changebtnSad ()
     {
         emotion = 1;
+        int qid;
+        qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
+        QuoteID = "00" + qid;
         updateEmo();
         SendUserToQuoteActivity();
     }
     private void changebtnHappy ()
     {
         emotion = 2;
+        int qid;
+        qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
+        if (qid >= 10)
+            QuoteID = "00" + qid;
+        else
+            QuoteID = "000" + qid;
         updateEmo();
         updateCup();
         SendUserToQuoteActivity();
@@ -78,18 +88,27 @@ public class EmotionActivity extends Fragment {
     private void changebtnNeutral ()
     {
         emotion = 3;
+        int qid;
+        qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
+        QuoteID = "00" + qid;
         updateEmo();
         SendUserToQuoteActivity();
     }
     private void changebtnAngry ()
     {
         emotion = 4;
+        int qid;
+        qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
+        QuoteID = "00" + qid;
         updateEmo();
         SendUserToQuoteActivity();
     }
     private void changebtnWorried ()
     {
         emotion = 5;
+        int qid;
+        qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
+        QuoteID = "00" + qid;
         updateEmo();
         SendUserToQuoteActivity();
     }
@@ -162,7 +181,7 @@ public class EmotionActivity extends Fragment {
     private void SendUserToQuoteActivity (){
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
 //        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        quoteIntent.putExtra("emotion", emotion);
+        quoteIntent.putExtra("QuoteID", QuoteID);
         startActivity(quoteIntent);
  //       finish();
     }
