@@ -137,7 +137,7 @@ public class StatisticsActivity extends Fragment {
 //        chart.getXAxis().setGranularity(1f);
 
 
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<Integer> colors = new ArrayList<>();
 
         colors.add(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.emotion_sad));
         colors.add(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.emotion_worried));
@@ -254,7 +254,7 @@ public class StatisticsActivity extends Fragment {
                         entries.add(new BarEntry(3f, days[2], "Neutral"));
                         entries.add(new BarEntry(4f, days[1], "Happy"));
 
-                        ArrayList<Integer> colors = new ArrayList<Integer>();
+                        ArrayList<Integer> colors = new ArrayList<>();
 
                         colors.add(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.emotion_sad));
                         colors.add(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.emotion_worried));
