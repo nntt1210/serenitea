@@ -20,12 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class QuoteNotificationActivity extends AppCompatActivity {
-    private DatabaseReference mQuote;
+
     private TextView QuoteView;
-    private String QuoteID;
     private String Quote;
     private ImageButton btnFavorite;
-    private Boolean btnFavoriteClicked;
     private String background, color;
 
     @Override
@@ -43,6 +41,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GenerateQuote();
 
+        Boolean btnFavoriteClicked;
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
@@ -73,6 +72,8 @@ public class QuoteNotificationActivity extends AppCompatActivity {
     }
     private void GenerateQuote ()
     {
+        DatabaseReference mQuote;
+        String QuoteID;
         QuoteID = getIntent().getStringExtra("Quote");
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addValueEventListener(new ValueEventListener() {
