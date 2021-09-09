@@ -68,8 +68,20 @@ public class PostForumActivity extends Fragment {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
+                if (snapshot.exists()) {
+                    String key = snapshot.getKey();
+                    int index = -1;
+                    for (Post p : postList) {
+                        if (p.postId.equals(key)) {
+                            index = postList.indexOf(p);
+                            break;
+                        }
+                    }
+                    if (index != -1) {
+                        postList.remove(index);
+                        postAdapter.notifyDataSetChanged();
+                    }
+            }}
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
