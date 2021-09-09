@@ -76,20 +76,17 @@ public class QuoteActivity extends AppCompatActivity {
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
         isFav(QuoteID);
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (QuoteID.isEmpty() == false) {
-                    if (((Boolean) btnFavorite.getTag()) == false) {
-                        btnFavorite.setImageResource(R.drawable.ic_favorite_added);
-                        btnFavorite.setTag(new Boolean(true));
-                        saveToFavQuote(QuoteID);
+        btnFavorite.setOnClickListener(v -> {
+            if (!QuoteID.isEmpty()) {
+                if (!((Boolean) btnFavorite.getTag())) {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                    btnFavorite.setTag(new Boolean(true));
+                    saveToFavQuote(QuoteID);
 
-                    } else {
-                        btnFavorite.setImageResource(R.drawable.ic_favorite);
-                        btnFavorite.setTag(new Boolean(false));
-                        removeFromFav(QuoteID);
-                    }
+                } else {
+                    btnFavorite.setImageResource(R.drawable.ic_favorite);
+                    btnFavorite.setTag(new Boolean(false));
+                    removeFromFav(QuoteID);
                 }
             }
         });
@@ -100,12 +97,7 @@ public class QuoteActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShareQuoteOnFacebook();
-            }
-        });
+        btnShare.setOnClickListener(v -> ShareQuoteOnFacebook());
     }
 
 
@@ -130,7 +122,7 @@ public class QuoteActivity extends AppCompatActivity {
                 break;
             case 2: // happy
                 qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
-                if (qid == 10)
+                if (qid >= 10)
                     QuoteID = "00" + qid;
                 else
                     QuoteID = "000" + qid;
