@@ -1,6 +1,6 @@
 package com.example.serenitea;
 
-import android.graphics.Bitmap;
+//import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +26,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,8 +37,8 @@ public class StatisticsActivity extends Fragment {
     ArrayList<Diary> diaryList = new ArrayList<>();
     DatabaseReference emoRef;
     BarChart chart;
-    ArrayList<Bitmap> imageList = new ArrayList<>();
-    int val[] = {3, 2, 7, 3, 4, 8};
+    //ArrayList<Bitmap> imageList = new ArrayList<>();
+    //int val[] = {3, 2, 7, 3, 4, 8};
     ArrayList<String> labels = new ArrayList<>();
     List<BarEntry> entries = new ArrayList<>();
     @Nullable
@@ -46,7 +48,7 @@ public class StatisticsActivity extends Fragment {
         return inflater.inflate(R.layout.activity_statistics, container, false);
     }
 
-    public class Diary
+    public static class Diary
     {
         String happy;
         String sad;
@@ -54,7 +56,7 @@ public class StatisticsActivity extends Fragment {
         String neutral;
         String angry;
 
-        public Diary(){ }
+        //public Diary(){ }
         public Diary(String s, String h, String neu, String a, String ner)
         {
             sad = s;
@@ -109,7 +111,7 @@ public class StatisticsActivity extends Fragment {
         return Boolean.TRUE;
     }
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         takeStatistics(view);
 
 
@@ -178,7 +180,7 @@ public class StatisticsActivity extends Fragment {
                         String neu = ss.child("3").getValue().toString();
                         String a = ss.child("4").getValue().toString();
                         String ner = ss.child("5").getValue().toString();
-                        Diary temp = new Diary(s,h,neu,a,ner);
+                        Diary temp = new Diary(s, h, neu, a, ner);
                         diaryList.add(temp);
                         Log.i("real run", String.valueOf(diaryList.size()));
                     }
@@ -240,6 +242,6 @@ public class StatisticsActivity extends Fragment {
                 }
             }
         });
-        
+
     }
 }
