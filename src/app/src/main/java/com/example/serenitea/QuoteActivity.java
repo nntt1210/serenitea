@@ -67,9 +67,9 @@ public class QuoteActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        QuoteView = (TextView) findViewById(R.id.text_quote);
+        QuoteView = findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
-        GetEmotion();
+        //GetEmotion();
         GenerateQuote();
 
         btnFavoriteClicked = new Boolean(false);
@@ -151,6 +151,7 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     private void GenerateQuote() {
+        QuoteID = getIntent().getStringExtra("QuoteID");
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
