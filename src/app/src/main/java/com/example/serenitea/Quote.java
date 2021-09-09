@@ -28,11 +28,4 @@ public class Quote {
     public void setDate(String date) {
         this.date = date;
     }
-
-//    public Quote(int quoteID, String content, String date) {
-//        this.quoteID = quoteID;
-//        this.content = content;
-//        this.date = date;
-//    }
-
 }

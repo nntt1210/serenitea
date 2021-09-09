@@ -175,7 +175,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         }
 
-
         public void takeScreenShot() {
             bitmap = Screenshot.takeScreenShotOfRootView(quote);
         }
@@ -332,14 +331,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
     }
-
-
-
-//    @Override
-//    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
-//    }
 
     private void NotificateToPostOwner(String postOwner, String postId) {
         if (!postOwner.equals(currentUserId)) {

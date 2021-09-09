@@ -18,8 +18,8 @@
         android:layout_marginBottom="30dp"
         android:alpha=".54"
         android:fontFamily="@font/open_sans_semibold"
-        android:textColor="@color/text_favorite"
+        android:textColor="@color/text_color"
         android:textSize="14sp"
-        tools:text="When you can't control what's happening, challenge yourself to control the way you respond. That's where your power is." />
+        tools:text="@string/sample_quote_send" />
 
 </RelativeLayout>

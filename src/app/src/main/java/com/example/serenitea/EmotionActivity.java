@@ -1,15 +1,15 @@
 package com.example.serenitea;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -172,15 +172,9 @@ public class EmotionActivity extends Fragment {
 
     }
 
-    //    @Override
-//    protected void onStart() {
-//        super.onStart();
-//    }
-    private void SendUserToQuoteActivity() {
+    private void SendUserToQuoteActivity (){
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
-//        quoteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        quoteIntent.putExtra("quoteID", QuoteID);
+        quoteIntent.putExtra("emotion", emotion);
         startActivity(quoteIntent);
-        //       finish();
     }
 }

@@ -15,7 +15,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="70dp"
             android:background="@drawable/search_friend_bar"
-            android:hint="Search for a friend" />
+            android:hint="@string/search_friend_txt"
+            android:inputType="textEmailAddress"/>
 
         <ImageButton
             android:id="@+id/search"
@@ -25,9 +26,9 @@
             android:layout_marginLeft="-30dp"
             android:layout_marginTop="72dp"
             android:layout_toRightOf="@+id/search_friend_bar"
+            android:layout_toEndOf="@+id/search_friend_bar"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_search"
-            android:text="Button" />
+            android:src="@drawable/ic_search" />
     </RelativeLayout>
 
     <ScrollView

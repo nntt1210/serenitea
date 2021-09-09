@@ -13,7 +13,9 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/search_friend_bar"
         android:drawableRight="@drawable/ic_search"
-        android:hint="Search for a friend" />
+        android:drawableEnd="@drawable/ic_search"
+        android:hint="@string/search_friend_txt"
+        android:inputType="textEmailAddress"/>
     <ScrollView
         android:id="@+id/container_scroll_view"
         android:layout_width="match_parent"

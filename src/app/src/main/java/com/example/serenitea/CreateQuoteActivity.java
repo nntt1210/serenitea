@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -41,9 +40,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -306,7 +302,7 @@ public class CreateQuoteActivity extends Fragment {
                     case 1:
                         quoteShare.setText(quote.getText().toString());
                         if (color == 0) {
-                            quoteShare.setTextColor(getResources().getColor(R.color.textColor));
+                            quoteShare.setTextColor(getResources().getColor(R.color.text_color));
                         }
                         else {
                             quoteShare.setTextColor(color);

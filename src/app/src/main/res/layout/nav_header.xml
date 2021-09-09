@@ -4,17 +4,18 @@
     android:id="@+id/fragment_profile"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#F68182"
+    android:background="@color/background_post_layout"
     android:orientation="horizontal">
-
 
     <ImageButton
         android:id="@+id/btn_close"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_close" />
 
@@ -38,11 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_men"
+            android:drawableLeft="@drawable/ic_women"
             android:drawablePadding="4dp"
-            android:drawableTint="@color/white"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/text_color"
             android:textSize="32sp"
             tools:text="Seonna" />
 
@@ -54,8 +54,8 @@
             android:layout_marginTop="50dp"
             android:drawableLeft="@drawable/ic_dob"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/text_color"
             android:textSize="24sp"
             tools:text="15/08/2000" />
 
@@ -68,8 +68,8 @@
             android:layout_marginTop="80dp"
             android:drawableLeft="@drawable/ic_cup_of_tea"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/text_color"
             android:textSize="24sp"
             tools:text="15" />
     </RelativeLayout>

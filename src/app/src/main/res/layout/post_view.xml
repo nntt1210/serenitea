@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/open_sans_semibold"
-            android:textColor="@color/text_friend"
+            android:textColor="@color/text_color"
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/post_avatar"
@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@drawable/sad_1"
-            tools:text="Time you enjoy wasting is not wasted time."
+            tools:text="@string/sample_quote_send"
             tools:textColor="#f0f9fe" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:textColor="@color/text_friend"
+                android:textColor="@color/text_color"
                 android:textSize="28sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_post_like"

@@ -14,9 +14,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="Friend Requests"
+        android:text="@string/friend_req"
         android:textAllCaps="true"
-        android:textColor="@color/text_friend_request"
+        android:textColor="@color/text_color"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,18 +31,16 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/text_friend_request" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_friend_request"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
+        android:layout_width="811dp"
+        android:layout_height="324dp"
+        android:layout_marginTop="12dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

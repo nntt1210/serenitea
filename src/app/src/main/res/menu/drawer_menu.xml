@@ -32,7 +32,7 @@
         <item
             android:id="@+id/nav_create_quote"
             android:icon="@drawable/ic_create"
-            android:title="Customize" />/>
+            android:title="Customize" />
     </group>
     <group
         android:id="@+id/group_item_5"
@@ -45,8 +45,7 @@
         android:id="@+id/group_item_3"
         android:checkableBehavior="single">
         <item android:id="@+id/nav_favorites"
-            android:icon="@drawable/ic_favorite"
-            android:iconTint="@color/white"
+            android:icon="@drawable/ic_favorite_menu"
             android:title="Favorites"/>
     </group>
     <group
