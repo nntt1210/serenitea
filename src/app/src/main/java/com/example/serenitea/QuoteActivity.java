@@ -95,7 +95,7 @@ public class QuoteActivity extends AppCompatActivity {
         });
 
 
-        btnShare = (ImageButton) findViewById(R.id.btn_share);
+        btnShare = findViewById(R.id.btn_share);
         //init FB
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
@@ -126,26 +126,26 @@ public class QuoteActivity extends AppCompatActivity {
         switch (emo) {
             case 1: // dissatisfied - sad
                 qid = (int) (Math.random() * ((30 - 21) + 1)) + 21;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
             case 2: // happy
                 qid = (int) (Math.random() * ((10 - 1) + 1)) + 1;
                 if (qid == 10)
-                    QuoteID = "00" + String.valueOf(qid);
+                    QuoteID = "00" + qid;
                 else
-                    QuoteID = "000" + String.valueOf(qid);
+                    QuoteID = "000" + qid;
                 break;
             case 3: // neutral
                 qid = (int) (Math.random() * ((90 - 81) + 1)) + 81;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
             case 4: // angry
                 qid = (int) (Math.random() * ((71 - 61) + 1)) + 61;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
             case 5: // nervous
                 qid = (int) (Math.random() * ((60 - 41) + 1)) + 41;
-                QuoteID = "00" + String.valueOf(qid);
+                QuoteID = "00" + qid;
                 break;
         }
     }
