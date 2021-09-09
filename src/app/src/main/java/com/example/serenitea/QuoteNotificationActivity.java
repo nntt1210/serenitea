@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
-//import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 

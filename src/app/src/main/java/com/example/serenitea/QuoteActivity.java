@@ -67,7 +67,6 @@ public class QuoteActivity extends AppCompatActivity {
 
         QuoteView = findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
-        //GetEmotion();
         GenerateQuote();
 
         ImageButton btnShare;

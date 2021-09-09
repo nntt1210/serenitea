@@ -65,7 +65,7 @@ public class EmotionActivity extends Fragment {
         btnAngry.setOnClickListener(v -> changebtnAngry());
         btnHappy.setOnClickListener(v -> changebtnHappy());
     }
-
+    // move getemotion from quote activity to emotion changebtn*
     //id dissatisfied: 21 - 30, happy: 1 - 10; nervous: 41 - 60; angry: 61 - 71; neutral: 81 - 90
     private void changebtnSad() {
         emotion = 1;
