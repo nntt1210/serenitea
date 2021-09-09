@@ -119,10 +119,7 @@ public class StatisticsActivity extends Fragment {
         labels.add("Angry");
         labels.add("Neutral");
         labels.add("Happy");
-//        Bitmap starBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_sad);
-//        chart.setRenderer(new ImageBarChartRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), starBitmap));
 
-//        chart.getXAxis().setEnabled(false);
         chart.getAxisLeft().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
         chart.getDescription().setEnabled(false);
@@ -133,8 +130,7 @@ public class StatisticsActivity extends Fragment {
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisLeft().setAxisMinimum(0f);
         chart.getAxisRight().setAxisMinimum(0f);
-//        chart.getXAxis().setCenterAxisLabels(false);
-//        chart.getXAxis().setGranularity(1f);
+
 
 
         ArrayList<Integer> colors = new ArrayList<>();
@@ -160,36 +156,8 @@ public class StatisticsActivity extends Fragment {
         chart.setData(data);
         chart.setFitBars(true); // make the x-axis fit exactly all bars
         chart.invalidate(); // refresh*/
-        //takeStatistics(view);
     }
 
-    /*public interface CallBack
-{
-    void onCallBack(ArrayList<Diary> diaryList);
-}
-    public void readStatistics (CallBack cb)
-    {
-        emoRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ss : snapshot.getChildren())
-                {
-                    String s = ss.child("1").getValue().toString();
-                    String h = ss.child("2").getValue().toString();
-                    String neu = ss.child("3").getValue().toString();
-                    String a = ss.child("4").getValue().toString();
-                    String ner = ss.child("5").getValue().toString();
-                    Diary temp = new Diary(s,h,neu,a,ner);
-                    diaryList.add(temp);
-                    Log.i("array value", String.valueOf(diaryList.size()));
-                }
-                cb.onCallBack(diaryList);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }*/
     private void takeStatistics (View view)
     {
         Calendar c = Calendar.getInstance();
@@ -231,21 +199,6 @@ public class StatisticsActivity extends Fragment {
                     if (!(checkAllEqual(days) && (days[0]==0)))
                     {
                         chart = view.findViewById(R.id.barchart);
-                        /*labels.add("Sad");
-                        labels.add("Worried");
-                        labels.add("Angry");
-                        labels.add("Neutral");
-                        labels.add("Happy");*/
-
-                        /*chart.getAxisLeft().setEnabled(false);
-                        chart.getAxisRight().setEnabled(false);
-                        chart.getDescription().setEnabled(false);
-                        chart.getLegend().setEnabled(false);
-
-                        chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-                        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-                        chart.getXAxis().setDrawGridLines(false);*/
-
 
                         List<BarEntry> entries = new ArrayList<>();
                         entries.add(new BarEntry(0f, days[0], "Sad"));
@@ -287,25 +240,6 @@ public class StatisticsActivity extends Fragment {
                 }
             }
         });
-
-        /*readStatistics(new CallBack() {
-            @Override
-            public void onCallBack(ArrayList<Diary> diaryList) {
-                for (int i = 0; i < diaryList.size(); i++) {
-                    int[] temp = new int[5];
-                    temp[0] = Integer.parseInt(diaryList.get(i).getSad());
-                    temp[1] = Integer.parseInt(diaryList.get(i).getHappy());
-                    temp[2] = Integer.parseInt(diaryList.get(i).getNeutral());
-                    temp[3] = Integer.parseInt(diaryList.get(i).getAngry());
-                    temp[4] = Integer.parseInt(diaryList.get(i).getNervous());
-                    if (checkAllEqual(temp))
-                        days[2] += 1;
-                    else {
-                        int emo = maximum(temp);
-                        days[emo] += 1;
-                    }
-                }
-            }
-        });*/
+        
     }
 }
