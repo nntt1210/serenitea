@@ -39,7 +39,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        QuoteView = (TextView)findViewById(R.id.text_quote);
+        QuoteView = (TextView) findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GenerateQuote();
 
@@ -49,19 +49,17 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((Boolean)btnFavorite.getTag()) == false)
-                {
+                if (((Boolean) btnFavorite.getTag()) == false) {
                     btnFavorite.setImageResource(R.drawable.ic_favorite_added);
                     btnFavorite.setTag(new Boolean(true));
-                }
-                else
-                {
+                } else {
                     btnFavorite.setImageResource(R.drawable.ic_favorite);
                     btnFavorite.setTag(new Boolean(false));
                 }
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -71,15 +69,14 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void GenerateQuote ()
-    {
+
+    private void GenerateQuote() {
         QuoteID = getIntent().getStringExtra("Quote");
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                if (datasnapshot.exists())
-                {
+                if (datasnapshot.exists()) {
                     Quote = datasnapshot.child("content").getValue().toString();
                     background = datasnapshot.child("background").getValue().toString();
                     color = datasnapshot.child("color").getValue().toString();
@@ -95,7 +92,8 @@ public class QuoteNotificationActivity extends AppCompatActivity {
             }
         });
     }
-    public void setLikeButtonQuote(){
+
+    public void setLikeButtonQuote() {
 
     }
 }
