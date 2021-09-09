@@ -42,18 +42,16 @@ public class QuoteActivity extends AppCompatActivity {
      * - Tạo phần like bài viết, khi like thì lưu quote vào database --> setLikeButtonQuote()
      * - Các hàm SendUserTo...Activity()
      * */
-    private DatabaseReference mQuote;
+
     private TextView QuoteView;
     private String QuoteID;
     private String Quote;
     private String background, color;
-    private ImageButton btnFavorite, btnShare;
-    private Boolean btnFavoriteClicked;
-    private String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+    private ImageButton btnFavorite;
+    private String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private DatabaseReference Ref;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
-    private View quoteShare;
     private Bitmap bitmap;
 
     @Override
@@ -72,6 +70,8 @@ public class QuoteActivity extends AppCompatActivity {
         //GetEmotion();
         GenerateQuote();
 
+        ImageButton btnShare;
+        Boolean btnFavoriteClicked;
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
@@ -152,6 +152,7 @@ public class QuoteActivity extends AppCompatActivity {
 
     private void GenerateQuote() {
         QuoteID = getIntent().getStringExtra("QuoteID");
+        DatabaseReference mQuote;
         mQuote = FirebaseDatabase.getInstance().getReference().child("quotes").child(QuoteID);
         mQuote.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -252,6 +253,7 @@ public class QuoteActivity extends AppCompatActivity {
     }
 
     private void takeScreenShot() {
+        View quoteShare;
         quoteShare = findViewById(R.id.text_quote);
         bitmap = Screenshot.takeScreenShotOfRootView(quoteShare);
     }
