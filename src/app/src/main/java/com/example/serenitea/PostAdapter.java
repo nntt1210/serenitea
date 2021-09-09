@@ -1,7 +1,9 @@
 package com.example.serenitea;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
@@ -23,6 +26,8 @@ import com.facebook.share.Sharer;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -69,7 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewAvatar;
         TextView quote, txtName, likeNum;
-        ImageButton likeBtn, shareBtn;
+        ImageButton likeBtn, shareBtn, delete_btn;
         int countLikes = 0;
 
         public PostViewHolder(View itemView) {
@@ -80,6 +85,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeNum = itemView.findViewById(R.id.like_number);
             likeBtn = itemView.findViewById(R.id.btn_post_like);
             shareBtn = itemView.findViewById(R.id.btn_post_share);
+            delete_btn=itemView.findViewById(R.id.btn_post_delete);
+            delete_btn.setEnabled(false);
+            delete_btn.setVisibility(itemView.INVISIBLE);
+
         }
 
         public void sendData(String id) {
@@ -286,12 +295,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
+        if (currentUserId.equals(user_id))
+        {
+            holder.delete_btn.setEnabled(true);
+            holder.delete_btn.setVisibility(View.VISIBLE);
+
+        }
+        //click delete
+        holder.delete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DeletePost(postId);
+                    }
+                });
+                builder.setNegativeButton("No",null);
+                builder.show();
+            }
+        });
         //click Like
         holder.likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LikeAPost(postId, user_id);
-
             }
         });
 
@@ -363,6 +392,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             }
         });
+
+    }
+    private void DeletePost(String PostId)
+    {
+        DatabaseReference PostRef= RootRef.child("forum");
+        PostRef.child(PostId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                Toast.makeText(context,"Post Deleted",Toast.LENGTH_SHORT).show();
+            }
+        });
+        LikeRef.child(PostId).removeValue();
     }
 
     @Override
