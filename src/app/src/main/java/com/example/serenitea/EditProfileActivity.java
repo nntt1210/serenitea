@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -77,6 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 Save();
             }
         });
@@ -165,6 +167,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void Save() {
+
         if (TextUtils.isEmpty(txtNickName.getText())) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         } else if (spGender.getSelectedItem().toString().equals("Gender")) {
