@@ -58,9 +58,9 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         DoB = findViewById(R.id.setup_dob);
-        txtNickName =  findViewById(R.id.setup_nickname);
+        txtNickName = findViewById(R.id.setup_nickname);
         spGender = findViewById(R.id.spinner);
-        btnSave =  findViewById(R.id.btn_save);
+        btnSave = findViewById(R.id.btn_save);
 
         setDefault();
 
@@ -78,7 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
             builder.setMessage("Are you sure you want to save?");
             builder.setPositiveButton("Yes", (dialog, which) -> Save());
-            builder.setNeutralButton("No",null);
+            builder.setNeutralButton("No", null);
             builder.show();
         });
     }
@@ -89,8 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sp = getSharedPreferences("EDIT", 0);
         avatar = sp.getInt("EDIT_AVATAR", 0);
-        if (avatar != -1)
-        {
+        if (avatar != -1) {
             btnChooseAvatar.setImageResource(avatar);
         }
     }
