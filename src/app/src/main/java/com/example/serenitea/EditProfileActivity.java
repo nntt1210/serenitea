@@ -76,20 +76,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage("Are you sure you want to save?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Save();
-                    }
-                });
-                builder.setNeutralButton("No",null);
-                builder.show();
-            }
+        btnSave.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+            builder.setMessage("Are you sure you want to save?");
+            builder.setPositiveButton("Yes", (dialog, which) -> Save());
+            builder.setNeutralButton("No",null);
+            builder.show();
         });
     }
 
