@@ -1,5 +1,6 @@
 package com.example.serenitea;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +11,6 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -39,7 +39,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText txtNickName;
     private Spinner spGender;
     private Integer avatar;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference userRef;
     private String name, dob, cot, gender, ava_id;
     private int db_day, db_month, db_year;
@@ -57,14 +57,14 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        DoB = (EditText) findViewById(R.id.setup_dob);
-        txtNickName = (EditText) findViewById(R.id.setup_nickname);
-        spGender = (Spinner) findViewById(R.id.spinner);
-        btnSave = (Button) findViewById(R.id.btn_save);
+        DoB = findViewById(R.id.setup_dob);
+        txtNickName = findViewById(R.id.setup_nickname);
+        spGender = findViewById(R.id.spinner);
+        btnSave = findViewById(R.id.btn_save);
 
         setDefault();
 
-        btnChooseAvatar = (ImageButton) findViewById(R.id.btn_choose_avatar);
+        btnChooseAvatar = findViewById(R.id.btn_choose_avatar);
 
         btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +74,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Save();
-            }
+        btnSave.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+            builder.setMessage("Are you sure you want to save?");
+            builder.setPositiveButton("Yes", (dialog, which) -> Save());
+            builder.setNeutralButton("No", null);
+            builder.show();
         });
     }
 
@@ -88,8 +89,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sp = getSharedPreferences("EDIT", 0);
         avatar = sp.getInt("EDIT_AVATAR", 0);
-        if (avatar != -1)
-        {
+        if (avatar != -1) {
             btnChooseAvatar.setImageResource(avatar);
         }
     }
@@ -129,24 +129,16 @@ public class EditProfileActivity extends AppCompatActivity {
                     } else if (gender.equals("Male")) {
                         spGender.setSelection(1);
                     }
-                    DoB.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //final Calendar cldr = Calendar.getInstance();
-                            int day = db_day;
-                            int month = db_month;
-                            int year = db_year;
-                            month -= 1;
-                            // date picker dialog
-                            picker = new DatePickerDialog(EditProfileActivity.this,
-                                    new DatePickerDialog.OnDateSetListener() {
-                                        @Override
-                                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                            DoB.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                                        }
-                                    }, year, month, day);
-                            picker.show();
-                        }
+                    DoB.setOnClickListener(v -> {
+                        //final Calendar cldr = Calendar.getInstance();
+                        int day = db_day;
+                        int month = db_month;
+                        int year = db_year;
+                        month -= 1;
+                        // date picker dialog
+                        picker = new DatePickerDialog(EditProfileActivity.this,
+                                (view, year1, monthOfYear, dayOfMonth) -> DoB.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1), year, month, day);
+                        picker.show();
                     });
                 }
             }
@@ -165,6 +157,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void Save() {
+
         if (TextUtils.isEmpty(txtNickName.getText())) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         } else if (spGender.getSelectedItem().toString().equals("Gender")) {

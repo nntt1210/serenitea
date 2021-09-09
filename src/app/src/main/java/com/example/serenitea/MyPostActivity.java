@@ -56,11 +56,11 @@ public class MyPostActivity extends Fragment {
                 if (snapshot.exists()) {
                     String key = snapshot.getKey();
                     Post p = snapshot.getValue(Post.class);
-                    if (p.getUserId().equals(currentUserId)){
-                    p.postId = key;
-                    postList.add(p);
-                    postAdapter.notifyDataSetChanged();
-                }
+                    if (p.getUserId().equals(currentUserId)) {
+                        p.postId = key;
+                        postList.add(p);
+                        postAdapter.notifyDataSetChanged();
+                    }
                 }
                 Collections.sort(postList);
             }
@@ -85,7 +85,8 @@ public class MyPostActivity extends Fragment {
                         postList.remove(index);
                         postAdapter.notifyDataSetChanged();
                     }
-            }}
+                }
+            }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

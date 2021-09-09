@@ -85,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             likeNum = itemView.findViewById(R.id.like_number);
             likeBtn = itemView.findViewById(R.id.btn_post_like);
             shareBtn = itemView.findViewById(R.id.btn_post_share);
-            delete_btn=itemView.findViewById(R.id.btn_post_delete);
+            delete_btn = itemView.findViewById(R.id.btn_post_delete);
             delete_btn.setEnabled(false);
             delete_btn.setVisibility(itemView.INVISIBLE);
 
@@ -294,8 +294,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
-        if (currentUserId.equals(user_id))
-        {
+        if (currentUserId.equals(user_id)) {
             holder.delete_btn.setEnabled(true);
             holder.delete_btn.setVisibility(View.VISIBLE);
 
@@ -311,7 +310,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         DeletePost(postId);
                     }
                 });
-                builder.setNegativeButton("No",null);
+                builder.setNegativeButton("No", null);
                 builder.show();
             }
         });
@@ -385,13 +384,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
     }
-    private void DeletePost(String PostId)
-    {
-        DatabaseReference PostRef= RootRef.child("forum");
+
+    private void DeletePost(String PostId) {
+        DatabaseReference PostRef = RootRef.child("forum");
         PostRef.child(PostId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task) {
-                Toast.makeText(context,"Post Deleted",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Post Deleted", Toast.LENGTH_SHORT).show();
             }
         });
         LikeRef.child(PostId).removeValue();
