@@ -41,7 +41,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText txtNickName;
     private Spinner spGender;
     private Integer avatar;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference userRef;
     private String name, dob, cot, gender, ava_id;
     private int db_day, db_month, db_year;
@@ -59,14 +59,14 @@ public class EditProfileActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        DoB = (EditText) findViewById(R.id.setup_dob);
-        txtNickName = (EditText) findViewById(R.id.setup_nickname);
-        spGender = (Spinner) findViewById(R.id.spinner);
-        btnSave = (Button) findViewById(R.id.btn_save);
+        DoB = findViewById(R.id.setup_dob);
+        txtNickName =  findViewById(R.id.setup_nickname);
+        spGender = findViewById(R.id.spinner);
+        btnSave =  findViewById(R.id.btn_save);
 
         setDefault();
 
-        btnChooseAvatar = (ImageButton) findViewById(R.id.btn_choose_avatar);
+        btnChooseAvatar = findViewById(R.id.btn_choose_avatar);
 
         btnChooseAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
