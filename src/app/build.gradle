@@ -10,7 +10,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/external/debug.keystore")
+            storeFile file("/Users/Study/serenitea/src/app/external/debug.keystore")
         }
     }
 
