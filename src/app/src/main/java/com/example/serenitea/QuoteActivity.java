@@ -48,7 +48,7 @@ public class QuoteActivity extends AppCompatActivity {
     private String Quote;
     private String background, color;
     private ImageButton btnFavorite;
-    private String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private final String curUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private DatabaseReference Ref;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
@@ -110,8 +110,6 @@ public class QuoteActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
     private void GenerateQuote() {
         QuoteID = getIntent().getStringExtra("QuoteID");
