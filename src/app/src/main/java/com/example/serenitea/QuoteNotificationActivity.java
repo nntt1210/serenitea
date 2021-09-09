@@ -5,7 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
-import android.view.View;
+//import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -37,7 +37,7 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        QuoteView = (TextView)findViewById(R.id.text_quote);
+        QuoteView = findViewById(R.id.text_quote);
         QuoteView.setMovementMethod(new ScrollingMovementMethod());
         GenerateQuote();
 
@@ -45,19 +45,16 @@ public class QuoteNotificationActivity extends AppCompatActivity {
         btnFavoriteClicked = new Boolean(false);
         btnFavorite = findViewById(R.id.btn_favorite);
         btnFavorite.setTag(btnFavoriteClicked);
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (((Boolean)btnFavorite.getTag()) == false)
-                {
-                    btnFavorite.setImageResource(R.drawable.ic_favorite_added);
-                    btnFavorite.setTag(new Boolean(true));
-                }
-                else
-                {
-                    btnFavorite.setImageResource(R.drawable.ic_favorite);
-                    btnFavorite.setTag(new Boolean(false));
-                }
+        btnFavorite.setOnClickListener(v -> {
+            if (!((Boolean) btnFavorite.getTag()))
+            {
+                btnFavorite.setImageResource(R.drawable.ic_favorite_added);
+                btnFavorite.setTag(new Boolean(true));
+            }
+            else
+            {
+                btnFavorite.setImageResource(R.drawable.ic_favorite);
+                btnFavorite.setTag(new Boolean(false));
             }
         });
     }
