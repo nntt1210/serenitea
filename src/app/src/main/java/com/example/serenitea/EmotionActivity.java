@@ -172,7 +172,7 @@ public class EmotionActivity extends Fragment {
 
     }
 
-    private void SendUserToQuoteActivity (){
+    private void SendUserToQuoteActivity() {
         Intent quoteIntent = new Intent(EmotionActivity.this.getActivity(), QuoteActivity.class);
         quoteIntent.putExtra("quoteID", QuoteID);
         startActivity(quoteIntent);
